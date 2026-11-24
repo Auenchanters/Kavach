@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Amma's phone · KAVACH prototype</title>
+  <meta name="description" content="KAVACH on Amma's phone: scam call screening, the KAVACH button, message checks and golden-hour recovery. Scripted prototype.">
+  <meta name="theme-color" content="#19191B">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="phone.css">
+  <script type="importmap">{"imports":{"three/webgpu":"https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.webgpu.js","three":"https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.webgpu.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.178.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.7v5.9c0 4.6 3.1 8.3 7.5 9.6 4.4-1.3 7.5-5 7.5-9.6V5.7L12 2.8Z"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="m16 9.5 5 5m0-5-5 5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></symbol>
+    <symbol id="i-hang" viewBox="0 0 24 24"><path d="M3 14.5c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5c-2.3-.8-4.7-.8-7 0v2.5l-3 1.5L3 14.5Z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-block" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m6 6 12 12"/></symbol>
+  </svg>
+
+  <main class="stage">
+    <section class="device" aria-label="Amma's phone">
+      <div class="screen" id="screen">
+        <div class="status"><span class="num" id="clock">11:42</span><span>Jio 5G · 86%</span></div>
+
+        <!-- HOME -->
+        <div class="home no-scrollbar" id="home">
+          <header class="h-top">
+            <div class="brand"><svg class="i"><use href="#i-shield"/></svg><div><strong>KAVACH</strong><span id="safeLine">You are protected</span></div></div>
+            <div class="seg" role="radiogroup" aria-label="Language">
+              <button role="radio" data-lang="kn" lang="kn">ಕನ್ನಡ</button>
+              <button role="radio" data-lang="hi" lang="hi">हिंदी</button>
+              <button role="radio" data-lang="en">EN</button>
+            </div>
+          </header>
+
+          <p class="greet" id="greet" lang="kn">ನಮಸ್ಕಾರ ಅಮ್ಮಾ</p>
+          <div class="watch row">
+            <span class="dot"></span>
+            <div><strong>Unknown calls are checked first</strong><span>Saved contacts ring normally.</span></div>
+          </div>
+
+          <article class="sms row" aria-label="New message">
+            <div class="sms-meta"><svg class="i"><use href="#i-msg"/></svg><b>VK-DISCOM</b><span class="num">11:38</span></div>
+            <p id="smsText"></p>
+            <button class="btn btn-kavach" id="btnSms"><svg class="i"><use href="#i-shield"/></svg>Check with KAVACH</button>
+            <div class="verdict-box" id="smsVerdict" hidden>
+              <span class="tag tag-red">Fake message</span>
+              <p class="indic" id="smsNote"></p>
+              <button class="btn btn-quiet" id="btnSmsPlay"><svg class="i"><use href="#i-play"/></svg>Play voice note</button>
+            </div>
+          </article>
+
+          <div class="recent">
+            <h2>This week</h2>
+            <div class="r-item"><svg class="i"><use href="#i-block"/></svg><span>+91 70XXX XX451 blocked before it rang</span><time class="num">Mon</time></div>
+            <div class="r-item"><svg class="i"><use href="#i-block"/></svg><span>Fake KYC link stopped</span><time class="num">Sat</time></div>
+          </div>
+
+          <button class="cheated" id="btnCheated">
+            <strong>I've been cheated</strong>
+            <span>KAVACH starts getting your money back and tells Rahul</span>
+          </button>
+        </div>
+
+        <!-- CALL -->
+        <div class="call no-scrollbar" id="call" hidden>
+          <div class="c-head">
+            <span class="tag tag-red" id="callTag">High risk · reported 47 times</span>
+            <div class="c-num num" id="callNum">+91 98XXX XX210</div>
+            <div class="c-meta" id="callMeta">Digital arrest · CBI impersonation</div>
+            <div class="c-timer num" id="callTimer">00:00</div>
+          </div>
+
+          <div class="shield-zone">
+            <div class="shield3d" id="shield3d"><div class="flat-shield" aria-hidden="true"></div></div>
+            <button class="kv-btn" id="btnKavach" aria-label="Add KAVACH to this call"><svg class="i"><use href="#i-shield"/></svg><span>KAVACH</span></button>
+            <p class="kv-hint" id="kvHint">Tap if this call feels wrong</p>
+          </div>
+
+          <div class="said" id="said" aria-live="polite"></div>
+
+          <div class="warn row" id="warn" hidden>
+            <div class="w-top"><span class="tag tag-kavach">KAVACH is on this call</span><span class="risk num" id="risk">94%</span></div>
+            <p class="w-text indic" id="warnText"></p>
+            <p class="w-sub">KAVACH told the caller this call is monitored. Rahul has been told.</p>
+          </div>
+
+          <div class="ended" id="ended" hidden>
+            <svg class="i"><use href="#i-check"/></svg>
+            <strong>Call ended. You are safe.</strong>
+            <span>No money moved. Rahul knows.</span>
+            <button class="btn btn-quiet" id="btnDone">Done</button>
+          </div>
+
+          <button class="hang" id="btnHang" aria-label="End call"><svg class="i"><use href="#i-hang"/></svg></button>
+        </div>
+
+        <!-- RECOVERY -->
+        <div class="rec no-scrollbar" id="rec" hidden>
+          <span class="tag tag-red">₹48,000 left your account</span>
+          <h2 class="r-title indic" id="recText"></h2>
+          <div class="gh"><span>Golden hour left</span><strong class="num" id="ghTime">58:48</strong></div>
+          <ol class="agents">
+            <li data-a="hold"><span class="tick"></span>Bank hold on HDFC ····4471<em>waits for Rahul</em></li>
+            <li data-a="brief"><span class="tick"></span>1930 call script ready<em>done</em></li>
+            <li data-a="ncrp"><span class="tick"></span>Police complaint drafted<em>waits for Rahul</em></li>
+            <li data-a="evid"><span class="tick"></span>Evidence sealed<em>done</em></li>
+          </ol>
+          <a class="btn btn-kavach big" href="tel:1930">Call 1930 now</a>
+          <button class="btn btn-quiet" id="btnRecBack">Back to home</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="guide" aria-label="Try the story">
+      <a class="back" href="../"><svg class="i"><use href="#i-arrow"/></svg>KAVACH prototype</a>
+      <h1>Amma’s phone</h1>
+      <p class="lede">Amma is 65 and lives in Bengaluru. KAVACH sits on her phone. Try what happens on her side; Rahul’s panel reacts in its own tab.</p>
+      <ol class="steps">
+        <li><button data-do="call"><b>A scam call comes in</b><span>A fake CBI officer threatens “digital arrest”. Tap the KAVACH button on the call.</span></button></li>
+        <li><button data-do="sms"><b>A fake message arrives</b><span>KAVACH checks the link and sends a voice note.</span></button></li>
+        <li><button data-do="cheated"><b>Money is lost anyway</b><span>One tap starts four recovery agents inside the golden hour.</span></button></li>
+      </ol>
+      <div class="guide-foot">
+        <button class="btn btn-line" id="btnSound"><svg class="i"><use href="#i-speaker"/></svg><span>Sound on</span></button>
+        <a class="btn btn-line" href="../admin/" target="kavach-admin">Open Rahul’s panel</a>
+        <button class="btn btn-line" id="btnReset">Reset</button>
+      </div>
+      <p class="proto-note">Scripted prototype: what the agents will do, replayed. Voices made with AI4Bharat Indic Parler-TTS. 3D: <span id="backend">loading</span>.</p>
+    </aside>
+  </main>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script type="module" src="phone.js"></script>
+</body>
+</html>

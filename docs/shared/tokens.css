@@ -1,0 +1,121 @@
+/* KAVACH · Studio & Enamel. The pitch film's world: light studio ground, dark objects on it,
+   one indigo accent for KAVACH itself, semantic red / green / amber only where they mean something. */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Sans+Kannada:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap");
+
+:root {
+  --ground-a: #F4F4F5;
+  --ground-b: #C9C9CC;
+  --card: #19191B;
+  --card-2: #212124;
+  --card-3: #2A2A2E;
+  --line: #2C2C2F;
+  --line-light: #D4D4D8;
+  --ink: #171717;
+  --ink-2: #525252;
+  --ink-3: #6B6B6B;
+  --on-dark: #EDEDED;
+  --on-dark-2: #A1A1A6;
+  --on-dark-3: #8A8A90;
+  --indigo: #2A2FD0;
+  --indigo-dark: #6C70F0;
+  --red: #E5484D;
+  --green: #4CC38A;
+  --amber: #F5A524;
+  --red-t: rgba(229, 72, 77, .14);
+  --green-t: rgba(76, 195, 138, .14);
+  --amber-t: rgba(245, 165, 36, .14);
+  --indigo-t: rgba(108, 112, 240, .16);
+  --r-card: 24px;
+  --r-row: 14px;
+  --r-ctl: 12px;
+  --shadow: 0 24px 48px rgba(0, 0, 0, .14);
+  --shadow-sm: 0 8px 20px rgba(0, 0, 0, .10);
+  --f-sans: "Geist", "Noto Sans Kannada", "Noto Sans Devanagari", system-ui, sans-serif;
+  --f-mono: "Geist Mono", ui-monospace, Consolas, monospace;
+  --f-indic: "Noto Sans Kannada", "Noto Sans Devanagari", "Nirmala UI", var(--f-sans);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);     /* expo out */
+  --ease-move: cubic-bezier(.65, 0, .35, 1);   /* power2 in-out */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh; min-height: 100dvh; color: var(--ink);
+  font: 400 15px/1.5 var(--f-sans); -webkit-font-smoothing: antialiased;
+  background: radial-gradient(120% 90% at 30% 0%, var(--ground-a) 0%, var(--ground-b) 100%) fixed;
+}
+h1, h2, h3, h4, p, figure, blockquote { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; padding: 0; }
+a { color: inherit; }
+svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+[hidden] { display: none !important; }
+::selection { background: var(--indigo); color: #fff; }
+:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; border-radius: 6px; }
+.dark :focus-visible { outline-color: var(--indigo-dark); }
+.mono, .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.indic, [lang="kn"], [lang="hi"] { font-family: var(--f-indic); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Scrollbars: a brushed-steel bead floating in a faint groove, turning indigo enamel when grabbed, like the shield.
+   (Chromium/Safari draw this; Firefox only takes flat colours, so it gets the same hues without the bevel.) */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-track:vertical { box-shadow: inset 1px 0 0 rgba(0, 0, 0, .05); }
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent; border-radius: 99px; background-clip: padding-box;
+  background-color: #A9ACB3;
+  background-image: linear-gradient(90deg, #EEF0F3 0%, #C3C6CD 38%, #9DA1A9 72%, #B7BAC1 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75), inset 0 -1px 0 rgba(0, 0, 0, .18), 0 1px 2px rgba(0, 0, 0, .12);
+}
+::-webkit-scrollbar-thumb:horizontal { background-image: linear-gradient(180deg, #EEF0F3 0%, #C3C6CD 38%, #9DA1A9 72%, #B7BAC1 100%); }
+::-webkit-scrollbar-thumb:hover { background-image: linear-gradient(90deg, #8E92F7 0%, #4B50E6 45%, #2A2FD0 100%); }
+::-webkit-scrollbar-thumb:active { background-image: linear-gradient(90deg, #6C70F0 0%, #2A2FD0 60%, #1F23A8 100%); }
+::-webkit-scrollbar-corner { background: transparent; }
+.card ::-webkit-scrollbar-thumb, .dark ::-webkit-scrollbar-thumb, .card::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(90deg, #5A5A61 0%, #3E3E44 45%, #2C2C31 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), inset 0 -1px 0 rgba(0, 0, 0, .4);
+}
+.card ::-webkit-scrollbar-thumb:hover, .dark ::-webkit-scrollbar-thumb:hover { background-image: linear-gradient(90deg, #8E92F7 0%, #4B50E6 45%, #2A2FD0 100%); }
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: #A9ACB3 transparent; }
+  .card *, .dark * { scrollbar-color: #45454B transparent; }
+}
+/* inside a phone there is no scrollbar, as on a real phone */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* dark object on the light ground */
+.card { background: var(--card); color: var(--on-dark); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); }
+.row { background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-row); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: var(--r-ctl);
+  font-weight: 500; font-size: 14px; transition: background .2s var(--ease-out), transform .12s, box-shadow .2s; white-space: nowrap; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-kavach { background: var(--indigo); color: #fff; }
+.btn-kavach:hover { background: #3237E0; }
+.dark .btn-kavach { background: var(--indigo-dark); }
+.dark .btn-kavach:hover { background: #7F83F4; }
+.btn-quiet { background: var(--card-3); color: var(--on-dark); }
+.btn-quiet:hover { background: #34343A; }
+.btn-line { border: 1px solid var(--line-light); color: var(--ink); background: rgba(255, 255, 255, .5); }
+.btn-line:hover { background: #fff; }
+.btn-danger { background: var(--red); color: #fff; }
+
+.tag { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 99px; font: 500 11.5px/1 var(--f-sans); white-space: nowrap; }
+.tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.tag-red { background: var(--red-t); color: var(--red); }
+.tag-green { background: var(--green-t); color: var(--green); }
+.tag-amber { background: var(--amber-t); color: var(--amber); }
+.tag-kavach { background: var(--indigo-t); color: var(--indigo-dark); }
+.tag-dim { background: rgba(255, 255, 255, .06); color: var(--on-dark-2); }
+
+.toasts { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 90; display: grid; gap: 8px; pointer-events: none; width: min(420px, calc(100% - 32px)); }
+.toast { padding: 12px 16px; border-radius: var(--r-row); background: var(--card); color: var(--on-dark); border: 1px solid var(--line); box-shadow: var(--shadow); font-size: 14px; animation: rise .5s var(--ease-out); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+.proto-note { font-size: 12.5px; color: var(--ink-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

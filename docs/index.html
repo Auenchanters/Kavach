@@ -3,252 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>KAVACH · Scam defense for families</title>
-  <meta name="description" content="KAVACH stands between parents and scammers: call screening, a decoy that wastes scammers' time, and golden-hour recovery, all behind a guardian-approved policy gate.">
-  <meta name="theme-color" content="#0B0E0D">
+  <title>KAVACH · a team of AI agents between your parents and the scammer</title>
+  <meta name="description" content="KAVACH warns parents during scam calls, keeps scammers busy with a decoy, and races the golden hour to get stolen money back. Clickable prototype for wHACKiest 2026.">
+  <meta name="theme-color" content="#F4F4F5">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="shared/tokens.css">
+  <script type="importmap">{"imports":{"three/webgpu":"https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.webgpu.js","three":"https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.webgpu.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.178.0/examples/jsm/"}}</script>
+  <style>
+    .wrap { width: min(1240px, 100% - 48px); margin: 0 auto; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; }
+    .mark { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: .1em; font-size: 14px; }
+    .mark svg { width: 26px; height: 26px; color: var(--indigo); fill: rgba(42, 47, 208, .12); }
+    .nav nav { display: flex; gap: 22px; font-size: 14px; color: var(--ink-2); }
+    .nav nav a { text-decoration: none; }
+    .nav nav a:hover { color: var(--ink); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: 24px; min-height: calc(100dvh - 210px); }
+    h1 { font-size: clamp(44px, 6vw, 86px); font-weight: 500; letter-spacing: -.04em; line-height: .98; }
+    h1 em { font-style: normal; color: var(--indigo); }
+    .sub { margin-top: 22px; font-size: clamp(17px, 1.5vw, 20px); color: var(--ink-2); max-width: 46ch; line-height: 1.5; }
+    .ctas { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .ctas .btn { min-height: 50px; padding: 0 20px; font-size: 15.5px; text-decoration: none; }
+    .stage3d { position: relative; aspect-ratio: 1; width: 100%; max-width: 560px; justify-self: center; }
+    .stage3d .flat { display: none; }
+    .stage3d.no-3d .flat { display: block; position: absolute; left: 50%; top: 50%; width: 46%; height: 54%; transform: translate(-50%, -50%);
+      clip-path: polygon(50% 0, 100% 18%, 92% 68%, 50% 100%, 8% 68%, 0 18%); background: linear-gradient(90deg, #A9ACB3 50%, var(--indigo) 50%); }
+    .layers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #B9B9BE; margin-top: 8px; }
+    .layers div { padding: 18px 20px 22px 0; }
+    .layers div + div { padding-left: 20px; border-left: 1px solid #B9B9BE; }
+    .layers h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .layers p { font-size: 14px; color: var(--ink-2); }
+    footer { padding: 18px 0 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; padding: 8px 0 24px; }
+      .stage3d { max-width: 340px; order: -1; }
+      .layers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .layers div:nth-child(3) { padding-left: 0; border-left: 0; }
+      .layers div:nth-child(n+3) { border-top: 1px solid #B9B9BE; }
+      .nav nav a:not(:last-child) { display: none; }
+    }
+    @media (max-width: 520px) { .layers { grid-template-columns: minmax(0, 1fr); } .layers div, .layers div + div { padding-left: 0; border-left: 0; border-top: 1px solid #B9B9BE; } }
+  </style>
 </head>
-<body data-view="amma">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 4 5.6v6.1c0 4.8 3.3 8.7 8 9.8 4.7-1.1 8-5 8-9.8V5.6L12 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 2.5v19" stroke="currentColor" stroke-width="1.6"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="i-guard" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20.5c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-    <symbol id="i-mask" viewBox="0 0 24 24"><path d="M3.5 6.5c3-1.3 14-1.3 17 0 0 7-3.6 11-8.5 11S3.5 13.5 3.5 6.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 10.5h2.5M13.5 10.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="i-gate" viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
-    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v3.7h3.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="i-hangup" viewBox="0 0 24 24"><path d="M3 14.5c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5c-2.3-.8-4.7-.8-7 0v2.5l-3 1.5L3 14.5Z" fill="currentColor"/></symbol>
-    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-  </svg>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.7v5.9c0 4.6 3.1 8.3 7.5 9.6 4.4-1.3 7.5-5 7.5-9.6V5.7L12 2.8Z"/></symbol></svg>
+  <div class="wrap">
+    <header class="nav">
+      <span class="mark"><svg class="i"><use href="#i-shield"/></svg>KAVACH</span>
+      <nav aria-label="Links"><a href="phone/">Amma’s phone</a><a href="admin/">Rahul’s panel</a><a href="https://github.com/Auenchanters/Kavach">GitHub</a></nav>
+    </header>
 
-  <div class="app">
-    <!-- Navigation: left rail on desktop, bottom tab bar on phones -->
-    <nav class="rail" aria-label="Sections">
-      <a class="mark" href="#" aria-label="KAVACH home"><svg><use href="#i-shield"/></svg></a>
-      <button class="nav-btn" data-nav="amma"><svg><use href="#i-phone"/></svg><span class="d-only">Live</span><span class="m-only">Amma</span></button>
-      <button class="nav-btn m-only-flex" data-nav="guardian"><svg><use href="#i-guard"/></svg><span>Rahul</span></button>
-      <button class="nav-btn" data-nav="recover"><svg><use href="#i-bolt"/></svg><span>Recover</span></button>
-      <button class="nav-btn" data-nav="strike"><svg><use href="#i-mask"/></svg><span>Strike</span></button>
-      <button class="nav-btn" data-nav="gate"><svg><use href="#i-gate"/></svg><span>Gate</span><b class="nav-count" id="pendingCount" hidden></b></button>
-    </nav>
-
-    <div class="main">
-      <header class="topbar">
-        <div class="title">
-          <h1>Kavach</h1>
-          <span class="conn" id="conn" title="Checking for the KAVACH server…"><i></i><span>Connecting</span></span>
+    <main>
+      <section class="hero">
+        <div>
+          <h1>No Amma left alone with a <em>scammer</em>.</h1>
+          <p class="sub">KAVACH puts a team of AI agents between your parents and the scammer. It warns them during the call in their own language, keeps scammers talking to a decoy, and races the golden hour to get stolen money back.</p>
+          <div class="ctas">
+            <a class="btn btn-kavach" href="phone/">Open Amma’s phone</a>
+            <a class="btn btn-line" href="admin/">Open Rahul’s panel</a>
+            <button class="btn btn-line" id="both">Open both, side by side</button>
+          </div>
         </div>
-        <div class="steps" role="group" aria-label="Demo scenario">
-          <button class="step" data-step="1"><b>1</b>Scam call</button>
-          <button class="step" data-step="2"><b>2</b>Decoy</button>
-          <button class="step" data-step="3"><b>3</b>Money lost</button>
-          <button class="step" data-step="4"><b>4</b>Forbidden action</button>
-          <button class="step ghost" data-step="reset" aria-label="Reset demo"><svg><use href="#i-reset"/></svg><span>Reset</span></button>
-        </div>
-      </header>
+        <div class="stage3d" id="hero3d"><div class="flat" aria-hidden="true"></div></div>
+      </section>
 
-      <main class="content" id="content">
+      <section class="layers" aria-label="What KAVACH does">
+        <div><h2>Shield</h2><p>Screens unknown calls, joins a scam call when Amma taps KAVACH, warns her in Kannada, Hindi or English.</p></div>
+        <div><h2>Strike</h2><p>Ramesh, a decoy retiree with fake details, keeps the scammer busy and draws out UPI IDs and mule accounts.</p></div>
+        <div><h2>Recover</h2><p>If money is lost, four agents start at once: bank hold, 1930 script, police complaint, sealed evidence.</p></div>
+        <div><h2>Intelligence</h2><p>Every captured number and account joins a shared fraud graph, so one family’s attack protects thousands.</p></div>
+      </section>
+    </main>
 
-        <div class="live">
-          <!-- ============ AMMA'S PHONE ============ -->
-          <section id="v-amma" class="view" aria-label="Amma's phone">
-            <div class="device">
-              <div class="screen" id="screen">
-                <div class="statusbar d-only-flex"><span>11:42</span><span>Jio 5G · 98%</span></div>
-
-                <div class="a-home" id="aHome">
-                  <div class="a-head">
-                    <div class="a-brand"><svg><use href="#i-shield"/></svg><div><strong>KAVACH</strong><span>You are protected</span></div></div>
-                    <div class="seg" role="radiogroup" aria-label="Warning language">
-                      <button role="radio" data-lang="kn" lang="kn">ಕನ್ನಡ</button>
-                      <button role="radio" data-lang="hi" lang="hi">हिंदी</button>
-                      <button role="radio" data-lang="en">EN</button>
-                    </div>
-                  </div>
-
-                  <div class="a-safe">
-                    <span class="pulse-dot"></span>
-                    <div><strong>Calls are being screened</strong><span>Unknown numbers are checked before your phone rings.</span></div>
-                  </div>
-
-                  <article class="sms" aria-label="New message">
-                    <div class="sms-meta"><svg><use href="#i-msg"/></svg><strong>VK-DISCOM-ALERT</strong><span>11:38</span></div>
-                    <p id="smsText">Dear consumer, your electricity power will be cut tonight at 9:30 PM because previous month bill was not updated. Immediately call 9876543210 or pay at bit.ly/eb-bill</p>
-                    <button class="btn gold block" id="btnCheckSms">Check with KAVACH</button>
-                    <div class="sms-verdict" id="smsVerdict" hidden></div>
-                  </article>
-
-                  <button class="panic" id="btnPanic">
-                    <strong>I've been cheated</strong>
-                    <span>Starts golden-hour recovery and tells Rahul</span>
-                  </button>
-                </div>
-
-                <!-- Call overlay -->
-                <div class="a-call" id="aCall" hidden>
-                  <div class="call-top">
-                    <span class="tag red" id="callTag">Screened by KAVACH</span>
-                    <div class="call-num" id="callNum">+91 98XXX XX210</div>
-                    <div class="call-meta" id="callMeta">Checking number…</div>
-                    <div class="call-timer mono" id="callTimer">00:00</div>
-                  </div>
-
-                  <blockquote class="transcript" id="transcript"></blockquote>
-
-                  <div class="kv-wrap" id="kvWrap">
-                    <button class="kv-btn" id="btnKavach" aria-describedby="kvHint"><svg><use href="#i-shield"/></svg><span>KAVACH</span></button>
-                    <p id="kvHint">Tap if this call feels wrong</p>
-                  </div>
-
-                  <div class="hud" id="hud" hidden>
-                    <div class="hud-row"><span>Scam risk</span><strong class="mono" id="riskPct">0%</strong></div>
-                    <div class="meter"><i id="riskBar"></i></div>
-                    <div class="verdict" id="verdict"></div>
-                    <p class="warning" id="warningText"></p>
-                    <button class="btn ghost small" id="btnSpeak"><svg><use href="#i-speaker"/></svg>Play warning</button>
-                  </div>
-
-                  <div class="call-actions">
-                    <button class="hangup" id="btnHangup" aria-label="End call"><svg><use href="#i-hangup"/></svg></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- ============ RAHUL'S GUARDIAN CONSOLE ============ -->
-          <section id="v-guardian" class="view" aria-label="Rahul's guardian console">
-            <div class="g-head">
-              <h2 class="display">Rahul’s console</h2>
-              <p>Guardian for Amma · Bengaluru. KAVACH asks you before it files a report or freezes an account.</p>
-            </div>
-
-            <div class="golden" id="goldenCard" hidden>
-              <div>
-                <span class="eyebrow">Golden hour</span>
-                <div class="golden-time mono" id="goldenTime">60:00</div>
-                <span class="muted" id="goldenSub"></span>
-              </div>
-              <div class="golden-bar"><i id="goldenBar"></i></div>
-            </div>
-
-            <div class="stats">
-              <div class="stat"><strong id="statCalls">0</strong><span>Scam calls stopped</span></div>
-              <div class="stat"><strong id="statProtected">₹0</strong><span>Frozen in golden hour</span></div>
-              <div class="stat"><strong id="statBlocked">0</strong><span>Blocked by policy</span></div>
-            </div>
-
-            <h3 class="section-h">Needs your approval</h3>
-            <div id="approvalList" class="stack"></div>
-
-            <h3 class="section-h">Alerts</h3>
-            <div id="alertFeed" class="stack"></div>
-          </section>
-        </div>
-
-        <!-- ============ RECOVER ============ -->
-        <section id="v-recover" class="view" aria-labelledby="recH">
-          <div class="v-head">
-            <div>
-              <span class="eyebrow">Recover swarm</span>
-              <h2 class="display" id="recH">Four agents, one golden hour</h2>
-              <p>When money leaves Amma’s account, four agents start at once. Anything that touches a bank or the police waits for Rahul.</p>
-            </div>
-          </div>
-          <div id="recoverBody"></div>
-        </section>
-
-        <!-- ============ STRIKE + INTEL ============ -->
-        <section id="v-strike" class="view" aria-labelledby="strH">
-          <div class="v-head">
-            <div>
-              <span class="eyebrow">Strike decoy</span>
-              <h2 class="display" id="strH">Ramesh keeps them talking</h2>
-              <p>Confirmed scam calls go to “Ramesh”, a slow, polite retired teacher. Every UPI ID and account they reveal goes into the shared fraud graph.</p>
-            </div>
-          </div>
-
-          <div class="strike">
-            <aside class="persona card">
-              <div class="persona-top"><span class="avatar">RS</span><div><strong>Ramesh Sharma, 67</strong><span>Retired maths teacher · Jayanagar</span></div></div>
-              <ul class="ticks">
-                <li>Hard of hearing, asks them to repeat</li>
-                <li>Never shares real financial data</li>
-                <li>Never moves money</li>
-              </ul>
-              <h4>Captured so far</h4>
-              <div id="entities" class="chips"></div>
-              <div class="wasted"><strong class="mono" id="wasted">0</strong><span>minutes of scammer time</span></div>
-            </aside>
-
-            <div class="chat card">
-              <div class="chat-log" id="chatLog" aria-live="polite"></div>
-              <div class="quick" id="quick">
-                <button class="chip-btn">Send ₹50,000 to refund.cbi@okaxis</button>
-                <button class="chip-btn">HDFC account number 50100492814471</button>
-                <button class="chip-btn">Sir, you are under digital arrest</button>
-              </div>
-              <form class="composer" id="composer">
-                <label class="sr" for="scamInput">Play the scammer</label>
-                <input id="scamInput" maxlength="1000" placeholder="Type what the scammer says…" autocomplete="off">
-                <button class="btn gold">Send</button>
-              </form>
-            </div>
-          </div>
-
-          <div class="card graph-card">
-            <div class="graph-head">
-              <div><h3>Shared fraud graph</h3><span class="muted" id="graphStats"></span></div>
-              <div class="legend"><span class="lg red">Scam number / mule</span><span class="lg gold">UPI ID</span><span class="lg dk">Syndicate</span><span class="lg blue">Protected family</span></div>
-            </div>
-            <svg id="graph" role="img" aria-label="Fraud graph linking scam numbers, UPI IDs, mule accounts, syndicates and protected families"></svg>
-          </div>
-        </section>
-
-        <!-- ============ POLICY GATE ============ -->
-        <section id="v-gate" class="view" aria-labelledby="gateH">
-          <div class="v-head">
-            <div>
-              <span class="eyebrow">Policy gate</span>
-              <h2 class="display" id="gateH">Every tool call, checked and written down</h2>
-              <p>Agents reach the world only through MCP tools, and every call passes this gate first.</p>
-            </div>
-            <button class="btn red-ghost" id="btnViolation">Try a forbidden action</button>
-          </div>
-          <div class="banner" id="violationBanner" hidden role="alert"></div>
-
-          <div class="tiers">
-            <div class="tier t-auto"><h4>Automatic</h4><p>Runs at once, logged.</p><ul><li>Number and link checks</li><li>Warnings to Amma</li><li>Alerts to Rahul</li><li>Ending a scam call</li></ul></div>
-            <div class="tier t-appr"><h4>Needs Rahul</h4><p>Waits for one tap of approval.</p><ul><li>Bank lien on a mule account</li><li>NCRP police complaint</li><li>Sanchar Saathi SIM report</li><li>Sharing call transcripts</li></ul></div>
-            <div class="tier t-never"><h4>Never allowed</h4><p>Blocked even if an agent asks.</p><ul><li>Moving money</li><li>Sharing OTP or PIN</li><li>Reading banking apps</li><li>Pretending to be police</li></ul></div>
-          </div>
-
-          <div class="card">
-            <div class="table-head"><h3>Audit log</h3><span class="muted" id="logCount"></span></div>
-            <div class="table-wrap">
-              <table class="audit">
-                <thead><tr><th>Time</th><th>Agent</th><th>Tool</th><th>Tier</th><th>Decision</th><th>Reason</th></tr></thead>
-                <tbody id="auditBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+    <footer>
+      <p class="proto-note">A scripted prototype for wHACKiest 2026, Track 1 “Make MCP Matter”. The six MCP servers are built during the hackathon; here the agents replay what they will do.</p>
+      <p class="proto-note">Voices: AI4Bharat Indic Parler-TTS · 3D: Three.js on WebGPU</p>
+    </footer>
   </div>
 
-  <div class="toasts" id="toasts" aria-live="polite"></div>
-
-  <script src="mock.js"></script>
-  <script src="app.js"></script>
+  <script type="module">
+    import { tryMountShield } from "./shared/three/shield.js";
+    tryMountShield(document.getElementById("hero3d")).then((s) => s.setState("joined"));
+    document.getElementById("both").onclick = () => {
+      const w = Math.floor(screen.availWidth / 2), h = screen.availHeight;
+      window.open("admin/", "kavach-admin", `popup,left=${w},top=0,width=${w},height=${h}`);
+      location.href = "phone/";
+    };
+  </script>
 </body>
 </html>
