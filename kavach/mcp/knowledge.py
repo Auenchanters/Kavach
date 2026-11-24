@@ -35,7 +35,8 @@ class KnowledgeServer:
             matches = [kw for kw in keywords if kw.lower() in lower_text]
             if matches:
                 # Calculate match density & weight
-                score = min(1.0, (len(matches) * 0.25) + pb.get("risk_weight", 0.8) * 0.5)
+                # capped below 1.0: keyword matching is never certain
+                score = min(0.97, (len(matches) * 0.25) + pb.get("risk_weight", 0.8) * 0.5)
                 if score > highest_score:
                     highest_score = score
                     best_match = category

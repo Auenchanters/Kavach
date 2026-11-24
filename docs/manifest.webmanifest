@@ -1,0 +1,20 @@
+{
+  "name": "KAVACH · Scam defense for families",
+  "short_name": "KAVACH",
+  "description": "Call screening, a scam decoy and golden-hour recovery, behind a guardian-approved policy gate.",
+  "start_url": "./#amma",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0B0E0D",
+  "theme_color": "#0B0E0D",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Amma's phone", "url": "./#amma" },
+    { "name": "Rahul's console", "url": "./#guardian" },
+    { "name": "Policy gate", "url": "./#gate" }
+  ]
+}

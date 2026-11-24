@@ -17,6 +17,9 @@ import uvicorn
 from kavach.orchestrator.server import app
 
 def main():
+    # Windows consoles default to cp1252, which cannot print the emoji banner below.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     port = int(os.environ.get("PORT", 8000))
     host = os.environ.get("HOST", "0.0.0.0")
     print("=" * 60)

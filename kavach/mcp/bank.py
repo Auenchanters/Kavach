@@ -53,7 +53,9 @@ class BankServer:
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"account_id": account_id, "transaction_id": transaction_id, "amount": amount}
-        eval_res = self.policy_gate.evaluate("RecoverSwarm-BankAgent", "bank.request_hold", args, approval_token)
+        eval_res = self.policy_gate.evaluate(
+            "RecoverSwarm-BankAgent", "bank.request_hold", args, approval_token,
+            on_approve=lambda tok: self.request_hold(account_id, transaction_id, amount, approval_token=tok))
 
         if not eval_res["allowed"]:
             return eval_res
@@ -80,7 +82,9 @@ class BankServer:
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"card_or_account": card_or_account, "reason": reason}
-        eval_res = self.policy_gate.evaluate("RecoverSwarm-BankAgent", "bank.request_block", args, approval_token)
+        eval_res = self.policy_gate.evaluate(
+            "RecoverSwarm-BankAgent", "bank.request_block", args, approval_token,
+            on_approve=lambda tok: self.request_block(card_or_account, reason, approval_token=tok))
 
         if not eval_res["allowed"]:
             return eval_res

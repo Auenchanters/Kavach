@@ -4,11 +4,21 @@ Screens unknown numbers, joins live suspicious calls via conference call,
 detects scam playbooks, speaks calm native warnings, and alerts Rahul.
 """
 
+import re
 from typing import Dict, Any, List
 
+LANGUAGE_NAMES = {"kn": "Kannada", "hi": "Hindi", "en": "English"}
+
+SMS_WARNINGS = {
+    "kn": "ಅಮ್ಮಾ, ಇದು ನಕಲಿ ಸಂದೇಶ. ಆ ಲಿಂಕ್ ಮೇಲೆ ಒತ್ತಬೇಡಿ, ಯಾರಿಗೂ ಹಣ ಕಳುಹಿಸಬೇಡಿ!",
+    "hi": "अम्मा, यह एक फर्जी मैसेज है। किसी भी लिंक पर क्लिक न करें, किसी को पैसे न भेजें!",
+    "en": "Amma, this message is a scam. Do not tap the link and do not send anyone money.",
+}
+
 class ShieldAgent:
-    def __init__(self, telephony_srv, intel_srv, knowledge_srv, family_srv):
+    def __init__(self, telephony_srv, intel_srv, knowledge_srv, family_srv, report_srv):
         self.telephony = telephony_srv
+        self.report = report_srv
         self.intel = intel_srv
         self.knowledge = knowledge_srv
         self.family = family_srv
@@ -27,6 +37,7 @@ class ShieldAgent:
                 "action": "KAVACH_SCREENING",
                 "caller_number": caller_number,
                 "risk_score": reputation["risk_score"],
+                "reported_count": reputation.get("reported_count"),
                 "category": reputation.get("category"),
                 "syndicate_id": reputation.get("syndicate_id"),
                 "verdict": "HIGH_RISK_SCAM_CALLER",
@@ -65,22 +76,27 @@ class ShieldAgent:
         # 4. Speak warning into conference call
         speak_res = self.telephony.speak_warning(call_id, warning_text, language)
 
-        # 5. Alert Rahul immediately via Family MCP
+        # 5. Queue a Sanchar Saathi (Chakshu) report; it waits for Rahul's approval
+        chakshu = self.report.file_chakshu(
+            phone_number="+91 98XXX XX210",
+            category=detection.get("name", "Suspected scam call"),
+            evidence=f"Matched keywords: {', '.join(detection.get('matched_keywords', [])) or 'none'}",
+        )
+
+        # 6. Alert Rahul immediately via Family MCP
         family_res = self.family.notify_guardian(
             guardian_id="Rahul (Son)",
             alert_level="CRITICAL",
             title=f"Amma received a '{detection.get('name', 'Digital Arrest')}' scam call",
             details=[
-                "Caller claimed to be a CBI officer and demanded she stay on a video call.",
-                "KAVACH joined the conference call and spoke a calm warning to Amma in Kannada.",
-                "Caller hung up. No money was moved.",
-                "Number +91 98XXX XX210 reported to Sanchar Saathi (pending your approval)."
+                f"Matched playbook: {detection.get('name', 'unknown')} (risk {risk_score:.0%}).",
+                f"KAVACH joined the call and spoke a calm warning to Amma in {LANGUAGE_NAMES.get(language, language)}.",
+                "No money was moved.",
+                "Sanchar Saathi report on +91 98XXX XX210 is waiting for your approval."
             ],
-            actions=[
-                {"id": "appr_chakshu_01", "label": "Approve report", "type": "primary"},
-                {"id": "call_amma", "label": "Call Amma", "type": "secondary"},
-                {"id": "view_tx", "label": "View transcript", "type": "secondary"}
-            ],
+            actions=[a for a in [
+                {"id": chakshu.get("approval_id"), "label": "Approve report", "type": "primary"},
+            ] if a["id"]] + [{"id": "call_amma", "label": "Call Amma", "type": "link"}],
             incident_id=call_id
         )
 
@@ -101,7 +117,6 @@ class ShieldAgent:
         Checks for malicious URLs and scam patterns, then generates a voice note verdict for Amma.
         """
         # Look for URLs
-        import re
         url_match = re.search(r'(https?://[^\s]+|bit\.ly/[^\s]+|tinyurl\.com/[^\s]+)', sms_text)
         url_analysis = None
         if url_match:
@@ -112,19 +127,18 @@ class ShieldAgent:
 
         is_scam = (url_analysis and url_analysis.get("phishing_detected")) or pattern.get("detected")
 
-        # Generate voice note for Amma
-        voice_text = "ಅಮ್ಮಾ, ಇದು ನಕಲಿ ವಿದ್ಯುತ್ ಬಿಲ್ ಸಂದೇಶ. ಆ ಲಿಂಕ್ ಮೇಲೆ ಒತ್ತಬೇಡಿ!" if language == "kn" else \
-                     "अम्मा, यह एक फर्जी मैसेज है। किसी भी लिंक पर क्लिक न करें!"
-
-        vn_res = self.family.send_voice_note(
-            recipient="Amma",
-            transcript=voice_text,
-            audio_file="voice_note_warning.ogg",
-            language=language
-        )
+        # Voice note for Amma, only when there is something to warn about
+        vn_res = None
+        if is_scam:
+            vn_res = self.family.send_voice_note(
+                recipient="Amma",
+                transcript=SMS_WARNINGS.get(language, SMS_WARNINGS["en"]),
+                audio_file="voice_note_warning.ogg",
+                language=language
+            )
 
         return {
-            "is_scam": is_scam,
+            "is_scam": bool(is_scam),
             "sender": sender,
             "url_analysis": url_analysis,
             "pattern_analysis": pattern,

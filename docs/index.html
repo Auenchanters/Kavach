@@ -2,2001 +2,253 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KAVACH · Multi-Agent Scam Defense Prototype</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KAVACH · Scam defense for families</title>
+  <meta name="description" content="KAVACH stands between parents and scammers: call screening, a decoy that wastes scammers' time, and golden-hour recovery, all behind a guardian-approved policy gate.">
+  <meta name="theme-color" content="#0B0E0D">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-studio: #0d0e12;
-      --bg-card: #15161c;
-      --bg-raised: #1c1d25;
-      --border-subtle: #292a36;
-      --border-focus: #3d3e52;
-      --ink-primary: #f3f4f6;
-      --ink-secondary: #9ca3af;
-      --ink-muted: #6b7280;
-      --kavach-indigo: #4f46e5;
-      --kavach-indigo-light: #6366f1;
-      --kavach-indigo-glow: rgba(99, 102, 241, 0.25);
-      --red-alert: #ef4444;
-      --red-alert-glow: rgba(239, 68, 68, 0.25);
-      --green-safe: #10b981;
-      --green-safe-glow: rgba(16, 185, 129, 0.2);
-      --amber-warn: #f59e0b;
-      --amber-glow: rgba(245, 158, 11, 0.2);
-      --radius-lg: 20px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    body {
-      background: var(--bg-studio);
-      color: var(--ink-primary);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    header {
-      background: rgba(21, 22, 28, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 12px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 8px var(--kavach-indigo-glow));
-    }
-
-    .brand-text h1 {
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-text h1 span.badge {
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--kavach-indigo-glow);
-      color: var(--kavach-indigo-light);
-      border: 1px solid var(--kavach-indigo);
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    .mode-badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid #10b981;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .brand-text p {
-      font-size: 12px;
-      color: var(--ink-secondary);
-    }
-
-    .quick-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 7px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-raised);
-      color: var(--ink-primary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn:hover {
-      border-color: var(--kavach-indigo-light);
-      background: #252632;
-    }
-
-    .btn-primary {
-      background: var(--kavach-indigo);
-      border-color: var(--kavach-indigo);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--kavach-indigo-light);
-    }
-
-    .btn-alert {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: var(--red-alert);
-      color: #fca5a5;
-    }
-
-    .btn-alert:hover {
-      background: var(--red-alert);
-      color: white;
-    }
-
-    .nav-bar {
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 0 28px;
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-    }
-
-    .nav-tab {
-      padding: 12px 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-secondary);
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .nav-tab:hover {
-      color: var(--ink-primary);
-    }
-
-    .nav-tab.active {
-      color: var(--kavach-indigo-light);
-      border-bottom-color: var(--kavach-indigo-light);
-    }
-
-    .nav-tab .count-badge {
-      background: var(--bg-raised);
-      padding: 2px 7px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    main {
-      flex: 1;
-      padding: 24px 28px;
-      max-width: 1600px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* DUAL PHONE VIEW (Tab 1) */
-    .dual-screen-grid {
-      display: grid;
-      grid-template-columns: 410px 1fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    @media (max-width: 1100px) {
-      .dual-screen-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .phone-mockup {
-      background: #000;
-      border: 4px solid #2e2f3a;
-      border-radius: 44px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 720px;
-      position: relative;
-    }
-
-    .phone-notch {
-      height: 30px;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 6px;
-      z-index: 10;
-    }
-
-    .notch-pill {
-      width: 90px;
-      height: 18px;
-      background: #111;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 8px;
-    }
-
-    .notch-camera {
-      width: 8px;
-      height: 8px;
-      background: #052e16;
-      border-radius: 50%;
-      border: 1px solid #14532d;
-    }
-
-    .notch-sensor {
-      width: 6px;
-      height: 6px;
-      background: #1e1b4b;
-      border-radius: 50%;
-    }
-
-    .phone-screen {
-      flex: 1;
-      background: #111216;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-y: auto;
-    }
-
-    .phone-header {
-      padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--ink-secondary);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .phone-subbar {
-      display: flex;
-      padding: 6px 12px;
-      background: var(--bg-raised);
-      border-bottom: 1px solid var(--border-subtle);
-      gap: 6px;
-    }
-
-    .phone-mode-btn {
-      flex: 1;
-      padding: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      border: none;
-      color: var(--ink-secondary);
-      cursor: pointer;
-    }
-
-    .phone-mode-btn.active {
-      background: var(--bg-card);
-      color: var(--ink-primary);
-    }
-
-    .call-view {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 20px;
-      text-align: center;
-    }
-
-    .caller-avatar {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      background: var(--bg-raised);
-      border: 2px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .caller-name {
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .caller-meta {
-      font-size: 13px;
-      color: var(--ink-secondary);
-      margin-bottom: 12px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .screening-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid var(--kavach-indigo);
-      color: var(--kavach-indigo-light);
-      margin-bottom: 16px;
-    }
-
-    .kavach-shield-btn {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #2a2fd0 0%, #151875 100%);
-      border: 3px solid #6366f1;
-      box-shadow: 0 0 25px rgba(99, 102, 241, 0.4), inset 0 2px 8px rgba(255, 255, 255, 0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-    }
-
-    .kavach-shield-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 35px rgba(99, 102, 241, 0.7);
-    }
-
-    .kavach-shield-btn.pulsing {
-      animation: pulse-ring 1.5s infinite;
-    }
-
-    @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); }
-      70% { box-shadow: 0 0 0 25px rgba(99, 102, 241, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
-    }
-
-    .kavach-shield-btn img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
-    }
-
-    .kavach-shield-btn span {
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff;
-      margin-top: 4px;
-      letter-spacing: 0.08em;
-    }
-
-    .hud-box {
-      width: 100%;
-      background: var(--bg-raised);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 12px;
-      text-align: left;
-      margin-top: 14px;
-      display: none;
-    }
-
-    .hud-box.active {
-      display: block;
-    }
-
-    .hud-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .hud-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--kavach-indigo-light);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .risk-meter {
-      height: 6px;
-      background: #272732;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-
-    .risk-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #f59e0b, #ef4444);
-      transition: width 0.8s ease;
-    }
-
-    .transcript-chip {
-      background: #111216;
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 11px;
-      color: #e2e8f0;
-      line-height: 1.4;
-      margin-bottom: 8px;
-      max-height: 70px;
-      overflow-y: auto;
-      border-left: 3px solid var(--red-alert);
-    }
-
-    .warning-banner {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid var(--red-alert);
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 11px;
-      color: #fca5a5;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .speech-player-bar {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .lang-pill {
-      font-size: 10px;
-      padding: 3px 6px;
-      border-radius: 4px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-card);
-      color: var(--ink-secondary);
-      cursor: pointer;
-    }
-
-    .lang-pill.active {
-      background: var(--kavach-indigo);
-      color: white;
-      border-color: var(--kavach-indigo);
-    }
-
-    .waveform-canvas {
-      width: 100%;
-      height: 32px;
-      background: #0a0b0e;
-      border-radius: 4px;
-      margin-top: 6px;
-    }
-
-    .call-controls {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      width: 100%;
-      margin-top: 14px;
-    }
-
-    .call-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      transition: transform 0.2s;
-    }
-
-    .call-btn:hover {
-      transform: scale(1.08);
-    }
-
-    .call-btn-hangup {
-      background: var(--red-alert);
-      color: white;
-    }
-
-    .call-btn-mute {
-      background: var(--bg-raised);
-      color: var(--ink-secondary);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .sms-view {
-      padding: 16px;
-      display: none;
-    }
-
-    .sms-bubble {
-      background: var(--bg-raised);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .sms-meta {
-      font-size: 11px;
-      color: var(--ink-secondary);
-      margin-bottom: 6px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .sms-voice-note {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid var(--green-safe);
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 12px;
-      color: #6ee7b7;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .panic-container {
-      padding: 12px 16px;
-      background: #0a0b0e;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .panic-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #b91c1c, #dc2626);
-      border: 1px solid #ef4444;
-      color: white;
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .panic-btn:hover {
-      background: #ef4444;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-    }
-
-    .guardian-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .telegram-card {
-      background: #17212b;
-      border: 1px solid #242f3d;
-      border-radius: 16px;
-      padding: 16px;
-      font-size: 13px;
-    }
-
-    .tg-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #242f3d;
-      margin-bottom: 12px;
-    }
-
-    .tg-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #2b5278;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    .tg-feed {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      max-height: 280px;
-      overflow-y: auto;
-    }
-
-    .tg-msg {
-      background: #202b36;
-      border-radius: 10px;
-      padding: 12px 14px;
-      border-left: 3px solid #5288c1;
-    }
-
-    .tg-msg.alert-critical {
-      border-left-color: var(--red-alert);
-    }
-
-    .tg-time {
-      font-size: 10px;
-      color: #7f91a4;
-      margin-bottom: 4px;
-    }
-
-    .tg-title {
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .tg-bullets {
-      font-size: 12px;
-      color: #d1d5db;
-      padding-left: 14px;
-      margin-bottom: 10px;
-    }
-
-    .tg-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .tg-action-btn {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #2b5278;
-      background: #2b5278;
-      color: white;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .tg-action-btn:hover {
-      background: #3a6d9b;
-    }
-
-    .tg-action-btn.secondary {
-      background: transparent;
-      border-color: #3d4f61;
-      color: #9ab4d0;
-    }
-
-    .timer-banner {
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(245, 158, 11, 0.15));
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 14px;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .timer-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: #fca5a5;
-    }
-
-    .timer-clock {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 24px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 0.05em;
-    }
-
-    #graphCanvas {
-      width: 100%;
-      height: 560px;
-      background: #0e0f14;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .recover-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 14px;
-    }
-
-    .agent-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s;
-    }
-
-    .agent-card:hover {
-      border-color: var(--kavach-indigo-light);
-    }
-
-    .agent-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      width: fit-content;
-    }
-
-    .agent-badge.pending {
-      background: var(--amber-glow);
-      color: var(--amber-warn);
-      border: 1px solid var(--amber-warn);
-    }
-
-    .agent-badge.active {
-      background: var(--kavach-indigo-glow);
-      color: var(--kavach-indigo-light);
-      border: 1px solid var(--kavach-indigo);
-    }
-
-    .agent-badge.done {
-      background: var(--green-safe-glow);
-      color: var(--green-safe);
-      border: 1px solid var(--green-safe);
-    }
-
-    .agent-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .agent-desc {
-      font-size: 12px;
-      color: var(--ink-secondary);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .agent-code-box {
-      background: #0f1015;
-      border-radius: 6px;
-      padding: 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: #94a3b8;
-      max-height: 120px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .tier-columns {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 900px) {
-      .tier-columns {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .tier-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-
-    .tier-title {
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .tier-items {
-      font-size: 12px;
-      color: var(--ink-secondary);
-      line-height: 1.6;
-      list-style-position: inside;
-    }
-
-    .table-container {
-      overflow-x: auto;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      text-align: left;
-    }
-
-    th {
-      background: var(--bg-raised);
-      padding: 10px 14px;
-      font-weight: 600;
-      color: var(--ink-secondary);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border-subtle);
-      color: var(--ink-primary);
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .tier-pill {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 4px;
-    }
-
-    .tier-pill.auto { background: var(--green-safe-glow); color: var(--green-safe); }
-    .tier-pill.appr { background: var(--amber-glow); color: var(--amber-warn); }
-    .tier-pill.never { background: var(--red-alert-glow); color: var(--red-alert); }
-
-    .decoy-grid {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 900px) {
-      .decoy-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .persona-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 20px;
-    }
-
-    .chat-bubble {
-      padding: 12px 16px;
-      border-radius: 14px;
-      max-width: 80%;
-      margin-bottom: 12px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .chat-bubble.scammer {
-      background: #27181c;
-      border: 1px solid #4a2228;
-      color: #fca5a5;
-      align-self: flex-start;
-    }
-
-    .chat-bubble.decoy {
-      background: #192233;
-      border: 1px solid #233e66;
-      color: #93c5fd;
-      align-self: flex-end;
-      margin-left: auto;
-    }
-
-    footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 16px 28px;
-      font-size: 12px;
-      color: var(--ink-muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-studio);
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
 </head>
-<body>
+<body data-view="amma">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 4 5.6v6.1c0 4.8 3.3 8.7 8 9.8 4.7-1.1 8-5 8-9.8V5.6L12 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 2.5v19" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-guard" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20.5c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mask" viewBox="0 0 24 24"><path d="M3.5 6.5c3-1.3 14-1.3 17 0 0 7-3.6 11-8.5 11S3.5 13.5 3.5 6.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 10.5h2.5M13.5 10.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-gate" viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v3.7h3.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-hangup" viewBox="0 0 24 24"><path d="M3 14.5c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5c-2.3-.8-4.7-.8-7 0v2.5l-3 1.5L3 14.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  </svg>
 
-  <!-- Top Navigation & Brand -->
-  <header>
-    <div class="brand-group">
-      <img src="./static/shield.png" alt="KAVACH Shield" class="brand-logo" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2250,5 95,25 80,85 50,100 20,85 5,25%22 fill=%22%234f46e5%22/></svg>'">
-      <div class="brand-text">
-        <h1>
-          KAVACH 
-          <span class="badge">Track 1: Make MCP Matter</span>
-          <span class="mode-badge" id="appModeBadge">● Standalone GitHub Pages Mode</span>
-        </h1>
-        <p>No Amma left alone with a scammer · 6 FastMCP Servers Active</p>
-      </div>
-    </div>
+  <div class="app">
+    <!-- Navigation: left rail on desktop, bottom tab bar on phones -->
+    <nav class="rail" aria-label="Sections">
+      <a class="mark" href="#" aria-label="KAVACH home"><svg><use href="#i-shield"/></svg></a>
+      <button class="nav-btn" data-nav="amma"><svg><use href="#i-phone"/></svg><span class="d-only">Live</span><span class="m-only">Amma</span></button>
+      <button class="nav-btn m-only-flex" data-nav="guardian"><svg><use href="#i-guard"/></svg><span>Rahul</span></button>
+      <button class="nav-btn" data-nav="recover"><svg><use href="#i-bolt"/></svg><span>Recover</span></button>
+      <button class="nav-btn" data-nav="strike"><svg><use href="#i-mask"/></svg><span>Strike</span></button>
+      <button class="nav-btn" data-nav="gate"><svg><use href="#i-gate"/></svg><span>Gate</span><b class="nav-count" id="pendingCount" hidden></b></button>
+    </nav>
 
-    <!-- Quick Action / Demo Automation Bar -->
-    <div class="quick-actions">
-      <button class="btn btn-primary" onclick="runDemoStep1()">1. Incoming Call & Shield</button>
-      <button class="btn" onclick="runDemoStep2()">2. Strike Decoy (Daisy)</button>
-      <button class="btn btn-alert" onclick="runDemoStep3()">3. Recover Swarm (Golden Hour)</button>
-      <button class="btn" onclick="runSecurityTest()">4. Test Policy Violation</button>
-      <button class="btn" onclick="resetDemoState()">↺ Reset</button>
-    </div>
-  </header>
+    <div class="main">
+      <header class="topbar">
+        <div class="title">
+          <h1>Kavach</h1>
+          <span class="conn" id="conn" title="Checking for the KAVACH server…"><i></i><span>Connecting</span></span>
+        </div>
+        <div class="steps" role="group" aria-label="Demo scenario">
+          <button class="step" data-step="1"><b>1</b>Scam call</button>
+          <button class="step" data-step="2"><b>2</b>Decoy</button>
+          <button class="step" data-step="3"><b>3</b>Money lost</button>
+          <button class="step" data-step="4"><b>4</b>Forbidden action</button>
+          <button class="step ghost" data-step="reset" aria-label="Reset demo"><svg><use href="#i-reset"/></svg><span>Reset</span></button>
+        </div>
+      </header>
 
-  <!-- Navigation Bar Tabs -->
-  <div class="nav-bar">
-    <div class="nav-tab active" onclick="switchTab('tab-live')">
-      📱 Live Dual View (Amma & Rahul)
-    </div>
-    <div class="nav-tab" onclick="switchTab('tab-graph')">
-      🕸️ Fraud Knowledge Graph <span class="count-badge" id="graphCountBadge">12</span>
-    </div>
-    <div class="nav-tab" onclick="switchTab('tab-recover')">
-      ⚡ Recover Swarm (4 Agents)
-    </div>
-    <div class="nav-tab" onclick="switchTab('tab-policy')">
-      🛡️ Policy Gate & Audit Log <span class="count-badge" id="logCountBadge">1</span>
-    </div>
-    <div class="nav-tab" onclick="switchTab('tab-decoy')">
-      🎙️ Strike Decoy Studio
+      <main class="content" id="content">
+
+        <div class="live">
+          <!-- ============ AMMA'S PHONE ============ -->
+          <section id="v-amma" class="view" aria-label="Amma's phone">
+            <div class="device">
+              <div class="screen" id="screen">
+                <div class="statusbar d-only-flex"><span>11:42</span><span>Jio 5G · 98%</span></div>
+
+                <div class="a-home" id="aHome">
+                  <div class="a-head">
+                    <div class="a-brand"><svg><use href="#i-shield"/></svg><div><strong>KAVACH</strong><span>You are protected</span></div></div>
+                    <div class="seg" role="radiogroup" aria-label="Warning language">
+                      <button role="radio" data-lang="kn" lang="kn">ಕನ್ನಡ</button>
+                      <button role="radio" data-lang="hi" lang="hi">हिंदी</button>
+                      <button role="radio" data-lang="en">EN</button>
+                    </div>
+                  </div>
+
+                  <div class="a-safe">
+                    <span class="pulse-dot"></span>
+                    <div><strong>Calls are being screened</strong><span>Unknown numbers are checked before your phone rings.</span></div>
+                  </div>
+
+                  <article class="sms" aria-label="New message">
+                    <div class="sms-meta"><svg><use href="#i-msg"/></svg><strong>VK-DISCOM-ALERT</strong><span>11:38</span></div>
+                    <p id="smsText">Dear consumer, your electricity power will be cut tonight at 9:30 PM because previous month bill was not updated. Immediately call 9876543210 or pay at bit.ly/eb-bill</p>
+                    <button class="btn gold block" id="btnCheckSms">Check with KAVACH</button>
+                    <div class="sms-verdict" id="smsVerdict" hidden></div>
+                  </article>
+
+                  <button class="panic" id="btnPanic">
+                    <strong>I've been cheated</strong>
+                    <span>Starts golden-hour recovery and tells Rahul</span>
+                  </button>
+                </div>
+
+                <!-- Call overlay -->
+                <div class="a-call" id="aCall" hidden>
+                  <div class="call-top">
+                    <span class="tag red" id="callTag">Screened by KAVACH</span>
+                    <div class="call-num" id="callNum">+91 98XXX XX210</div>
+                    <div class="call-meta" id="callMeta">Checking number…</div>
+                    <div class="call-timer mono" id="callTimer">00:00</div>
+                  </div>
+
+                  <blockquote class="transcript" id="transcript"></blockquote>
+
+                  <div class="kv-wrap" id="kvWrap">
+                    <button class="kv-btn" id="btnKavach" aria-describedby="kvHint"><svg><use href="#i-shield"/></svg><span>KAVACH</span></button>
+                    <p id="kvHint">Tap if this call feels wrong</p>
+                  </div>
+
+                  <div class="hud" id="hud" hidden>
+                    <div class="hud-row"><span>Scam risk</span><strong class="mono" id="riskPct">0%</strong></div>
+                    <div class="meter"><i id="riskBar"></i></div>
+                    <div class="verdict" id="verdict"></div>
+                    <p class="warning" id="warningText"></p>
+                    <button class="btn ghost small" id="btnSpeak"><svg><use href="#i-speaker"/></svg>Play warning</button>
+                  </div>
+
+                  <div class="call-actions">
+                    <button class="hangup" id="btnHangup" aria-label="End call"><svg><use href="#i-hangup"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ RAHUL'S GUARDIAN CONSOLE ============ -->
+          <section id="v-guardian" class="view" aria-label="Rahul's guardian console">
+            <div class="g-head">
+              <h2 class="display">Rahul’s console</h2>
+              <p>Guardian for Amma · Bengaluru. KAVACH asks you before it files a report or freezes an account.</p>
+            </div>
+
+            <div class="golden" id="goldenCard" hidden>
+              <div>
+                <span class="eyebrow">Golden hour</span>
+                <div class="golden-time mono" id="goldenTime">60:00</div>
+                <span class="muted" id="goldenSub"></span>
+              </div>
+              <div class="golden-bar"><i id="goldenBar"></i></div>
+            </div>
+
+            <div class="stats">
+              <div class="stat"><strong id="statCalls">0</strong><span>Scam calls stopped</span></div>
+              <div class="stat"><strong id="statProtected">₹0</strong><span>Frozen in golden hour</span></div>
+              <div class="stat"><strong id="statBlocked">0</strong><span>Blocked by policy</span></div>
+            </div>
+
+            <h3 class="section-h">Needs your approval</h3>
+            <div id="approvalList" class="stack"></div>
+
+            <h3 class="section-h">Alerts</h3>
+            <div id="alertFeed" class="stack"></div>
+          </section>
+        </div>
+
+        <!-- ============ RECOVER ============ -->
+        <section id="v-recover" class="view" aria-labelledby="recH">
+          <div class="v-head">
+            <div>
+              <span class="eyebrow">Recover swarm</span>
+              <h2 class="display" id="recH">Four agents, one golden hour</h2>
+              <p>When money leaves Amma’s account, four agents start at once. Anything that touches a bank or the police waits for Rahul.</p>
+            </div>
+          </div>
+          <div id="recoverBody"></div>
+        </section>
+
+        <!-- ============ STRIKE + INTEL ============ -->
+        <section id="v-strike" class="view" aria-labelledby="strH">
+          <div class="v-head">
+            <div>
+              <span class="eyebrow">Strike decoy</span>
+              <h2 class="display" id="strH">Ramesh keeps them talking</h2>
+              <p>Confirmed scam calls go to “Ramesh”, a slow, polite retired teacher. Every UPI ID and account they reveal goes into the shared fraud graph.</p>
+            </div>
+          </div>
+
+          <div class="strike">
+            <aside class="persona card">
+              <div class="persona-top"><span class="avatar">RS</span><div><strong>Ramesh Sharma, 67</strong><span>Retired maths teacher · Jayanagar</span></div></div>
+              <ul class="ticks">
+                <li>Hard of hearing, asks them to repeat</li>
+                <li>Never shares real financial data</li>
+                <li>Never moves money</li>
+              </ul>
+              <h4>Captured so far</h4>
+              <div id="entities" class="chips"></div>
+              <div class="wasted"><strong class="mono" id="wasted">0</strong><span>minutes of scammer time</span></div>
+            </aside>
+
+            <div class="chat card">
+              <div class="chat-log" id="chatLog" aria-live="polite"></div>
+              <div class="quick" id="quick">
+                <button class="chip-btn">Send ₹50,000 to refund.cbi@okaxis</button>
+                <button class="chip-btn">HDFC account number 50100492814471</button>
+                <button class="chip-btn">Sir, you are under digital arrest</button>
+              </div>
+              <form class="composer" id="composer">
+                <label class="sr" for="scamInput">Play the scammer</label>
+                <input id="scamInput" maxlength="1000" placeholder="Type what the scammer says…" autocomplete="off">
+                <button class="btn gold">Send</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card graph-card">
+            <div class="graph-head">
+              <div><h3>Shared fraud graph</h3><span class="muted" id="graphStats"></span></div>
+              <div class="legend"><span class="lg red">Scam number / mule</span><span class="lg gold">UPI ID</span><span class="lg dk">Syndicate</span><span class="lg blue">Protected family</span></div>
+            </div>
+            <svg id="graph" role="img" aria-label="Fraud graph linking scam numbers, UPI IDs, mule accounts, syndicates and protected families"></svg>
+          </div>
+        </section>
+
+        <!-- ============ POLICY GATE ============ -->
+        <section id="v-gate" class="view" aria-labelledby="gateH">
+          <div class="v-head">
+            <div>
+              <span class="eyebrow">Policy gate</span>
+              <h2 class="display" id="gateH">Every tool call, checked and written down</h2>
+              <p>Agents reach the world only through MCP tools, and every call passes this gate first.</p>
+            </div>
+            <button class="btn red-ghost" id="btnViolation">Try a forbidden action</button>
+          </div>
+          <div class="banner" id="violationBanner" hidden role="alert"></div>
+
+          <div class="tiers">
+            <div class="tier t-auto"><h4>Automatic</h4><p>Runs at once, logged.</p><ul><li>Number and link checks</li><li>Warnings to Amma</li><li>Alerts to Rahul</li><li>Ending a scam call</li></ul></div>
+            <div class="tier t-appr"><h4>Needs Rahul</h4><p>Waits for one tap of approval.</p><ul><li>Bank lien on a mule account</li><li>NCRP police complaint</li><li>Sanchar Saathi SIM report</li><li>Sharing call transcripts</li></ul></div>
+            <div class="tier t-never"><h4>Never allowed</h4><p>Blocked even if an agent asks.</p><ul><li>Moving money</li><li>Sharing OTP or PIN</li><li>Reading banking apps</li><li>Pretending to be police</li></ul></div>
+          </div>
+
+          <div class="card">
+            <div class="table-head"><h3>Audit log</h3><span class="muted" id="logCount"></span></div>
+            <div class="table-wrap">
+              <table class="audit">
+                <thead><tr><th>Time</th><th>Agent</th><th>Tool</th><th>Tier</th><th>Decision</th><th>Reason</th></tr></thead>
+                <tbody id="auditBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   </div>
 
-  <!-- Main Content Area -->
-  <main>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
 
-    <!-- TAB 1: DUAL PHONE VIEW (Amma's Phone + Rahul's Dashboard) -->
-    <section id="tab-live" class="tab-content active">
-      <div class="dual-screen-grid">
-
-        <!-- LEFT: AMMA'S PHONE PWA -->
-        <div>
-          <div class="phone-mockup">
-            <div class="phone-notch">
-              <div class="notch-pill">
-                <div class="notch-camera"></div>
-                <div class="notch-sensor"></div>
-              </div>
-            </div>
-
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span>11:42 AM</span>
-                <span>📶 Jio 5G · 98% 🔋</span>
-              </div>
-
-              <!-- View Switcher: Call / SMS -->
-              <div class="phone-subbar">
-                <button class="phone-mode-btn active" id="btnPhoneCall" onclick="showPhoneScreen('call')">📞 Phone Call</button>
-                <button class="phone-mode-btn" id="btnPhoneSms" onclick="showPhoneScreen('sms')">💬 Messages (SMS)</button>
-              </div>
-
-              <!-- SCREEN A: LIVE CALL -->
-              <div id="phoneScreenCall" class="call-view">
-                <div class="caller-avatar" id="callAvatar">🚨</div>
-                <div class="caller-name" id="callerNameText">+91 98XXX XX210</div>
-                <div class="caller-meta" id="callerMetaText">Suspected Telecom Spoof · Kolkata</div>
-
-                <div class="screening-badge" id="screeningBadge">
-                  <span>🛡️</span> <span id="screeningBadgeText">KAVACH Active Call Screening</span>
-                </div>
-
-                <!-- THE CENTRAL KAVACH BUTTON -->
-                <div class="kavach-shield-btn pulsing" id="kavachShieldBtn" onclick="onKavachButtonTapped()" title="Tap to join KAVACH conference protection">
-                  <img src="./static/shield.png" alt="KAVACH" onerror="this.style.display='none'">
-                  <span>KAVACH</span>
-                </div>
-                <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 8px;" id="tapPrompt">
-                  Tap to add KAVACH Conference Protection
-                </p>
-
-                <!-- CONFERENCE HUD -->
-                <div class="hud-box" id="conferenceHud">
-                  <div class="hud-header">
-                    <span class="hud-title">🛡️ KAVACH CONFERENCE ACTIVE</span>
-                    <span style="font-size: 11px; font-weight:700; color:#ef4444;" id="hudRiskPct">RISK: 94%</span>
-                  </div>
-
-                  <div class="risk-meter">
-                    <div class="risk-fill" id="hudRiskBar"></div>
-                  </div>
-
-                  <div class="transcript-chip" id="hudTranscript">
-                    <strong>Caller:</strong> "Inspector Alok Verma, CBI Cyber Crime HQ New Delhi. Non-bailable arrest warrant issued against Aadhaar. Stay on video call!"
-                  </div>
-
-                  <div class="warning-banner" id="hudVerdict">
-                    <span>⚠️</span>
-                    <span>SCAM DETECTED · Digital Arrest · Fake CBI Officer</span>
-                  </div>
-
-                  <!-- Multi-lingual Spoken Audio Voice Cue -->
-                  <div class="speech-player-bar">
-                    <span style="font-size: 10px; color: var(--ink-secondary);">Spoken to Amma:</span>
-                    <button class="lang-pill active" onclick="speakWarning('kn')">Kannada (ಕನ್ನಡ)</button>
-                    <button class="lang-pill" onclick="speakWarning('hi')">Hindi (हिंदी)</button>
-                    <button class="lang-pill" onclick="speakWarning('en')">English</button>
-                    <button class="btn" style="padding: 2px 8px; font-size: 10px;" onclick="playWarningVoice()">🔊 Play</button>
-                  </div>
-
-                  <!-- Waveform Animation -->
-                  <canvas id="waveCanvas" class="waveform-canvas"></canvas>
-                </div>
-
-                <!-- CALL CONTROLS -->
-                <div class="call-controls">
-                  <button class="call-btn call-btn-mute" title="Mute Microphone">🎤</button>
-                  <button class="call-btn call-btn-hangup" onclick="hangupCall()" title="Hang Up Scam Call">📞</button>
-                  <button class="call-btn call-btn-mute" title="Speakerphone">🔊</button>
-                </div>
-              </div>
-
-              <!-- SCREEN B: SUSPICIOUS SMS -->
-              <div id="phoneScreenSms" class="sms-view">
-                <div class="sms-bubble">
-                  <div class="sms-meta">
-                    <strong>VK-DISCOM-ALERT</strong>
-                    <span>11:38 AM</span>
-                  </div>
-                  <p>Dear consumer, your electricity power will be cut tonight at 9:30 PM because previous month bill was not updated. Immediately call 9876543210 or pay at bit.ly/eb-bill</p>
-                  
-                  <div style="margin-top: 10px; display: flex; gap: 8px;">
-                    <button class="btn btn-primary" style="font-size: 11px;" onclick="checkSmsWithKavach()">🛡️ Check with KAVACH</button>
-                  </div>
-
-                  <div class="sms-voice-note" id="smsVoiceNote" style="display: none;">
-                    <span>🔊</span>
-                    <div>
-                      <strong>Voice Note to Amma:</strong>
-                      <p id="smsVoiceNoteText">ಅಮ್ಮಾ, ಇದು ನಕಲಿ ವಿದ್ಯುತ್ ಬಿಲ್ ಸಂದೇಶ. ಯಾವುದೇ ಲಿಂಕ್ ಒತ್ತಬೇಡಿ.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- BOTTOM EMERGENCY "I'VE BEEN CHEATED" -->
-              <div class="panic-container">
-                <button class="panic-btn" onclick="triggerCheatPanic()">
-                  <span>🚨</span> I'VE BEEN CHEATED (GOLDEN HOUR)
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: RAHUL'S GUARDIAN DASHBOARD & TELEGRAM -->
-        <div class="guardian-panel">
-
-          <!-- Golden Hour Live Timer -->
-          <div class="timer-banner" id="goldenHourBanner">
-            <div>
-              <div class="timer-title">⏱️ GOLDEN HOUR RECOVERY ACTIVE</div>
-              <div style="font-size: 11px; color: var(--ink-secondary);">Funds recoverable within 60 minutes via 1930 & Bank Lien</div>
-            </div>
-            <div class="timer-clock" id="timerClockDisplay">00:01:12</div>
-          </div>
-
-          <!-- Telegram Messenger Card -->
-          <div class="telegram-card">
-            <div class="tg-header">
-              <div class="tg-avatar">🛡️</div>
-              <div>
-                <strong style="font-size: 14px; color: #fff;">KAVACH Guardian Alerts</strong>
-                <div style="font-size: 11px; color: #7f91a4;">Bot · Connected to Rahul (Son)</div>
-              </div>
-            </div>
-
-            <div class="tg-feed" id="telegramFeed">
-              <!-- Telegram messages dynamically inserted here -->
-            </div>
-          </div>
-
-          <!-- Quick System Metrics Grid -->
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-            <div class="card" style="padding: 14px; text-align: center;">
-              <div style="font-size: 22px; font-weight: 800; color: #4f46e5;">4</div>
-              <div style="font-size: 11px; color: var(--ink-secondary); margin-top: 4px;">Scam Calls Blocked</div>
-            </div>
-            <div class="card" style="padding: 14px; text-align: center;">
-              <div style="font-size: 22px; font-weight: 800; color: #10b981;">26 min</div>
-              <div style="font-size: 11px; color: var(--ink-secondary); margin-top: 4px;">Scammer Time Wasted</div>
-            </div>
-            <div class="card" style="padding: 14px; text-align: center;">
-              <div style="font-size: 22px; font-weight: 800; color: #ef4444;">₹48,000</div>
-              <div style="font-size: 11px; color: var(--ink-secondary); margin-top: 4px;">Protected in Golden Hour</div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- TAB 2: FRAUD KNOWLEDGE GRAPH -->
-    <section id="tab-graph" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🕸️</span> Shared Fraud Intelligence Knowledge Graph
-          </div>
-          <div style="font-size: 12px; color: var(--ink-secondary);">
-            Powered by NetworkX & kavach-intel MCP Server · One family's defense protects thousands
-          </div>
-        </div>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">
-          Legend: <span style="color:#ef4444;">● Scam Syndicate / Mule Accounts / Numbers</span> | 
-          <span style="color:#f59e0b;">● Extracted UPI IDs</span> | 
-          <span style="color:#6366f1;">● Protected Families (Amma, Sunita, Ramanathan)</span>
-        </p>
-        <canvas id="graphCanvas"></canvas>
-      </div>
-    </section>
-
-    <!-- TAB 3: RECOVER SWARM (4 PARALLEL AGENTS) -->
-    <section id="tab-recover" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>⚡</span> The 4-Agent Golden Hour Parallel Swarm
-          </div>
-          <span class="agent-badge active">All 4 Agents Concurrently Active</span>
-        </div>
-        <p style="font-size: 13px; color: var(--ink-secondary); line-height: 1.5;">
-          When an unauthorized debit is reported, four specialized agents launch inside the critical 60-minute window to freeze mule accounts, prep helpline briefings, and compile legal complaints before funds are layered out.
-        </p>
-
-        <div class="recover-grid">
-
-          <!-- Agent 1: Bank Lien Agent -->
-          <div class="agent-card">
-            <div>
-              <span class="agent-badge pending" id="agent1Badge">Approval Needed</span>
-              <div class="agent-title">🏦 Bank Hold / Lien Agent</div>
-              <div class="agent-desc">Issues inter-bank emergency freeze on recipient mule account (HDFC ····4471) via RBI Account Aggregator framework.</div>
-            </div>
-            <div class="agent-code-box" id="agent1Output">HOLD-HDFC-REQUEST:
-Status: Awaiting Guardian Approval
-Mule Account: HDFC ····4471
-Amount to Freeze: ₹48,000 INR
-Transaction Ref: UPI-619284019284</div>
-            <button class="btn btn-primary" style="margin-top: 10px; width: 100%;" onclick="approveTelegramAction('APPR-BANK-HOLD')">Approve Bank Hold</button>
-          </div>
-
-          <!-- Agent 2: 1930 Briefing Agent -->
-          <div class="agent-card">
-            <div>
-              <span class="agent-badge done">Draft Ready</span>
-              <div class="agent-title">📞 1930 Helpline Briefing Agent</div>
-              <div class="agent-desc">Prepares word-for-word victim spoken brief to ensure zero panic and maximum clarity when calling 1930.</div>
-            </div>
-            <div class="agent-code-box" id="agent2Output">[1930 HELPLINE CALL SCRIPT]
-1. Incident: Digital Arrest Extortion
-2. Amount: ₹48,000 INR
-3. Victim A/c: Canara Bank ····9102
-4. Mule Account: HDFC ····4471
-5. Suspect UPI: refund.cbi@okaxis
-6. Caller: +91 98XXX XX210</div>
-            <button class="btn" style="margin-top: 10px; width: 100%;" onclick="copy1930Brief()">📋 Copy 1930 Brief</button>
-          </div>
-
-          <!-- Agent 3: NCRP Complaint Agent -->
-          <div class="agent-card">
-            <div>
-              <span class="agent-badge pending" id="agent3Badge">Approval Needed</span>
-              <div class="agent-title">⚖️ NCRP Complaint Drafter</div>
-              <div class="agent-desc">Pre-fills formal cybercrime.gov.in complaint with suspect coordinates, jurisdiction, and timestamps.</div>
-            </div>
-            <div class="agent-code-box" id="agent3Output">PORTAL: cybercrime.gov.in
-Complaint ID: NCRP-2026-BLR-DRAFT
-Accused: Fake CBI Inspector Alok Verma
-Phone: +91 98XXX XX210
-Jurisdiction: Bengaluru Cyber Crime PS
-Status: Queued for Submission</div>
-            <button class="btn btn-primary" style="margin-top: 10px; width: 100%;" onclick="approveTelegramAction('APPR-NCRP')">Approve NCRP Filing</button>
-          </div>
-
-          <!-- Agent 4: Evidence Packager Agent -->
-          <div class="agent-card">
-            <div>
-              <span class="agent-badge done">Cryptographically Sealed</span>
-              <div class="agent-title">🔒 Evidence Dossier Agent</div>
-              <div class="agent-desc">Assembles tamper-evident SHA-256 signed evidence dossier adhering to Section 65B of Indian Evidence Act.</div>
-            </div>
-            <div class="agent-code-box" id="agent4Output">DOSSIER-HASH:
-SHA256: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
-Artifacts:
-- call_audio_waveform_hash.bin
-- debit_sms_headers.txt
-- strike_extracted_mule.json</div>
-            <button class="btn" style="margin-top: 10px; width: 100%;" onclick="alert('Evidence dossier validated against Section 65B Indian Evidence Act!')">🔍 Verify Signature</button>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 4: POLICY GATE & AUDIT LOG -->
-    <section id="tab-policy" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🛡️</span> Policy Gate & Real-Time Security Audit Trail
-          </div>
-          <button class="btn btn-alert" onclick="runSecurityTest()">Simulate Prohibited Action ('move_money')</button>
-        </div>
-
-        <div class="tier-columns">
-          <div class="tier-card">
-            <div class="tier-title" style="color: var(--green-safe);">
-              <span>●</span> Tier 1: AUTOMATIC
-            </div>
-            <ul class="tier-items">
-              <li>Reputation lookups (check_number, check_url)</li>
-              <li>Live scam detection & warnings to Amma</li>
-              <li>Guardian alerts & telemetry notifications</li>
-              <li>Emergency defensive call disconnects</li>
-            </ul>
-          </div>
-
-          <div class="tier-card">
-            <div class="tier-title" style="color: var(--amber-warn);">
-              <span>●</span> Tier 2: GUARDIAN APPROVAL
-            </div>
-            <ul class="tier-items">
-              <li>DoT Chakshu SIM block filings</li>
-              <li>National Cybercrime Portal (NCRP) submissions</li>
-              <li>Bank emergency lien and account holds</li>
-              <li>Sharing call transcripts with law enforcement</li>
-            </ul>
-          </div>
-
-          <div class="tier-card">
-            <div class="tier-title" style="color: var(--red-alert);">
-              <span>●</span> Tier 3: NEVER ALLOWED
-            </div>
-            <ul class="tier-items">
-              <li>Initiating money transfers or fund routing</li>
-              <li>Sharing victim OTP, MPIN, or credentials</li>
-              <li>Screen-scraping banking/UPI apps</li>
-              <li>Impersonating police or government officials</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Audit Table -->
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Agent</th>
-                <th>Tool Invocation</th>
-                <th>Action Tier</th>
-                <th>Decision</th>
-                <th>Reason</th>
-              </tr>
-            </thead>
-            <tbody id="auditTableBody">
-              <!-- Dynamically populated from audit log -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 5: STRIKE DECOY STUDIO -->
-    <section id="tab-decoy" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <span>🎙️</span> Strike Decoy Persona: "Ramesh Sharma, 67"
-          </div>
-          <span class="agent-badge active">Active Decoy Engagement</span>
-        </div>
-
-        <div class="decoy-grid">
-          <!-- Persona Card -->
-          <div class="persona-card">
-            <div style="font-size: 40px; margin-bottom: 8px;">👴</div>
-            <h3 style="font-size: 16px; margin-bottom: 4px;">Ramesh Sharma</h3>
-            <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Retired High School Maths Teacher · Jayanagar</p>
-
-            <div style="font-size: 12px; line-height: 1.6; margin-bottom: 14px;">
-              <strong>Persona Strategy:</strong>
-              <p style="color: var(--ink-secondary);">Slightly hard of hearing, very polite, continually asking for clarification on how UPI works, keeping scammers on the phone for 26+ minutes.</p>
-            </div>
-
-            <div style="font-size: 12px; line-height: 1.6;">
-              <strong>Extracted Intelligence:</strong>
-              <div style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color:#f59e0b;" id="extractedEntitiesBox">
-                UPI: refund.cbi@okaxis<br>
-                MULE: HDFC ····4471<br>
-                CALLER: +91 98XXX XX210
-              </div>
-            </div>
-          </div>
-
-          <!-- Decoy Chat Log -->
-          <div style="display: flex; flex-direction: column;">
-            <div style="display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; padding: 10px; background: #0f1015; border-radius: 12px;" id="decoyChatLog">
-              <div class="chat-bubble scammer">
-                <strong>Scammer:</strong> "Sir, this is Reserve Bank Verification Officer. You must deposit 50,000 security money immediately to clear your name."
-              </div>
-              <div class="chat-bubble decoy">
-                <strong>Decoy (KAVACH):</strong> "Haan beta... security deposit? But my pension comes in Canara Bank. Where should I send it? Let me find my reading glasses..."
-              </div>
-              <div class="chat-bubble scammer">
-                <strong>Scammer:</strong> "Listen carefully! Open Google Pay or PhonePe right now. Send it to refund.cbi@okaxis."
-              </div>
-              <div class="chat-bubble decoy">
-                <strong>Decoy (KAVACH):</strong> "Re-fund dot see-bee-eye at ok axis... beta, can you repeat? My grandson set up this phone. What was the account number?"
-              </div>
-              <div class="chat-bubble scammer">
-                <strong>Scammer:</strong> "Account number is 50100492814471, HDFC Bank Salt Lake! Send ₹50,000 now!"
-              </div>
-            </div>
-
-            <div style="margin-top: 14px; display: flex; gap: 8px;">
-              <input type="text" id="customScammerInput" placeholder="Type scammer reply to test Decoy..." style="flex:1; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-raised); color: white; font-size: 13px;">
-              <button class="btn btn-primary" onclick="sendCustomDecoyMessage()">Send to Decoy</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div>
-      KAVACH Multi-Agent Scam Defense System · Built for <strong>wHACKiest 2026</strong> (Ramaiah Institute of Technology)
-    </div>
-    <div>
-      Track 1: Make MCP Matter · <em>"Less magic, more utility."</em>
-    </div>
-  </footer>
-
-  <!-- STANDALONE CLIENT-SIDE MULTI-AGENT & MCP ENGINE -->
-  <script>
-    // Audio Synthesizer via Web Audio API (Zero-dependency fallback sound effects)
-    class WebAudioFX {
-      constructor() {
-        this.ctx = null;
-      }
-      init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) this.ctx = new AudioContext();
-        }
-      }
-      playTone(freq, type, duration, gainVal = 0.1) {
-        try {
-          this.init();
-          if (!this.ctx) return;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = type;
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + duration);
-        } catch(e) {}
-      }
-      click() { this.playTone(800, 'triangle', 0.05, 0.05); }
-      confirm() { 
-        this.playTone(523.25, 'sine', 0.1, 0.1); 
-        setTimeout(() => this.playTone(659.25, 'sine', 0.15, 0.1), 80);
-      }
-      alert() {
-        this.playTone(400, 'sawtooth', 0.25, 0.15);
-        setTimeout(() => this.playTone(300, 'sawtooth', 0.35, 0.15), 180);
-      }
-      drop() { this.playTone(320, 'sine', 0.15, 0.08); }
-    }
-    const fx = new WebAudioFX();
-
-    // Client-side simulation state
-    const KavachState = {
-      isBackendOnline: false,
-      currentLanguage: 'kn',
-      timerSeconds: 72,
-      timerInterval: null,
-      auditLogs: [
-        {
-          id: "LOG-0001",
-          time: "11:40:12",
-          agent: "SYSTEM",
-          tool: "policy_gate.init",
-          tier: "AUTOMATIC",
-          decision: "ALLOWED",
-          reason: "Policy gate initialized with 3 Action Tiers enforced (Track 1 MCP)"
-        }
-      ],
-      pendingApprovals: [
-        {
-          id: "APPR-CHAKSHU",
-          agent: "ReporterAgent",
-          tool: "report.file_chakshu",
-          tier: "NEEDS_GUARDIAN_APPROVAL",
-          target: "+91 98XXX XX210",
-          status: "PENDING"
-        }
-      ],
-      telegramMessages: [
-        {
-          id: "TG-001",
-          time: "11:42 AM",
-          header: "🛡️ KAVACH ALERT · 11:42 AM",
-          title: "Amma received a 'Digital Arrest' scam call from +91 98XXX XX210",
-          alert_level: "CRITICAL",
-          bullet_points: [
-            "Caller claimed to be a CBI officer and asked her to stay on video call.",
-            "KAVACH joined the call, warned Amma in Kannada, and caller hung up.",
-            "No money was moved. Number reported to Sanchar Saathi (pending your approval)."
-          ],
-          actions: [
-            { id: "APPR-CHAKSHU", label: "Approve report", type: "primary" },
-            { id: "CALL_AMMA", label: "Call Amma", type: "secondary" },
-            { id: "VIEW_LOG", label: "View audit trail", type: "secondary" }
-          ]
-        }
-      ],
-      fraudGraph: {
-        nodes: [
-          { id: "SYN-MEWAT-04", label: "Kolkata-Mewat 'Digital Arrest' Ring", type: "syndicate", color: "#E5484D", size: 26 },
-          { id: "SYN-JAM-09", label: "Jamtara Discom Fraud Syndicate", type: "syndicate", color: "#E5484D", size: 24 },
-          { id: "+91 98XXX XX210", label: "+91 98XXX XX210", type: "phone", color: "#E5484D", size: 18 },
-          { id: "+91 70XXX XX451", label: "+91 70XXX XX451", type: "phone", color: "#E5484D", size: 16 },
-          { id: "+91 91234 56789", label: "Rahul (Son) - Whitelisted", type: "phone", color: "#4CC38A", size: 16 },
-          { id: "refund.cbi@okaxis", label: "refund.cbi@okaxis", type: "upi", color: "#F5A524", size: 16 },
-          { id: "ebill.pay@icici", label: "ebill.pay@icici", type: "upi", color: "#F5A524", size: 16 },
-          { id: "HDFC ····4471", label: "Mule A/c HDFC ····4471", type: "mule", color: "#E5484D", size: 20 },
-          { id: "Amma (Bengaluru)", label: "Amma (Bengaluru)", type: "victim", color: "#6C70F0", size: 16 },
-          { id: "Sunita Devi (Lucknow)", label: "Sunita Devi (Lucknow)", type: "victim", color: "#6C70F0", size: 14 },
-          { id: "R. Ramanathan (Chennai)", label: "R. Ramanathan (Chennai)", type: "victim", color: "#6C70F0", size: 14 }
-        ],
-        links: [
-          { source: "+91 98XXX XX210", target: "SYN-MEWAT-04", relation: "OPERATED_BY" },
-          { source: "+91 98XXX XX210", target: "Amma (Bengaluru)", relation: "ATTACK_INTERCEPTED" },
-          { source: "+91 70XXX XX451", target: "SYN-MEWAT-04", relation: "OPERATED_BY" },
-          { source: "refund.cbi@okaxis", target: "SYN-MEWAT-04", relation: "LAUNDERS_FOR" },
-          { source: "refund.cbi@okaxis", target: "HDFC ····4471", relation: "DEPOSITS_INTO" },
-          { source: "ebill.pay@icici", target: "SYN-JAM-09", relation: "LAUNDERS_FOR" },
-          { source: "HDFC ····4471", target: "SYN-MEWAT-04", relation: "MULE_SETTLEMENT" }
-        ]
-      }
-    };
-
-    // Helper: Record audit log in standalone simulator
-    function simLog(agent, tool, tier, decision, reason) {
-      const now = new Date();
-      const timeStr = now.toTimeString().split(' ')[0];
-      const entry = {
-        id: `LOG-00${KavachState.auditLogs.length + 1}`,
-        time: timeStr,
-        agent,
-        tool,
-        tier,
-        decision,
-        reason
-      };
-      KavachState.auditLogs.unshift(entry);
-      renderAuditTable();
-    }
-
-    // Tab Switching
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-
-      const target = document.getElementById(tabId);
-      if (target) target.classList.add('active');
-
-      const tabs = Array.from(document.querySelectorAll('.nav-tab'));
-      const activeIdx = ['tab-live', 'tab-graph', 'tab-recover', 'tab-policy', 'tab-decoy'].indexOf(tabId);
-      if (activeIdx >= 0 && tabs[activeIdx]) {
-        tabs[activeIdx].classList.add('active');
-      }
-
-      if (tabId === 'tab-graph') {
-        renderFraudGraph();
-      } else if (tabId === 'tab-policy') {
-        renderAuditTable();
-      }
-    }
-
-    function showPhoneScreen(type) {
-      const callScreen = document.getElementById('phoneScreenCall');
-      const smsScreen = document.getElementById('phoneScreenSms');
-      const btnCall = document.getElementById('btnPhoneCall');
-      const btnSms = document.getElementById('btnPhoneSms');
-
-      if (type === 'call') {
-        callScreen.style.display = 'flex';
-        smsScreen.style.display = 'none';
-        btnCall.classList.add('active');
-        btnSms.classList.remove('active');
-      } else {
-        callScreen.style.display = 'none';
-        smsScreen.style.display = 'block';
-        btnCall.classList.remove('active');
-        btnSms.classList.add('active');
-      }
-    }
-
-    // DEMO STEP 1: Incoming Call & Shield
-    async function runDemoStep1() {
-      switchTab('tab-live');
-      showPhoneScreen('call');
-      fx.confirm();
-
-      document.getElementById('callerNameText').innerText = '+91 98XXX XX210';
-      document.getElementById('callerMetaText').innerText = 'Digital Arrest Syndicate · High Risk';
-      document.getElementById('callAvatar').innerText = '🚨';
-      document.getElementById('screeningBadgeText').innerText = 'KAVACH Intercepted Call Before Ringing';
-      document.getElementById('screeningBadge').style.borderColor = '#ef4444';
-      document.getElementById('screeningBadge').style.color = '#ef4444';
-
-      simLog("CallScreenerAgent", "telephony.answer_call", "AUTOMATIC", "ALLOWED", "Intercepted high risk caller (+91 98XXX XX210) before phone rang");
-
-      setTimeout(() => {
-        onKavachButtonTapped();
-      }, 1200);
-    }
-
-    // AMMA TAPS KAVACH BUTTON
-    async function onKavachButtonTapped() {
-      fx.confirm();
-      const hud = document.getElementById('conferenceHud');
-      hud.classList.add('active');
-      document.getElementById('kavachShieldBtn').classList.remove('pulsing');
-      document.getElementById('tapPrompt').innerText = 'KAVACH Conference Active & Monitoring';
-
-      // Update HUD
-      document.getElementById('hudRiskBar').style.width = '94%';
-      document.getElementById('hudRiskPct').innerText = 'RISK: 94%';
-      document.getElementById('hudVerdict').innerHTML = '<span>⚠️</span> <span>SCAM DETECTED · Digital Arrest · Fake CBI Officer</span>';
-
-      startWaveform();
-      playWarningVoice();
-
-      simLog("ShieldAgent", "telephony.join_conference", "AUTOMATIC", "ALLOWED", "KAVACH added as 3-way conference listener with user consent");
-      simLog("ScamDetectorAgent", "knowledge.match_scam_pattern", "AUTOMATIC", "ALLOWED", "Matched 'digital arrest' playbook: risk score 0.94 (I4C Advisory)");
-      simLog("ShieldAgent", "telephony.speak_warning", "AUTOMATIC", "ALLOWED", "Spoke calm native warning to Amma in Kannada");
-      simLog("GuardianAgent", "family.notify_guardian", "AUTOMATIC", "ALLOWED", "Telegram alert delivered to Rahul (Son) with one-tap action cards");
-
-      renderTelegramFeed();
-      renderAuditTable();
-    }
-
-    function speakWarning(lang) {
-      KavachState.currentLanguage = lang;
-      document.querySelectorAll('.lang-pill').forEach(el => el.classList.remove('active'));
-      if (event && event.target) event.target.classList.add('active');
-      playWarningVoice();
-    }
-
-    function playWarningVoice() {
-      fx.confirm();
-      let text = "Amma, this is a scam! Real police or CBI officers never arrest anyone over video call. Please hang up immediately.";
-      let langCode = "en-IN";
-
-      if (KavachState.currentLanguage === 'kn') {
-        text = "ಅಮ್ಮಾ, ಇದು ಸುಳ್ಳು ಕರೆ! ಭಾರತದ ಯಾವುದೇ ಪೊಲೀಸ್ ಅಥವಾ ಸಿಬಿಐ ವಿಡಿಯೋ ಕಾಲಿನಲ್ಲಿ ಯಾರನ್ನೂ ಬಂಧಿಸುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೂಡಲೇ ಕರೆ ಕಟ್ ಮಾಡಿ.";
-        langCode = "kn-IN";
-      } else if (KavachState.currentLanguage === 'hi') {
-        text = "अम्मा, यह एक फर्जी कॉल है! असली पुलिस कभी वीडियो कॉल पर गिरफ़्तारी नहीं करती। कृपया तुरंत फोन काटें।";
-        langCode = "hi-IN";
-      }
-
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = langCode;
-        utterance.rate = 0.92;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    function hangupCall() {
-      fx.drop();
-      stopWaveform();
-      document.getElementById('hudVerdict').innerHTML = '<span>✅</span> <span>CALL TERMINATED · NUMBER BLOCKED</span>';
-      document.getElementById('callerMetaText').innerText = 'Call Ended · Amma Protected';
-      document.getElementById('hudRiskBar').style.width = '0%';
-      simLog("ShieldAgent", "telephony.end_call", "AUTOMATIC", "ALLOWED", "Malicious call terminated. Scammer disconnected.");
-    }
-
-    function checkSmsWithKavach() {
-      fx.confirm();
-      const vn = document.getElementById('smsVoiceNote');
-      vn.style.display = 'flex';
-      playWarningVoice();
-
-      simLog("IntelAgent", "intel.check_url", "AUTOMATIC", "ALLOWED", "URL bit.ly/eb-bill flagged as high risk DISCOM phishing portal");
-      simLog("FamilyAgent", "family.send_voice_note", "AUTOMATIC", "ALLOWED", "Voice note dispatched to Amma's phone in Kannada");
-      renderAuditTable();
-    }
-
-    // DEMO STEP 2: Strike Decoy
-    function runDemoStep2() {
-      switchTab('tab-decoy');
-      fx.confirm();
-
-      const chatLog = document.getElementById('decoyChatLog');
-      chatLog.innerHTML += `
-        <div class="chat-bubble scammer">
-          <strong>Scammer:</strong> Open Google Pay and transfer 50,000 security deposit to refund.cbi@okaxis and HDFC Bank account 50100492814471.
-        </div>
-        <div class="chat-bubble decoy">
-          <strong>Decoy (Ramesh 67):</strong> Re-fund dot see-bee-eye at ok axis... beta, can you repeat? My grandson set up this phone. What was the account number?
-        </div>
-      `;
-      chatLog.scrollTop = chatLog.scrollHeight;
-
-      simLog("StrikeAgent", "telephony.transfer_to_decoy", "AUTOMATIC", "ALLOWED", "Scammer transferred to Ramesh Sharma (67-yo retired teacher)");
-      simLog("IntelExtractorAgent", "intel.add_entity", "AUTOMATIC", "ALLOWED", "Extracted UPI ID: refund.cbi@okaxis, linked to SYN-MEWAT-04");
-      simLog("IntelExtractorAgent", "intel.add_entity", "AUTOMATIC", "ALLOWED", "Extracted Mule Account: HDFC ····4471");
-      simLog("ReporterAgent", "report.file_chakshu", "NEEDS_GUARDIAN_APPROVAL", "APPROVAL_PENDING", "Drafted DoT Sanchar Saathi carrier disconnection request");
-      renderAuditTable();
-    }
-
-    function sendCustomDecoyMessage() {
-      const input = document.getElementById('customScammerInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-      input.value = '';
-
-      fx.click();
-      const chatLog = document.getElementById('decoyChatLog');
-      chatLog.innerHTML += `
-        <div class="chat-bubble scammer">
-          <strong>Scammer:</strong> ${msg}
-        </div>
-        <div class="chat-bubble decoy">
-          <strong>Decoy (Ramesh 67):</strong> Haan beta... let me find my reading glasses. It is asking for UPI PIN. Should I put my birth year or retirement year 2018?
-        </div>
-      `;
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
-
-    // DEMO STEP 3: Recover Swarm (Golden Hour)
-    function runDemoStep3() {
-      switchTab('tab-recover');
-      fx.confirm();
-
-      startGoldenHourTimer();
-
-      simLog("RecoverSwarm-BankAgent", "bank.request_hold", "NEEDS_GUARDIAN_APPROVAL", "APPROVAL_PENDING", "Drafted emergency lien on HDFC Mule Account ····4471");
-      simLog("RecoverSwarm-1930Agent", "report.prepare_1930_brief", "AUTOMATIC", "ALLOWED", "Word-for-word victim 1930 script prepared for instant dialing");
-      simLog("RecoverSwarm-NCRPAgent", "report.draft_ncrp_complaint", "NEEDS_GUARDIAN_APPROVAL", "APPROVAL_PENDING", "Pre-filled formal complaint for cybercrime.gov.in portal");
-      simLog("RecoverSwarm-EvidenceAgent", "intel.seal_dossier", "AUTOMATIC", "ALLOWED", "Compiled SHA-256 evidence package compliant with Section 65B");
-
-      renderAuditTable();
-    }
-
-    function triggerCheatPanic() {
-      runDemoStep3();
-    }
-
-    // DEMO STEP 4: Test Prohibited Action ('move_money')
-    function runSecurityTest() {
-      switchTab('tab-policy');
-      fx.alert();
-
-      simLog("MaliciousOrFaultyAgent", "bank.move_money", "NEVER_ALLOWED", "BLOCKED", "SECURITY VIOLATION: KAVACH policy gate blocks all outbound fund movement & credential access");
-
-      alert("🛡️ KAVACH POLICY GATE ENFORCEMENT:\n\nTool 'bank.move_money' is in the NEVER_ALLOWED tier.\n\nKAVACH will NEVER initiate money transfers, share victim OTPs, or inspect banking apps. Action was instantly BLOCKED and logged in the immutable audit trail.");
-      renderAuditTable();
-    }
-
-    function resetDemoState() {
-      location.reload();
-    }
-
-    function approveTelegramAction(actionId) {
-      fx.confirm();
-      simLog("GuardianAgent", "family.guardian_approval", "NEEDS_GUARDIAN_APPROVAL", "APPROVED", `Guardian Rahul confirmed execution of ${actionId}`);
-
-      if (actionId === 'APPR-BANK-HOLD') {
-        document.getElementById('agent1Badge').className = 'agent-badge done';
-        document.getElementById('agent1Badge').innerText = 'Approved & Executed';
-        document.getElementById('agent1Output').innerText = "LIEN_PLACED_SUCCESSFULLY:\nHDFC Mule Account ····4471 frozen.\nAmount Protected: ₹48,000 INR\nStatus: Golden Hour Hold Active";
-      } else if (actionId === 'APPR-NCRP') {
-        document.getElementById('agent3Badge').className = 'agent-badge done';
-        document.getElementById('agent3Badge').innerText = 'Submitted to Portal';
-        document.getElementById('agent3Output').innerText = "NCRP_ACK_NO: NCRP-2026-BLR-8921\nStatus: Registered with Bengaluru Cyber Crime Police\nEvidence Pack Attached.";
-      }
-
-      alert("✅ Action approved by Guardian Rahul! Submission dispatched to official authorities.");
-      renderAuditTable();
-    }
-
-    function copy1930Brief() {
-      const text = document.getElementById('agent2Output').innerText;
-      navigator.clipboard.writeText(text);
-      fx.confirm();
-      alert("📋 1930 Spoken Helpline Brief copied to clipboard!");
-    }
-
-    function renderTelegramFeed() {
-      const feed = document.getElementById('telegramFeed');
-      if (!feed) return;
-      feed.innerHTML = '';
-      KavachState.telegramMessages.forEach(msg => {
-        feed.innerHTML += `
-          <div class="tg-msg ${msg.alert_level === 'CRITICAL' ? 'alert-critical' : ''}">
-            <div class="tg-time">${msg.time} · ${msg.header}</div>
-            <div class="tg-title">${msg.title}</div>
-            <ul class="tg-bullets">
-              ${msg.bullet_points.map(p => `<li>${p}</li>`).join('')}
-            </ul>
-            <div class="tg-actions">
-              ${msg.actions.map(a => `<button class="tg-action-btn ${a.type === 'secondary' ? 'secondary' : ''}" onclick="approveTelegramAction('${a.id}')">${a.label}</button>`).join('')}
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    function renderAuditTable() {
-      const tbody = document.getElementById('auditTableBody');
-      const badge = document.getElementById('logCountBadge');
-      if (badge) badge.innerText = KavachState.auditLogs.length;
-      if (!tbody) return;
-
-      tbody.innerHTML = '';
-      KavachState.auditLogs.forEach(item => {
-        let tierClass = 'auto';
-        if (item.tier === 'NEEDS_GUARDIAN_APPROVAL') tierClass = 'appr';
-        else if (item.tier === 'NEVER_ALLOWED') tierClass = 'never';
-
-        let decColor = '#10b981';
-        if (item.decision === 'BLOCKED') decColor = '#ef4444';
-        else if (item.decision === 'APPROVAL_PENDING') decColor = '#f59e0b';
-
-        tbody.innerHTML += `
-          <tr>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">${item.time}</td>
-            <td style="font-weight: 600;">${item.agent}</td>
-            <td style="font-family: 'JetBrains Mono', monospace; color: #93c5fd;">${item.tool}</td>
-            <td><span class="tier-pill ${tierClass}">${item.tier}</span></td>
-            <td><strong style="color: ${decColor};">${item.decision}</strong></td>
-            <td style="font-size: 11px; color: var(--ink-secondary);">${item.reason}</td>
-          </tr>
-        `;
-      });
-    }
-
-    function startGoldenHourTimer() {
-      if (KavachState.timerInterval) clearInterval(KavachState.timerInterval);
-      KavachState.timerInterval = setInterval(() => {
-        KavachState.timerSeconds++;
-        const mins = Math.floor(KavachState.timerSeconds / 60).toString().padStart(2, '0');
-        const secs = (KavachState.timerSeconds % 60).toString().padStart(2, '0');
-        document.getElementById('timerClockDisplay').innerText = `00:${mins}:${secs}`;
-      }, 1000);
-    }
-
-    // Waveform Animation
-    let waveAnim = null;
-    function startWaveform() {
-      const canvas = document.getElementById('waveCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let step = 0;
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        for (let x = 0; x < canvas.width; x++) {
-          const y = Math.sin((x + step) * 0.08) * 10 + (canvas.height / 2);
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-        step += 4;
-        waveAnim = requestAnimationFrame(draw);
-      }
-      if (waveAnim) cancelAnimationFrame(waveAnim);
-      draw();
-    }
-
-    function stopWaveform() {
-      if (waveAnim) cancelAnimationFrame(waveAnim);
-      const canvas = document.getElementById('waveCanvas');
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    // Fraud Knowledge Graph Canvas
-    function renderFraudGraph() {
-      const canvas = document.getElementById('graphCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      canvas.width = canvas.parentElement.clientWidth || 900;
-      canvas.height = 560;
-
-      const nodes = KavachState.fraudGraph.nodes;
-      const links = KavachState.fraudGraph.links;
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-
-      nodes.forEach((n, idx) => {
-        if (!n.x) {
-          const angle = (idx / nodes.length) * 2 * Math.PI;
-          const radius = n.type === 'syndicate' ? 70 : (n.type === 'victim' ? 200 : 130);
-          n.x = cx + Math.cos(angle) * radius;
-          n.y = cy + Math.sin(angle) * radius;
-        }
-      });
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw Links
-        links.forEach(l => {
-          const s = nodes.find(n => n.id === l.source);
-          const t = nodes.find(n => n.id === l.target);
-          if (s && t) {
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(s.x, s.y);
-            ctx.lineTo(t.x, t.y);
-            ctx.stroke();
-
-            const mx = (s.x + t.x) / 2;
-            const my = (s.y + t.y) / 2;
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '10px JetBrains Mono';
-            ctx.fillText(l.relation, mx + 4, my);
-          }
-        });
-
-        // Draw Nodes
-        nodes.forEach(n => {
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, n.size || 16, 0, 2 * Math.PI);
-          ctx.fillStyle = n.color || '#6366f1';
-          ctx.fill();
-          ctx.strokeStyle = '#fff';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          ctx.fillStyle = '#f3f4f6';
-          ctx.font = '11px Plus Jakarta Sans';
-          ctx.textAlign = 'center';
-          ctx.fillText(n.label || n.id, n.x, n.y + (n.size || 16) + 14);
-        });
-      }
-      draw();
-    }
-
-    // Backend Probe: Check if running alongside local/cloud FastAPI backend
-    async function probeBackend() {
-      try {
-        const res = await fetch('/api/status', { method: 'GET' });
-        if (res.ok) {
-          KavachState.isBackendOnline = true;
-          const badge = document.getElementById('appModeBadge');
-          if (badge) {
-            badge.innerText = '● Connected to FastAPI Orchestrator';
-            badge.style.background = 'rgba(99, 102, 241, 0.15)';
-            badge.style.color = '#818cf8';
-            badge.style.borderColor = '#6366f1';
-          }
-        }
-      } catch (e) {
-        // Standalone mode - works completely in-browser
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      probeBackend();
-      renderTelegramFeed();
-      renderAuditTable();
-    });
-  </script>
+  <script src="mock.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -186,7 +186,10 @@ class IntelServer:
         eval_res = self.policy_gate.evaluate("DashboardAgent", "intel.get_fraud_graph", args)
         if not eval_res["allowed"]:
             return eval_res
+        return self.graph_payload()
 
+    def graph_payload(self) -> Dict[str, Any]:
+        """Graph as JSON, without an audit entry (the dashboard's own reads are not agent actions)."""
         nodes = []
         for n, d in self.graph.nodes(data=True):
             nodes.append({

@@ -29,17 +29,19 @@ class ReportServer:
         brief_id = f"1930-BRIEF-{uuid.uuid4().hex[:6].upper()}"
         amount = incident_details.get("amount", 48000)
         caller = incident_details.get("scammer_number", "+91 98XXX XX210")
-        upi_ref = incident_details.get("upi_ref", "619284019284")
-        mule_acc = incident_details.get("mule_account", "HDFC ····4471")
+        upi_ref = incident_details.get("transaction_id", "UPI-619284019284")
+        mule_acc = incident_details.get("destination_mule", "HDFC ····4471")
+        source_acc = incident_details.get("source_account", "Canara Bank ····9102")
+        debited_at = incident_details.get("started_at", "11:42")
 
         script = f"""
 [1930 HELPLINE CALL BRIEFING SCRIPT]
 1. Incident Category: Financial Cyber Fraud / Digital Arrest Extortion.
-2. Loss Amount: ₹{amount:,} INR.
-3. Debited From: Canara Bank A/c ····9102 at 11:42 AM.
+2. Loss Amount: ₹{amount:,.0f} INR.
+3. Debited From: {source_acc} at {debited_at}.
 4. Transaction Reference (RRN): {upi_ref}.
 5. Suspect Destination UPI: refund.cbi@okaxis.
-6. Destination Mule Account: {mule_acc} (HDFC Bank Salt Lake Branch).
+6. Destination Mule Account: {mule_acc}.
 7. Caller Phone Number: {caller}.
 8. Requested Action: Immediate inter-bank freeze request via Indian Cybercrime Coordination Centre (I4C) API to HDFC Bank nodal officer.
         """.strip()
@@ -62,7 +64,9 @@ class ReportServer:
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"incident_id": incident_details.get("incident_id", "INC-001")}
-        eval_res = self.policy_gate.evaluate("RecoverSwarm-NCRPAgent", "report.draft_ncrp_complaint", args, approval_token)
+        eval_res = self.policy_gate.evaluate(
+            "RecoverSwarm-NCRPAgent", "report.draft_ncrp_complaint", args, approval_token,
+            on_approve=lambda tok: self.draft_ncrp_complaint(incident_details, approval_token=tok))
         if not eval_res["allowed"]:
             return eval_res
 
@@ -77,7 +81,8 @@ class ReportServer:
                 "phone": incident_details.get("scammer_number", "+91 98XXX XX210"),
                 "alias": "Fake CBI Inspector Alok Verma",
                 "upi_id": "refund.cbi@okaxis",
-                "mule_account": "HDFC ····4471"
+                "mule_account": incident_details.get("destination_mule", "HDFC ····4471"),
+                "transaction_id": incident_details.get("transaction_id")
             },
             "loss_amount": incident_details.get("amount", 48000),
             "evidence_attached": [
@@ -99,7 +104,9 @@ class ReportServer:
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"phone_number": phone_number, "category": category}
-        eval_res = self.policy_gate.evaluate("ReporterAgent", "report.file_chakshu", args, approval_token)
+        eval_res = self.policy_gate.evaluate(
+            "ReporterAgent", "report.file_chakshu", args, approval_token,
+            on_approve=lambda tok: self.file_chakshu(phone_number, category, evidence, approval_token=tok))
         if not eval_res["allowed"]:
             return eval_res
 

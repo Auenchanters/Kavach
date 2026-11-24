@@ -95,34 +95,49 @@ Every agent tool invocation passes through the central Policy Gate and is record
 ## 🚀 Running Locally
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/Pratun/kavach.git
-cd kavach
-
-# 2. Install dependencies
+git clone https://github.com/Auenchanters/Kavach.git
+cd Kavach
 pip install -r requirements.txt
-
-# 3. Launch local orchestrator
 python run_kavach.py
 ```
-Open **[http://localhost:8000](http://localhost:8000)** in your browser.
+Open **http://localhost:8000**. The badge in the top bar says **Live server** when every action runs through the Python agents and policy gate.
+
+With no server (for example on GitHub Pages, serving `docs/`), the same app runs in **Browser demo** mode: `docs/mock.js` stands in for the backend with the same routes and rules.
+
+### Tests
+```bash
+pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+---
+
+## 📱 Desktop and phone
+
+One responsive web app serves both:
+
+| Screen | What you get |
+|---|---|
+| **Desktop** (≥1024px) | Rahul's guardian console beside a live preview of Amma's phone, plus Recover, Strike and Policy Gate in the left rail. In Chrome or Edge, *Install app* gives it its own window. |
+| **Phone** | Amma's app full-screen, with a bottom tab bar (Amma · Rahul · Recover · Strike · Gate). *Add to Home Screen* installs it as an app (PWA, works offline). Open `#guardian` to install Rahul's view. |
+
+The four demo steps in the top bar (Scam call → Decoy → Money lost → Forbidden action) walk the whole story; **Reset** clears server state.
 
 ---
 
 ## 📦 Project Structure
 
 ```
-├── docs/                      # GitHub Pages standalone deployment folder
-│   ├── index.html             # Standalone client-side simulator
-│   └── static/                # Official CC0 audio and shield icon
-├── kavach/                    # Python Backend Source
-│   ├── orchestrator/          # FastAPI app, REST APIs, & policy gate
-│   ├── mcp/                   # 6 FastMCP tool servers
-│   ├── agents/                # Shield, Strike Decoy, Recover Swarm
-│   ├── data/                  # Official playbooks & seed intelligence
-│   └── web/                   # Web dashboard templates & static assets
-├── Procfile                   # Cloud PaaS entry point
-├── render.yaml                # Render 1-click cloud blueprint
-├── requirements.txt           # Python dependencies
-└── run_kavach.py              # Convenience launcher
+├── docs/                      # The web app (served by FastAPI at / and by GitHub Pages)
+│   ├── index.html · app.css · app.js
+│   ├── mock.js                # In-browser backend for the no-server demo
+│   ├── manifest.webmanifest · sw.js · icons/   # PWA install + offline
+├── kavach/                    # Python backend
+│   ├── orchestrator/          # FastAPI app, REST API, policy gate
+│   ├── mcp/                   # 6 MCP tool servers
+│   ├── agents/                # Shield, Strike decoy, Recover swarm
+│   └── data/                  # Scam playbooks & seed intelligence
+├── tests/                     # API tests (pytest)
+├── Procfile · render.yaml     # Cloud deploy
+└── run_kavach.py              # Launcher
 ```

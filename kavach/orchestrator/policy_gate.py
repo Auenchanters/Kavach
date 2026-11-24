@@ -10,7 +10,7 @@ Every invocation is recorded in an immutable audit trail.
 from datetime import datetime
 import json
 import uuid
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Callable
 
 class PolicyGate:
     TIER_AUTOMATIC = "AUTOMATIC"
@@ -49,7 +49,8 @@ class PolicyGate:
         "bank.request_block": TIER_APPROVAL_REQUIRED,
 
         # Report actions
-        "report.prepare_1930_brief": TIER_APPROVAL_REQUIRED,
+        # A script for the victim to read aloud: no outside effect, so no approval wait in the golden hour.
+        "report.prepare_1930_brief": TIER_AUTOMATIC,
         "report.draft_ncrp_complaint": TIER_APPROVAL_REQUIRED,
         "report.file_chakshu": TIER_APPROVAL_REQUIRED,
         "report.share_transcript": TIER_APPROVAL_REQUIRED,
@@ -65,6 +66,8 @@ class PolicyGate:
     def __init__(self):
         self.audit_log: List[Dict[str, Any]] = []
         self.pending_approvals: Dict[str, Dict[str, Any]] = {}
+        # approval_id -> callable that re-runs the gated tool with the approval token
+        self._executors: Dict[str, Callable[[str], Dict[str, Any]]] = {}
         # Seed initial system startup audit log entry
         self._record_log(
             agent="SYSTEM",
@@ -75,7 +78,8 @@ class PolicyGate:
             reason="Policy gate initialized successfully with strict tier enforcement"
         )
 
-    def evaluate(self, agent_name: str, tool_name: str, args: Dict[str, Any], approval_token: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, agent_name: str, tool_name: str, args: Dict[str, Any], approval_token: Optional[str] = None,
+                 on_approve: Optional[Callable[[str], Dict[str, Any]]] = None) -> Dict[str, Any]:
         """
         Evaluate tool invocation against policy gate.
         Returns:
@@ -100,7 +104,10 @@ class PolicyGate:
             }
 
         if tier == self.TIER_APPROVAL_REQUIRED:
-            if approval_token and approval_token in self.pending_approvals and self.pending_approvals[approval_token].get("status") == "APPROVED":
+            pending = self.pending_approvals.get(approval_token) if approval_token else None
+            # A token is single-use and only valid for the tool it was issued for.
+            if pending and pending.get("status") == "APPROVED" and pending.get("tool") == tool_name:
+                pending["status"] = "EXECUTED"
                 reason = f"Guardian approved action with token {approval_token}."
                 self._record_log(agent_name, tool_name, tier, args, "ALLOWED", reason)
                 return {
@@ -120,6 +127,8 @@ class PolicyGate:
                     "status": "PENDING",
                     "created_at": datetime.now().strftime("%H:%M:%S")
                 }
+                if on_approve:
+                    self._executors[approval_id] = on_approve
                 reason = f"Action '{tool_name}' requires explicit Guardian approval before execution."
                 self._record_log(agent_name, tool_name, tier, args, "APPROVAL_PENDING", reason)
                 return {
@@ -140,38 +149,44 @@ class PolicyGate:
             "reason": reason
         }
 
-    def approve_action(self, approval_id: str, guardian_id: str = "Rahul") -> bool:
-        """Guardian marks an action as approved"""
-        if approval_id in self.pending_approvals:
-            self.pending_approvals[approval_id]["status"] = "APPROVED"
-            self.pending_approvals[approval_id]["approved_by"] = guardian_id
-            self.pending_approvals[approval_id]["approved_at"] = datetime.now().strftime("%H:%M:%S")
-            self._record_log(
-                agent="GuardianAgent",
-                tool="family.guardian_approval",
-                tier=self.TIER_APPROVAL_REQUIRED,
-                args={"approval_id": approval_id, "guardian": guardian_id},
-                decision="APPROVED",
-                reason=f"Guardian {guardian_id} confirmed execution of {self.pending_approvals[approval_id]['tool']}"
-            )
-            return True
-        return False
+    def approve_action(self, approval_id: str, guardian_id: str = "Rahul") -> Optional[Dict[str, Any]]:
+        """Guardian approves a PENDING action; the gated tool then runs once. Returns the approval record, or None."""
+        pending = self.pending_approvals.get(approval_id)
+        if not pending or pending["status"] != "PENDING":
+            return None
+        pending["status"] = "APPROVED"
+        pending["approved_by"] = guardian_id
+        pending["approved_at"] = datetime.now().strftime("%H:%M:%S")
+        self._record_log(
+            agent="GuardianAgent",
+            tool="family.guardian_approval",
+            tier=self.TIER_APPROVAL_REQUIRED,
+            args={"approval_id": approval_id, "guardian": guardian_id},
+            decision="APPROVED",
+            reason=f"Guardian {guardian_id} confirmed execution of {pending['tool']}"
+        )
+        executor = self._executors.pop(approval_id, None)
+        if executor:
+            pending["result"] = executor(approval_id)
+        return pending
 
-    def reject_action(self, approval_id: str, guardian_id: str = "Rahul") -> bool:
-        """Guardian marks an action as rejected"""
-        if approval_id in self.pending_approvals:
-            self.pending_approvals[approval_id]["status"] = "REJECTED"
-            self.pending_approvals[approval_id]["rejected_by"] = guardian_id
-            self._record_log(
-                agent="GuardianAgent",
-                tool="family.guardian_rejection",
-                tier=self.TIER_APPROVAL_REQUIRED,
-                args={"approval_id": approval_id, "guardian": guardian_id},
-                decision="REJECTED",
-                reason=f"Guardian {guardian_id} rejected execution of {self.pending_approvals[approval_id]['tool']}"
-            )
-            return True
-        return False
+    def reject_action(self, approval_id: str, guardian_id: str = "Rahul") -> Optional[Dict[str, Any]]:
+        """Guardian rejects a PENDING action. Returns the approval record, or None."""
+        pending = self.pending_approvals.get(approval_id)
+        if not pending or pending["status"] != "PENDING":
+            return None
+        pending["status"] = "REJECTED"
+        pending["rejected_by"] = guardian_id
+        self._executors.pop(approval_id, None)
+        self._record_log(
+            agent="GuardianAgent",
+            tool="family.guardian_rejection",
+            tier=self.TIER_APPROVAL_REQUIRED,
+            args={"approval_id": approval_id, "guardian": guardian_id},
+            decision="REJECTED",
+            reason=f"Guardian {guardian_id} rejected execution of {pending['tool']}"
+        )
+        return pending
 
     def _record_log(self, agent: str, tool: str, tier: str, args: Dict[str, Any], decision: str, reason: str):
         entry = {

@@ -16,6 +16,7 @@ class StrikeAgent:
         self.family = family_srv
         self.conversation_step = 0
         self.minutes_wasted = 26
+        self.chakshu_requested = False
         self.extracted_entities = {
             "upi_ids": [],
             "mule_accounts": [],
@@ -49,9 +50,11 @@ class StrikeAgent:
         and links any captured financial coordinates to the fraud graph.
         """
         self.conversation_step += 1
+        if self.conversation_step == 1:
+            self.telephony.transfer_to_decoy("CALL-X210")
 
-        # Extract UPI ID (e.g., refund.cbi@okaxis)
-        upi_match = re.search(r'([a-zA-Z0-9_\-\.]+@[a-zA-Z0-9]+)', scammer_message)
+        # Extract UPI ID (e.g., refund.cbi@okaxis); the lookahead skips email domains like x@gmail.com
+        upi_match = re.search(r'([a-zA-Z0-9_\-\.]+@[a-zA-Z]+)(?![a-zA-Z]|\.\w)', scammer_message)
         captured_upi = upi_match.group(1) if upi_match else None
 
         # Extract Bank Account
@@ -78,12 +81,15 @@ class StrikeAgent:
         elif captured_acc or "hdfc" in scammer_message.lower():
             decoy_reply = "HDFC Bank Salt Lake... wait beta, my phone screen went black! Ah, it is asking for a 6-digit UPI PIN. Should I put my birth year or retirement year 2018?"
 
-        # Auto-draft Chakshu report
-        chakshu_draft = self.report.file_chakshu(
-            phone_number="+91 98XXX XX210",
-            category="Digital Arrest Impersonation",
-            evidence=f"Strike Decoy extracted UPI ID '{captured_upi or 'refund.cbi@okaxis'}' and mule account '{captured_acc or '50100492814471'}'."
-        )
+        # Draft one Chakshu report per engagement, once there is evidence (not one per turn).
+        chakshu_draft = None
+        if not self.chakshu_requested and (captured_upi or captured_acc):
+            self.chakshu_requested = True
+            chakshu_draft = self.report.file_chakshu(
+                phone_number="+91 98XXX XX210",
+                category="Digital Arrest Impersonation",
+                evidence=f"Strike Decoy extracted UPI ID '{captured_upi or 'n/a'}' and mule account '{captured_acc or 'n/a'}'."
+            )
 
         return {
             "step": self.conversation_step,

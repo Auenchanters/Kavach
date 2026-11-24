@@ -22,6 +22,7 @@ class RecoverSwarm:
         self.intel = intel_srv
         self.policy_gate = policy_gate
         self.active_incident = None
+        self.last_run = None
 
     def trigger_recovery(self, incident_data: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -41,8 +42,7 @@ class RecoverSwarm:
             "transaction_id": transaction_id,
             "scammer_number": caller_number,
             "started_at": datetime.now().strftime("%H:%M:%S"),
-            "golden_hour_timer": "00:01:12",
-            "time_remaining_mins": 58
+            "started_at_epoch": datetime.now().timestamp(),
         }
 
         # Agent 1: Bank Hold Request
@@ -66,39 +66,38 @@ class RecoverSwarm:
         self.family.notify_guardian(
             guardian_id="Rahul (Son)",
             alert_level="CRITICAL",
-            title="EMERGENCY: ₹48,000 Golden Hour Recovery Swarm Activated",
+            title=f"EMERGENCY: ₹{amount:,.0f} Golden Hour Recovery Swarm Activated",
             details=[
-                "Amma reported unauthorized transaction of ₹48,000.",
-                "Recover Swarm deployed 4 agents in parallel (00:01:12 elapsed).",
-                "Bank lien hold drafted for HDFC Mule Account ····4471.",
+                f"Amma reported an unauthorized transaction of ₹{amount:,.0f}.",
+                "Recover Swarm deployed 4 agents in parallel.",
+                f"Bank lien hold drafted for mule account {destination_mule}.",
                 "1930 Helpline verbal briefing ready for one-tap calling.",
                 "Formal NCRP complaint drafted with cryptographic evidence dossier."
             ],
-            actions=[
-                {"id": "appr_bank_hold", "label": "Approve Bank Lien", "type": "primary"},
-                {"id": "appr_ncrp_submit", "label": "Approve NCRP Filing", "type": "primary"},
-                {"id": "call_1930", "label": "Dial 1930 Helpline", "type": "secondary"}
-            ],
+            actions=[a for a in [
+                {"id": bank_res.get("approval_id"), "label": "Approve bank lien", "type": "primary"},
+                {"id": ncrp_res.get("approval_id"), "label": "Approve NCRP filing", "type": "primary"},
+            ] if a["id"]] + [{"id": "call_1930", "label": "Dial 1930", "type": "link"}],
             incident_id=self.active_incident["incident_id"]
         )
 
-        return {
+        self.last_run = {
             "status": "RECOVER_SWARM_ACTIVE",
             "incident": self.active_incident,
             "agents": {
                 "bank_agent": {
                     "role": "Emergency Mule Account Lien Request",
-                    "status": "APPROVAL_PENDING" if not bank_res.get("allowed") else "EXECUTED",
+                    "status": "APPROVAL_PENDING" if bank_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
                     "result": bank_res
                 },
                 "helpline_1930_agent": {
                     "role": "Verbal 1930 Briefing Generator",
-                    "status": "APPROVAL_PENDING" if not brief_1930_res.get("allowed") else "EXECUTED",
+                    "status": "APPROVAL_PENDING" if brief_1930_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
                     "result": brief_1930_res
                 },
                 "ncrp_complaint_agent": {
                     "role": "cybercrime.gov.in Formal Drafter",
-                    "status": "APPROVAL_PENDING" if not ncrp_res.get("allowed") else "EXECUTED",
+                    "status": "APPROVAL_PENDING" if ncrp_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
                     "result": ncrp_res
                 },
                 "evidence_agent": {
@@ -106,9 +105,9 @@ class RecoverSwarm:
                     "status": "COMPLETED",
                     "result": evidence_pack
                 }
-            },
-            "golden_hour_timer": "00:01:12 elapsed / 58:48 remaining"
+            }
         }
+        return self.last_run
 
     def _build_evidence_pack(self, incident: Dict[str, Any]) -> Dict[str, Any]:
         """Generates tamper-evident hash dossier"""
