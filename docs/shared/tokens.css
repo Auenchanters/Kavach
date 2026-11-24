@@ -88,7 +88,7 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
 .card { background: var(--card); color: var(--on-dark); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); }
 .row { background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-row); }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: var(--r-ctl);
+.btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: var(--r-ctl);
   font-weight: 500; font-size: 14px; transition: background .2s var(--ease-out), transform .12s, box-shadow .2s; white-space: nowrap; }
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }

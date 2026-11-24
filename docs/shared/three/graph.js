@@ -28,7 +28,7 @@ function layout(graph, prev) {
     for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
       d.subVectors(nodes[i].p, nodes[j].p);
       const len2 = Math.max(d.lengthSq(), 0.01);
-      d.multiplyScalar((1.4 / len2) * k * 0.5);
+      d.multiplyScalar((3.2 / len2) * k * 0.5);
       nodes[i].p.add(d); nodes[j].p.sub(d);
     }
     for (const l of links) {
@@ -45,7 +45,7 @@ function layout(graph, prev) {
   nodes.forEach((n) => c.add(n.p));
   c.divideScalar(nodes.length || 1);
   const far = Math.max(...nodes.map((n) => n.p.distanceTo(c)), 0.001);
-  nodes.forEach((n) => n.p.sub(c).multiplyScalar(3 / far));
+  nodes.forEach((n) => n.p.sub(c).multiplyScalar(3.4 / far));
   return { nodes, links, idx };
 }
 
@@ -120,7 +120,7 @@ export async function mountGraph(el, graph) {
     renderer.domElement.style.height = "100%";
     labels.setSize(w, h);
     camera.aspect = w / h;
-    camera.position.setLength(w < 600 ? 12 : 9.5);
+    camera.position.setLength(w < 600 ? 11.5 : 8.6);
     camera.updateProjectionMatrix();
   };
   const ro = new ResizeObserver(fit);
