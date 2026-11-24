@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>try{var t=new URLSearchParams(location.search).get("theme")||localStorage.getItem("kavach.theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Amma's phone · KAVACH prototype</title>
   <meta name="description" content="KAVACH on Amma's phone: scam call screening, the KAVACH button, message checks and golden-hour recovery. Scripted prototype.">
@@ -15,6 +16,7 @@
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6m12 12 1.4 1.4M2.5 12h2m15 0h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.7v5.9c0 4.6 3.1 8.3 7.5 9.6 4.4-1.3 7.5-5 7.5-9.6V5.7L12 2.8Z"/></symbol>
     <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z"/></symbol>
     <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
@@ -131,6 +133,7 @@
         <li><button data-do="cheated"><b>Money is lost anyway</b><span>One tap starts four recovery agents inside the golden hour.</span></button></li>
       </ol>
       <div class="guide-foot">
+        <button class="theme-btn" data-theme-toggle type="button"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button>
         <button class="btn btn-line" id="btnSound"><svg class="i"><use href="#i-speaker"/></svg><span>Sound on</span></button>
         <a class="btn btn-line" href="../admin/" target="kavach-admin">Open Rahul’s panel</a>
         <button class="btn btn-line" id="btnReset">Reset</button>

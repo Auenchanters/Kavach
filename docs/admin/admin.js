@@ -1,4 +1,5 @@
 import { createStory, pending, SCENES, DECOY_SCRIPT, RAMESH, LANGS, AUTO, APPR } from "../shared/story.js";
+import "../shared/theme.js";
 import * as voice from "../shared/voice.js";
 import { tryMountGraph } from "../shared/three/graph.js";
 

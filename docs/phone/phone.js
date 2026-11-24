@@ -1,4 +1,5 @@
 import { createStory, TRANSCRIPT, WARNING, SMS_NOTE, RECOVER_NOTE, SMS_TEXT, SCENES } from "../shared/story.js";
+import "../shared/theme.js";
 import * as voice from "../shared/voice.js";
 import { tryMountShield } from "../shared/three/shield.js";
 

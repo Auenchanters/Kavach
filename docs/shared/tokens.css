@@ -35,7 +35,60 @@
   --f-indic: "Noto Sans Kannada", "Noto Sans Devanagari", "Nirmala UI", var(--f-sans);
   --ease-out: cubic-bezier(.16, 1, .3, 1);     /* expo out */
   --ease-move: cubic-bezier(.65, 0, .35, 1);   /* power2 in-out */
+  --glass: rgba(255, 255, 255, .55);
+  --glass-hover: #fff;
+  --rule: #B9B9BE;
+  --dash: #A8A8AD;
+  --well: #111113;
+  --device: #0E0E10;
+  --device-rim: #3A3A3F;
+  color-scheme: light;
 }
+
+/* Dark mode: a different palette, not the light one dimmed. Night-indigo studio, graphite-blue objects,
+   a brighter enamel indigo, and a light titanium phone so the device still reads against the dark ground. */
+:root[data-theme="dark"] {
+  --ground-a: #1B2035;
+  --ground-b: #07080D;
+  --card: #171B27;
+  --card-2: #1F2433;
+  --card-3: #2A3044;
+  --line: #2A3042;
+  --line-light: #2F3549;
+  --ink: #F2F3F7;
+  --ink-2: #B3B8C8;
+  --ink-3: #8D93A6;
+  --on-dark: #F2F3F7;
+  --on-dark-2: #AEB3C3;
+  --on-dark-3: #8D93A6;
+  --indigo: #5B60F5;
+  --indigo-dark: #9094FF;
+  --red: #FF6369;
+  --green: #5BD6A0;
+  --amber: #FFB547;
+  --red-t: rgba(255, 99, 105, .16);
+  --green-t: rgba(91, 214, 160, .14);
+  --amber-t: rgba(255, 181, 71, .14);
+  --indigo-t: rgba(144, 148, 255, .18);
+  --shadow: 0 24px 48px rgba(0, 0, 0, .5);
+  --shadow-sm: 0 8px 20px rgba(0, 0, 0, .4);
+  --glass: rgba(255, 255, 255, .05);
+  --glass-hover: rgba(255, 255, 255, .1);
+  --rule: #2A3042;
+  --dash: #3A4158;
+  --well: #0D1018;
+  --device: #C3C6CE;
+  --device-rim: #E8EAEE;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] ::selection { background: var(--indigo-dark); color: #07080D; }
+
+.theme-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: var(--r-ctl); border: 1px solid var(--line-light); background: var(--glass); color: var(--ink); }
+.theme-btn:hover { background: var(--glass-hover); }
+.theme-btn svg { width: 18px; height: 18px; }
+.theme-btn .moon, [data-theme="dark"] .theme-btn .sun { display: none; }
+[data-theme="dark"] .theme-btn .moon { display: block; }
+.card .theme-btn, .dark .theme-btn { color: var(--on-dark); border-color: var(--line); background: var(--card-2); }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -98,8 +151,8 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
 .dark .btn-kavach:hover { background: #7F83F4; }
 .btn-quiet { background: var(--card-3); color: var(--on-dark); }
 .btn-quiet:hover { background: #34343A; }
-.btn-line { border: 1px solid var(--line-light); color: var(--ink); background: rgba(255, 255, 255, .5); }
-.btn-line:hover { background: #fff; }
+.btn-line { border: 1px solid var(--line-light); color: var(--ink); background: var(--glass); }
+.btn-line:hover { background: var(--glass-hover); }
 .btn-danger { background: var(--red); color: #fff; }
 
 .tag { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 99px; font: 500 11.5px/1 var(--f-sans); white-space: nowrap; }

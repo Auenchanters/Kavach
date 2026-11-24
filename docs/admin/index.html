@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>try{var t=new URLSearchParams(location.search).get("theme")||localStorage.getItem("kavach.theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Rahul's panel · KAVACH prototype</title>
   <meta name="description" content="KAVACH guardian panel: live agent activity, approvals, golden-hour recovery, the 3D fraud graph and the audit log. Scripted prototype.">
@@ -14,6 +15,7 @@
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6m12 12 1.4 1.4M2.5 12h2m15 0h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.7v5.9c0 4.6 3.1 8.3 7.5 9.6 4.4-1.3 7.5-5 7.5-9.6V5.7L12 2.8Z"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
@@ -48,6 +50,7 @@
         <div class="r-btns">
           <a class="btn btn-quiet" href="../phone/" target="kavach-phone"><svg class="i"><use href="#i-phone"/></svg>Amma’s phone</a>
           <button class="btn btn-quiet" id="btnReset">Reset</button>
+          <button class="theme-btn" data-theme-toggle type="button"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button>
         </div>
         <p class="r-note">Scripted prototype · 3D: <span id="backend">loading</span></p>
       </div>
