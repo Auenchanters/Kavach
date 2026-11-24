@@ -15,13 +15,18 @@ class StrikeAgent:
         self.report = report_srv
         self.family = family_srv
         self.conversation_step = 0
-        self.minutes_wasted = 26
+        self.minutes_wasted = 0
         self.chakshu_requested = False
         self.extracted_entities = {
             "upi_ids": [],
             "mule_accounts": [],
             "phone_numbers": []
         }
+
+    def active_minutes_wasted(self) -> int:
+        if self.conversation_step <= 0:
+            return 0
+        return 26 + (self.conversation_step - 1) * 4
 
     def get_persona_profile(self) -> Dict[str, Any]:
         return {
@@ -50,6 +55,7 @@ class StrikeAgent:
         and links any captured financial coordinates to the fraud graph.
         """
         self.conversation_step += 1
+        self.minutes_wasted = self.active_minutes_wasted()
         if self.conversation_step == 1:
             self.telephony.transfer_to_decoy("CALL-X210")
 

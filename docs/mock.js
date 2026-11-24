@@ -1,6 +1,5 @@
 /* In-browser stand-in for the KAVACH FastAPI backend, used when no server answers (GitHub Pages).
-   shortcut: a hand port of kavach/ with the same routes, rules and response shapes;
-   when you change the Python API, change this file too. */
+   Mirrors kavach/ routes, rules, playbooks, trusted contacts, and response shapes. */
 (function () {
   "use strict";
   const AUTO = "AUTOMATIC", APPR = "NEEDS_GUARDIAN_APPROVAL", NEVER = "NEVER_ALLOWED";
@@ -15,17 +14,63 @@
     "report.file_chakshu": APPR, "report.share_transcript": APPR,
   };
   const PLAYBOOKS = {
-    digital_arrest: ["Digital Arrest / CBI Impersonation", 0.95, ["digital arrest", "cbi", "crime branch", "money laundering", "supreme court", "warrant", "aadhaar", "canara bank", "narcotics", "skype call", "stay on video", "security deposit", "rbi verification account"]],
-    kyc_expiry: ["Bank / SIM KYC Expiration Scam", 0.88, ["kyc expire", "sim block", "account suspend", "pan card update", "click link", "download quicksupport", "anydesk", "24 hours", "otp"]],
-    parcel_drugs: ["Customs / International Parcel Scam", 0.92, ["fedex", "dhl", "customs mumbai", "parcel seized", "mdma", "taiwan passport", "customs penalty", "transfer clearance"]],
-    electricity_cutoff: ["Urgent Electricity Bill Disconnection", 0.85, ["power cut", "electricity bill", "tonight 9:30", "discom", "unpaid bill", "pay immediately", "call electricity officer"]],
-    investment_fraud: ["High-Yield VIP Stock/Crypto Syndicate", 0.9, ["vip group", "guaranteed returns", "institutional allotment", "pre-ipo", "forex", "trading app", "transfer to trading account"]],
+    digital_arrest: {
+      name: "Digital Arrest / CBI Impersonation",
+      weight: 0.95,
+      advisory_source: "I4C / Ministry of Home Affairs Advisory",
+      keywords: ["digital arrest", "cbi", "crime branch", "money laundering", "supreme court", "warrant", "aadhaar", "canara bank", "narcotics", "skype call", "stay on video", "security deposit", "rbi verification account"],
+      safe_advice: {
+        kn: "ಅಮ್ಮಾ, ಇದು ಸುಳ್ಳು ಕರೆ! ಭಾರತದ ಯಾವುದೇ ಪೊಲೀಸ್ ಅಥವಾ ಸಿಬಿಐ ವಿಡಿಯೋ ಕಾಲಿನಲ್ಲಿ ಯಾರನ್ನೂ ಬಂಧಿಸುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೂಡಲೇ ಕರೆ ಕಟ್ ಮಾಡಿ.",
+        hi: "अम्मा, यह एक फर्जी कॉल है! भारत में कोई भी पुलिस या सीबीआई अधिकारी वीडियो कॉल पर गिरफ़्तारी नहीं करता। कृपया तुरंत फोन काटें।",
+        en: "Amma, this is a scam! Real police or CBI officers never arrest anyone over video call or ask for money verification. Please hang up immediately.",
+      },
+    },
+    kyc_expiry: {
+      name: "Bank / SIM KYC Expiration Scam",
+      weight: 0.88,
+      advisory_source: "RBI / DoT Public Fraud Advisory",
+      keywords: ["kyc expire", "sim block", "account suspend", "pan card update", "click link", "download quicksupport", "anydesk", "24 hours", "otp"],
+      safe_advice: {
+        kn: "ಎಚ್ಚರಿಕೆ! ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಅಥವಾ ಸಿಮ್ ಎಂದಿಗೂ ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಲು ಅಥವಾ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಕೇಳುವುದಿಲ್ಲ.",
+        hi: "सावधान! बैंक या टेलीकॉम कंपनी कभी भी फोन पर KYC के लिए ऐप डाउनलोड करने को नहीं कहती।",
+        en: "Warning! Banks and telecom providers never ask you to install remote apps or click links for KYC.",
+      },
+    },
+    parcel_drugs: {
+      name: "Customs / International Parcel Scam",
+      weight: 0.92,
+      advisory_source: "Customs / Narcotics Control Bureau Advisory",
+      keywords: ["fedex", "dhl", "customs mumbai", "parcel seized", "mdma", "taiwan passport", "customs penalty", "transfer clearance"],
+      safe_advice: {
+        kn: "ಇದು ಪಾರ್ಸೆಲ್ ವಂಚನೆ. ಕಸ್ಟಮ್ಸ್ ಇಲಾಖೆ ಆನ್‌ಲೈನ್ ದಂಡ ಕೇಳುವುದಿಲ್ಲ.",
+        hi: "यह पार्सल फ्रॉड है। कस्टम्स विभाग कभी फोन पर सीधे पैसे नहीं मांगता।",
+        en: "This is a parcel fraud. Customs officers do not demand online transfers over the phone.",
+      },
+    },
+    electricity_cutoff: {
+      name: "Urgent Electricity Bill Disconnection",
+      weight: 0.85,
+      advisory_source: "State DISCOM Fraud Warning",
+      keywords: ["power cut", "electricity bill", "tonight 9:30", "discom", "unpaid bill", "pay immediately", "call electricity officer"],
+      safe_advice: {
+        kn: "ವಿದ್ಯುತ್ ಕಡಿತದ ನಕಲಿ ಸಂದೇಶ! ಬಿಲ್‌ಗಳನ್ನು ಕೇವಲ ಅಧಿಕೃತ ಬೆಸ್ಕಾಂ ವೆಬ್‌ಸೈಟ್ ಅಥವಾ ಆ್ಯಪ್ ಮೂಲಕವೇ ಪಾವತಿಸಿ.",
+        hi: "बिजली कटौती का फर्जी संदेश! बिजली विभाग कभी व्यक्तिगत नंबरों से ऐसे मैसेज नहीं भेजता।",
+        en: "Fake electricity disconnection alert! Never pay through personal links or phone numbers.",
+      },
+    },
+    investment_fraud: {
+      name: "High-Yield VIP Stock/Crypto Syndicate",
+      weight: 0.9,
+      advisory_source: "SEBI Investor Warning Circular",
+      keywords: ["vip group", "guaranteed returns", "institutional allotment", "pre-ipo", "forex", "trading app", "transfer to trading account"],
+      safe_advice: {
+        kn: "ಖಚಿತ ಲಾಭದ ಆಮಿಷ ಒಡ್ಡುವ ಹೂಡಿಕೆ ವಂಚನೆ! ಅಪರಿಚಿತ ಬ್ಯಾಂಕ್ ಖಾತೆಗಳಿಗೆ ಹಣ ವರ್ಗಾಯಿಸಬೇಡಿ.",
+        hi: "यह फर्जी निवेश योजना है। सेबी किसी भी निजी ग्रुप ट्रेडिंग की गारंटी नहीं देता।",
+        en: "Investment scam! Never transfer money to unverified personal or business mule accounts.",
+      },
+    },
   };
-  const ADVICE = {
-    kn: "ಅಮ್ಮಾ, ಇದು ಸುಳ್ಳು ಕರೆ! ಭಾರತದ ಯಾವುದೇ ಪೊಲೀಸ್ ಅಥವಾ ಸಿಬಿಐ ವಿಡಿಯೋ ಕಾಲಿನಲ್ಲಿ ಯಾರನ್ನೂ ಬಂಧಿಸುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೂಡಲೇ ಕರೆ ಕಟ್ ಮಾಡಿ.",
-    hi: "अम्मा, यह एक फर्जी कॉल है! भारत में कोई भी पुलिस या सीबीआई अधिकारी वीडियो कॉल पर गिरफ़्तारी नहीं करता। कृपया तुरंत फोन काटें।",
-    en: "Amma, this is a scam! Real police or CBI officers never arrest anyone over video call or ask for money verification. Please hang up immediately.",
-  };
+  const ADVICE = PLAYBOOKS.digital_arrest.safe_advice;
   const SMS_WARN = {
     kn: "ಅಮ್ಮಾ, ಇದು ನಕಲಿ ಸಂದೇಶ. ಆ ಲಿಂಕ್ ಮೇಲೆ ಒತ್ತಬೇಡಿ, ಯಾರಿಗೂ ಹಣ ಕಳುಹಿಸಬೇಡಿ!",
     hi: "अम्मा, यह एक फर्जी मैसेज है। किसी भी लिंक पर क्लिक न करें, किसी को पैसे न भेजें!",
@@ -33,10 +78,19 @@
   };
   const LANG = { kn: "Kannada", hi: "Hindi", en: "English" };
   const NUMBERS = {
-    "+91 98XXX XX210": { reported_count: 47, risk_score: 0.96, category: "Digital Arrest / CBI Impersonation", syndicate_id: "SYN-MEWAT-04" },
-    "+91 70XXX XX451": { reported_count: 19, risk_score: 0.91, category: "Mule Call Relay / Tech Support", syndicate_id: "SYN-MEWAT-04" },
-    "+91 91234 56789": { reported_count: 0, risk_score: 0.05, category: "Trusted Contact - Rahul (Son)", syndicate_id: null },
+    "+91 98XXX XX210": { reported_count: 47, risk_score: 0.96, category: "Digital Arrest / CBI Impersonation", operator: "Airtel Kolkata Circle (SIM suspected cloned / mule)", syndicate_id: "SYN-MEWAT-04" },
+    "+91 70XXX XX451": { reported_count: 19, risk_score: 0.91, category: "Mule Call Relay / Tech Support", operator: "Jio Jamtara Cluster", syndicate_id: "SYN-MEWAT-04" },
+    "+91 91234 56789": { reported_count: 0, risk_score: 0.05, category: "Trusted Contact - Rahul (Son)", operator: "Jio Karnataka", syndicate_id: null },
+    "+91 80234 99000": { reported_count: 0, risk_score: 0.08, category: "Trusted Contact - Manipal Hospital Bengaluru", operator: "BSNL Karnataka", syndicate_id: null },
   };
+  const MCP_SERVERS = [
+    { name: "kavach-telephony", purpose: "Call screening, conference join, native TTS warnings, decoy transfer", tools: ["telephony.answer_call", "telephony.join_conference", "telephony.speak_warning", "telephony.transfer_to_decoy", "telephony.end_call"] },
+    { name: "kavach-intel", purpose: "Phone/URL reputation & NetworkX shared fraud knowledge graph", tools: ["intel.check_number", "intel.check_url", "intel.add_entity", "intel.link_entities", "intel.get_fraud_graph"] },
+    { name: "kavach-bank", purpose: "Consent-based debit SMS parser & Golden Hour mule lien holds", tools: ["bank.parse_debit_sms", "bank.request_hold", "bank.request_block"] },
+    { name: "kavach-report", purpose: "1930 helpline briefing, cybercrime.gov.in NCRP & DoT Chakshu filings", tools: ["report.prepare_1930_brief", "report.draft_ncrp_complaint", "report.file_chakshu"] },
+    { name: "kavach-family", purpose: "Guardian Telegram alerts, approval cards & voice notes", tools: ["family.notify_guardian", "family.request_approval", "family.send_voice_note"] },
+    { name: "kavach-knowledge", purpose: "RBI / DoT / I4C scam playbooks & localized advisories", tools: ["knowledge.match_scam_pattern", "knowledge.get_safe_advice"] },
+  ];
   const SCAMMER = "+91 98XXX XX210";
 
   const clock = () => new Date().toTimeString().slice(0, 8);
@@ -46,22 +100,22 @@
 
   function seedGraph() {
     const nodes = [
-      ["SYN-MEWAT-04", "Kolkata-Mewat 'Digital Arrest' Syndicate", "syndicate"],
-      ["SYN-JAM-09", "Jamtara Discom Bill Fraud Ring", "syndicate"],
-      ["+91 98XXX XX210", "+91 98XXX XX210", "phone", { risk_score: 0.96 }],
-      ["+91 70XXX XX451", "+91 70XXX XX451", "phone", { risk_score: 0.91 }],
-      ["+91 91234 56789", "+91 91234 56789", "phone", { risk_score: 0.05 }],
-      ["+91 80234 99000", "+91 80234 99000", "phone", { risk_score: 0.88 }],
-      ["refund.cbi@okaxis", "refund.cbi@okaxis", "upi"],
-      ["ebill.pay@icici", "ebill.pay@icici", "upi"],
-      ["HDFC ····4471", "HDFC ····4471", "mule_account"],
-      ["Amma (Bengaluru)", "Amma (Bengaluru)", "victim"],
-      ["Sunita Devi (Lucknow)", "Sunita Devi (Lucknow)", "victim"],
-      ["R. Ramanathan (Chennai)", "R. Ramanathan (Chennai)", "victim"],
+      ["SYN-MEWAT-04", "Kolkata-Mewat 'Digital Arrest' Syndicate", "syndicate", { hub_location: "Mewat / Salt Lake Cyber Hub", estimated_victims: 420, total_laundered_cr: 4.8, primary_modus: "Impersonates CBI / Mumbai Police / Courier Narcotics" }],
+      ["SYN-JAM-09", "Jamtara Discom Bill Fraud Ring", "syndicate", { hub_location: "Jamtara, Jharkhand", estimated_victims: 180, total_laundered_cr: 1.2, primary_modus: "Electricity cutoff SMS with malicious APK" }],
+      ["+91 98XXX XX210", "+91 98XXX XX210", "phone", { ...NUMBERS["+91 98XXX XX210"], first_seen: "2026-09-12" }],
+      ["+91 70XXX XX451", "+91 70XXX XX451", "phone", { ...NUMBERS["+91 70XXX XX451"], first_seen: "2026-10-04" }],
+      ["+91 91234 56789", "+91 91234 56789", "phone", NUMBERS["+91 91234 56789"]],
+      ["+91 80234 99000", "+91 80234 99000", "phone", NUMBERS["+91 80234 99000"]],
+      ["refund.cbi@okaxis", "refund.cbi@okaxis", "upi", { holder_name: "Ramesh Mule Account #12", bank: "Axis Bank", risk_score: 0.98, freeze_status: "FLAGGED_PENDING_FREEZE" }],
+      ["ebill.pay@icici", "ebill.pay@icici", "upi", { holder_name: "Quick Utilities Fake", bank: "ICICI Bank", risk_score: 0.94, freeze_status: "FROZEN" }],
+      ["HDFC ····4471", "HDFC ····4471", "mule_account", { bank: "HDFC Bank", branch: "Salt Lake Sector V, Kolkata", ifsc: "HDFC0001289", total_volume_today: "₹14,80,000", status: "ACTIVE_MULE" }],
+      ["Amma (Bengaluru)", "Amma (Bengaluru)", "victim", { status: "PROTECTED", notes: "Protected by KAVACH (Son Rahul)" }],
+      ["Sunita Devi (Lucknow)", "Sunita Devi (Lucknow)", "victim", { status: "PROTECTED", notes: "Protected by KAVACH" }],
+      ["R. Ramanathan (Chennai)", "R. Ramanathan (Chennai)", "victim", { status: "PROTECTED", notes: "Protected by KAVACH" }],
     ].map(([id, label, type, details]) => ({ id, label, type, details: details || {} }));
     const links = [
       ["+91 98XXX XX210", "SYN-MEWAT-04", "OPERATED_BY"], ["+91 70XXX XX451", "SYN-MEWAT-04", "OPERATED_BY"],
-      ["+91 80234 99000", "SYN-JAM-09", "OPERATED_BY"], ["refund.cbi@okaxis", "SYN-MEWAT-04", "LAUNDERS_FOR"],
+      ["refund.cbi@okaxis", "SYN-MEWAT-04", "LAUNDERS_FOR"],
       ["ebill.pay@icici", "SYN-JAM-09", "LAUNDERS_FOR"], ["HDFC ····4471", "SYN-MEWAT-04", "MULE_SETTLEMENT"],
       ["refund.cbi@okaxis", "HDFC ····4471", "DEPOSITS_INTO"], ["+91 98XXX XX210", "Amma (Bengaluru)", "ATTACK_INTERCEPTED"],
     ].map(([source, target, relation]) => ({ source, target, relation }));
@@ -116,15 +170,18 @@
     gate("ScamDetectorAgent", "knowledge.match_scam_pattern", { text_preview: text.slice(0, 60) });
     const lower = text.toLowerCase();
     let best = null;
-    for (const [category, [name, weight, kws]] of Object.entries(PLAYBOOKS)) {
-      const hits = kws.filter((k) => lower.includes(k));
-      const score = hits.length ? Math.min(0.97, hits.length * 0.25 + weight * 0.5) : 0;
-      if (score > (best ? best.risk_score : 0)) best = { category, name, risk_score: Math.round(score * 100) / 100, matched_keywords: hits };
+    for (const [category, pb] of Object.entries(PLAYBOOKS)) {
+      const hits = pb.keywords.filter((k) => lower.includes(k));
+      const score = hits.length ? Math.min(1.0, hits.length * 0.25 + pb.weight * 0.5) : 0;
+      if (score > (best ? best.risk_score : 0)) {
+        best = { category, name: pb.name, risk_score: Math.round(score * 100) / 100, matched_keywords: hits, advisory_source: pb.advisory_source, safe_advice: pb.safe_advice };
+      }
     }
-    return best && best.risk_score >= 0.65 ? { detected: true, ...best } : { detected: false, category: "BENIGN_OR_INCONCLUSIVE", risk_score: 0.2, matched_keywords: [] };
+    return best && best.risk_score >= 0.65
+      ? { detected: true, ...best }
+      : { detected: false, category: "BENIGN_OR_INCONCLUSIVE", risk_score: 0.2, matched_keywords: [], safe_advice: {} };
   }
 
-  // ---- gated tools; each re-runs itself with the approval token once Rahul approves ----
   function fileChakshu(phone_number, category, evidence, tok) {
     const r = gate("ReporterAgent", "report.file_chakshu", { phone_number, category }, tok, (t) => fileChakshu(phone_number, category, evidence, t));
     if (!r.allowed) return r;
@@ -142,7 +199,7 @@
   }
 
   async function sha256(text) {
-    if (!crypto.subtle) return hex(32) + hex(32); // file:// has no subtle crypto
+    if (!crypto.subtle) return hex(32) + hex(32);
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
   }
@@ -159,9 +216,15 @@
   const routes = {
     "GET /api/status": () => ({ status: "ONLINE", mode: "browser" }),
     "GET /api/state": () => {
+      const trusted_contacts = Object.entries(NUMBERS)
+        .filter(([, v]) => v.risk_score < 0.5)
+        .map(([number, v]) => ({ number, label: v.category, operator: v.operator || "" }));
       return {
         audit_log: S.logs.slice(0, 200), approvals: Object.values(S.approvals), telegram_messages: S.messages,
         voice_notes: S.notes, recovery: S.recovery, extracted_entities: S.entities,
+        strike_stats: { turns: S.step, minutes_wasted: S.step > 0 ? 26 + (S.step - 1) * 4 : 0 },
+        trusted_contacts,
+        mcp_servers: MCP_SERVERS,
         fraud_graph: { ...S.graph, stats: { total_nodes: S.graph.nodes.length, total_links: S.graph.links.length, syndicates_tracked: 2, mule_accounts_mapped: 1 } },
       };
     },
@@ -173,21 +236,22 @@
         gate("CallScreenerAgent", "telephony.answer_call", { call_id: "CALL-X210", caller_number });
         return { action: "KAVACH_SCREENING", caller_number, ...rep, verdict: "HIGH_RISK_SCAM_CALLER", screening_status: "INTERCEPTED_BEFORE_RINGING" };
       }
-      return { action: "RING_NORMALLY", caller_number, ...rep, verdict: "BENIGN_OR_TRUSTED" };
+      return { action: "RING_NORMALLY", caller_number, ...rep, verdict: "BENIGN_OR_TRUSTED", screening_status: "PUT_THROUGH_WITH_SUMMARY" };
     },
-    "POST /api/shield/kavach-tap": ({ call_id = "CALL-X210", transcript = "", language = "kn" }) => {
+    "POST /api/shield/kavach-tap": ({ call_id = "CALL-X210", transcript = "", language = "kn", caller_number = SCAMMER }) => {
       gate("ShieldAgent", "telephony.join_conference", { call_id, participant: "KAVACH_SHIELD" });
       const detection = matchPattern(transcript);
       const category = detection.detected ? detection.category : "digital_arrest";
       gate("ScamDetectorAgent", "knowledge.get_safe_advice", { category, language });
-      const warning = category === "digital_arrest" ? ADVICE[language] : ADVICE.en;
+      const pb = PLAYBOOKS[category] || PLAYBOOKS.digital_arrest;
+      const warning = pb.safe_advice[language] || pb.safe_advice.en;
       gate("ShieldAgent", "telephony.speak_warning", { call_id, language, message_preview: warning.slice(0, 40) });
-      const ch = fileChakshu(SCAMMER, detection.name || "Suspected scam call", `Matched keywords: ${detection.matched_keywords.join(", ") || "none"}`);
+      const ch = fileChakshu(caller_number, detection.name || "Suspected scam call", `Matched keywords: ${detection.matched_keywords.join(", ") || "none"}`);
       notify(`Amma received a '${detection.name || "Digital Arrest"}' scam call`, [
         `Matched playbook: ${detection.name || "unknown"} (risk ${Math.round(detection.risk_score * 100)}%).`,
         `KAVACH joined the call and spoke a calm warning to Amma in ${LANG[language]}.`,
         "No money was moved.",
-        `Sanchar Saathi report on ${SCAMMER} is waiting for your approval.`,
+        `Sanchar Saathi report on ${caller_number} is waiting for your approval.`,
       ], [...(ch.approval_id ? [{ id: ch.approval_id, label: "Approve report", type: "primary" }] : []), { id: "call_amma", label: "Call Amma", type: "link" }]);
       return { status: "INTERVENED", detection, spoken_warning: warning, language, risk_score: detection.risk_score, suggested_action: "HANG_UP" };
     },
@@ -208,7 +272,7 @@
       let voice_note = null;
       if (is_scam) {
         gate("ShieldAgent", "family.send_voice_note", { recipient: "Amma", language });
-        voice_note = { status: "SUCCESS", voice_note: { recipient: "Amma", language, transcript: SMS_WARN[language] } };
+        voice_note = { status: "SUCCESS", voice_note: { recipient: "Amma", language, transcript: SMS_WARN[language] || SMS_WARN.en } };
         S.notes.unshift(voice_note.voice_note);
       }
       return { is_scam, sender, url_analysis, pattern_analysis: pattern, voice_note, verdict: is_scam ? "PHISHING_MALICIOUS" : "SAFE" };
@@ -220,14 +284,14 @@
       const acc = (message.match(/(?:account\s*(?:number)?|a\/c)[\s:]*([0-9]{9,16})/i) || [])[1] || null;
       if (upi && !S.entities.upi_ids.includes(upi)) {
         S.entities.upi_ids.push(upi);
-        addEntity(upi, "upi", { captured_by: "StrikeDecoy" });
+        addEntity(upi, "upi", { captured_by: "StrikeDecoy", scam_type: "Digital Arrest" });
         link(SCAMMER, upi, "REVEALED_UPI");
       }
       if (acc) {
         const masked = `HDFC ····${acc.slice(-4)}`;
         if (!S.entities.mule_accounts.includes(masked)) {
           S.entities.mule_accounts.push(masked);
-          addEntity(masked, "mule_account", { account_number: acc });
+          addEntity(masked, "mule_account", { account_number: acc, bank: "HDFC Bank" });
           if (upi) link(upi, masked, "SETTLES_INTO");
         }
       }
@@ -240,7 +304,8 @@
         S.chakshu = true;
         chakshu_draft = fileChakshu(SCAMMER, "Digital Arrest Impersonation", `Strike Decoy extracted UPI ID '${upi || "n/a"}' and mule account '${acc || "n/a"}'.`);
       }
-      return { step: S.step, scammer_input: message, decoy_response: reply, captured_upi: upi, captured_account: acc, total_minutes_wasted: 26, all_extracted_entities: S.entities, chakshu_draft, status: "ENGAGING_SCAMMER" };
+      const total_minutes_wasted = 26 + (S.step - 1) * 4;
+      return { step: S.step, scammer_input: message, decoy_response: reply, captured_upi: upi, captured_account: acc, total_minutes_wasted, all_extracted_entities: S.entities, chakshu_draft, status: "ENGAGING_SCAMMER" };
     },
     "POST /api/recover/trigger": async ({ amount = 48000, scammer_number = SCAMMER, destination_mule = "HDFC ····4471", transaction_id = "UPI-619284019284" }) => {
       const d = new Date();
@@ -257,7 +322,11 @@
         `6. Destination Mule Account: ${destination_mule}.`,
         `7. Caller Phone Number: ${scammer_number}.`,
         "8. Requested Action: Immediate inter-bank freeze request via Indian Cybercrime Coordination Centre (I4C) API to the receiving bank's nodal officer.",
-      ].join("\n") };
+      ].join("\n"), checklist: [
+        "Keep Bank Statement SMS ready",
+        "Mention Transaction RRN explicitly",
+        "Request immediate Lien on recipient account",
+      ] };
       const ncrp = draftNcrp(inc);
       const sha = await sha256(JSON.stringify(inc));
       const evidence = { dossier_id: `EVID-${sha.slice(0, 10).toUpperCase()}`, sha256_hash: sha, timestamp: d.toISOString(), artifacts_compiled: ["telephony_call_recording_metadata.json", "strike_decoy_extracted_upi.json", "bank_sms_debit_notification.txt", "caller_reputation_audit_trail.json"], legal_admissibility: "Indian Evidence Act Section 65B Compliant", status: "SEALED" };
@@ -275,7 +344,12 @@
       } };
       return S.recovery;
     },
-    "POST /api/policy/test-violation": () => gate("MaliciousOrFaultyAgent", "bank.move_money", { amount: 50000, destination: "MULE_ACCOUNT_XYZ" }),
+    "POST /api/policy/test-violation": ({ tool_name = "bank.move_money" } = {}) => {
+      const allowedTools = ["bank.move_money", "auth.share_otp", "device.read_banking_app", "telephony.impersonate_police"];
+      const tool = allowedTools.includes(tool_name) ? tool_name : "bank.move_money";
+      const args = tool === "bank.move_money" ? { amount: 50000, destination: "MULE_ACCOUNT_XYZ" } : { target: "Amma (Bengaluru)", requested_action: tool };
+      return gate("MaliciousOrFaultyAgent", tool, args);
+    },
   };
 
   function decide(id, { action = "APPROVE", guardian_id = "Rahul (Son)" }) {
@@ -295,13 +369,13 @@
 
   reset();
   window.KavachMock = {
-    ADVICE, SMS_WARN,
+    ADVICE, SMS_WARN, PLAYBOOKS, MCP_SERVERS,
     async handle(method, path, body) {
       const m = path.match(/^\/api\/approvals\/([^/]+)\/action$/);
       if (method === "POST" && m) return decide(decodeURIComponent(m[1]), body || {});
       const fn = routes[`${method} ${path}`];
       if (!fn) throw new Error(`No route ${method} ${path}`);
-      return JSON.parse(JSON.stringify(await fn(body || {}))); // copy, like a network round trip
+      return JSON.parse(JSON.stringify(await fn(body || {})));
     },
   };
 })();

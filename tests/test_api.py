@@ -104,5 +104,14 @@ def test_input_size_is_bounded(client):
 
 def test_dashboard_reads_do_not_fill_the_audit_log(client):
     n = len(client.get("/api/state").json()["audit_log"])
-    client.get("/api/state")
-    assert len(client.get("/api/state").json()["audit_log"]) == n
+    state = client.get("/api/state").json()
+    assert len(state["audit_log"]) == n
+    assert len(state["mcp_servers"]) == 6
+    assert "strike_stats" in state
+
+
+def test_policy_violation_supports_other_forbidden_tools(client):
+    r = client.post("/api/policy/test-violation", json={"tool_name": "auth.share_otp"})
+    assert r.status_code == 200
+    assert r.json()["decision"] == "BLOCKED"
+    assert r.json()["tier"] == "NEVER_ALLOWED"

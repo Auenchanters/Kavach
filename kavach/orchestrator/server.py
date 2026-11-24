@@ -4,7 +4,7 @@ Exposes REST APIs and serves the web app (desktop guardian console + Amma's phon
 """
 
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
@@ -58,6 +58,7 @@ class KavachTapRequest(BaseModel):
     call_id: str = Field("CALL-X210", max_length=32)
     transcript: str = Field("This is Inspector Alok Verma from CBI Cyber Crime HQ New Delhi. Non-bailable digital arrest warrant is issued against your Aadhaar.", max_length=4000)
     language: Language = "kn"
+    caller_number: str = Field("+91 98XXX XX210", max_length=32)
 
 class EndCallRequest(BaseModel):
     call_id: str = Field("CALL-X210", max_length=32)
@@ -79,6 +80,23 @@ class RecoverTriggerRequest(BaseModel):
 class ApprovalActionRequest(BaseModel):
     action: Literal["APPROVE", "REJECT"] = "APPROVE"
     guardian_id: str = Field("Rahul (Son)", max_length=40)
+
+class ViolationTestRequest(BaseModel):
+    tool_name: Literal[
+        "bank.move_money",
+        "auth.share_otp",
+        "device.read_banking_app",
+        "telephony.impersonate_police",
+    ] = "bank.move_money"
+
+MCP_CATALOG = [
+    {"name": "kavach-telephony", "purpose": "Call screening, conference join, native TTS warnings, decoy transfer", "tools": ["telephony.answer_call", "telephony.join_conference", "telephony.speak_warning", "telephony.transfer_to_decoy", "telephony.end_call"]},
+    {"name": "kavach-intel", "purpose": "Phone/URL reputation & NetworkX shared fraud knowledge graph", "tools": ["intel.check_number", "intel.check_url", "intel.add_entity", "intel.link_entities", "intel.get_fraud_graph"]},
+    {"name": "kavach-bank", "purpose": "Consent-based debit SMS parser & Golden Hour mule lien holds", "tools": ["bank.parse_debit_sms", "bank.request_hold", "bank.request_block"]},
+    {"name": "kavach-report", "purpose": "1930 helpline briefing, cybercrime.gov.in NCRP & DoT Chakshu filings", "tools": ["report.prepare_1930_brief", "report.draft_ncrp_complaint", "report.file_chakshu"]},
+    {"name": "kavach-family", "purpose": "Guardian Telegram alerts, approval cards & voice notes", "tools": ["family.notify_guardian", "family.request_approval", "family.send_voice_note"]},
+    {"name": "kavach-knowledge", "purpose": "RBI / DoT / I4C scam playbooks & localized advisories", "tools": ["knowledge.match_scam_pattern", "knowledge.get_safe_advice"]},
+]
 
 # ----------------- APIs -----------------
 
@@ -103,6 +121,11 @@ def get_system_status():
 @app.get("/api/state")
 def get_state():
     """Everything the dashboard draws, in one call."""
+    trusted_contacts = [
+        {"number": num, "label": info.get("category", "Trusted Contact"), "operator": info.get("operator", "")}
+        for num, info in sys_.intel.intel_db.get("numbers", {}).items()
+        if info.get("risk_score", 1.0) < 0.5
+    ]
     return {
         "audit_log": sys_.policy_gate.get_logs(200),
         "approvals": list(sys_.policy_gate.pending_approvals.values()),
@@ -111,6 +134,12 @@ def get_state():
         "fraud_graph": sys_.intel.graph_payload(),
         "recovery": sys_.recover.last_run,
         "extracted_entities": sys_.strike.extracted_entities,
+        "strike_stats": {
+            "turns": sys_.strike.conversation_step,
+            "minutes_wasted": sys_.strike.active_minutes_wasted(),
+        },
+        "trusted_contacts": trusted_contacts,
+        "mcp_servers": MCP_CATALOG,
     }
 
 @app.get("/api/audit-log")
@@ -146,7 +175,7 @@ def screen_call(req: ScreenCallRequest):
 
 @app.post("/api/shield/kavach-tap")
 def kavach_button_tap(req: KavachTapRequest):
-    return sys_.shield.handle_kavach_button_tap(req.call_id, req.transcript, req.language)
+    return sys_.shield.handle_kavach_button_tap(req.call_id, req.transcript, req.language, req.caller_number)
 
 @app.post("/api/shield/end-call")
 def end_call(req: EndCallRequest):
@@ -169,9 +198,16 @@ def trigger_recover_swarm(req: RecoverTriggerRequest):
     return sys_.recover.trigger_recovery(req.model_dump())
 
 @app.post("/api/policy/test-violation")
-def test_policy_violation():
-    """Attempts prohibited fund transfer to demonstrate Policy Gate security rejection"""
-    return sys_.bank.attempt_prohibited_move_money(50000.0, "MULE_ACCOUNT_XYZ")
+def test_policy_violation(req: Optional[ViolationTestRequest] = None):
+    """Attempts prohibited action to demonstrate Policy Gate security rejection"""
+    tool_name = req.tool_name if req else "bank.move_money"
+    if tool_name == "bank.move_money":
+        return sys_.bank.attempt_prohibited_move_money(50000.0, "MULE_ACCOUNT_XYZ")
+    return sys_.policy_gate.evaluate(
+        "MaliciousOrFaultyAgent",
+        tool_name,
+        {"target": "Amma (Bengaluru)", "requested_action": tool_name},
+    )
 
 @app.post("/api/reset")
 def reset_demo():

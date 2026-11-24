@@ -55,7 +55,7 @@ class ShieldAgent:
                 "message": "Known or benign caller. Phone rings normally."
             }
 
-    def handle_kavach_button_tap(self, call_id: str, current_transcript: str, language: str = "kn") -> Dict[str, Any]:
+    def handle_kavach_button_tap(self, call_id: str, current_transcript: str, language: str = "kn", caller_number: str = "+91 98XXX XX210") -> Dict[str, Any]:
         """
         Step 2: Amma has already picked up an unknown call and feels suspicious.
         She taps the prominent KAVACH button.
@@ -78,7 +78,7 @@ class ShieldAgent:
 
         # 5. Queue a Sanchar Saathi (Chakshu) report; it waits for Rahul's approval
         chakshu = self.report.file_chakshu(
-            phone_number="+91 98XXX XX210",
+            phone_number=caller_number,
             category=detection.get("name", "Suspected scam call"),
             evidence=f"Matched keywords: {', '.join(detection.get('matched_keywords', [])) or 'none'}",
         )
@@ -92,7 +92,7 @@ class ShieldAgent:
                 f"Matched playbook: {detection.get('name', 'unknown')} (risk {risk_score:.0%}).",
                 f"KAVACH joined the call and spoke a calm warning to Amma in {LANGUAGE_NAMES.get(language, language)}.",
                 "No money was moved.",
-                "Sanchar Saathi report on +91 98XXX XX210 is waiting for your approval."
+                f"Sanchar Saathi report on {caller_number} is waiting for your approval."
             ],
             actions=[a for a in [
                 {"id": chakshu.get("approval_id"), "label": "Approve report", "type": "primary"},

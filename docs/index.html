@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>KAVACH · Scam defense for families</title>
   <meta name="description" content="KAVACH stands between parents and scammers: call screening, a decoy that wastes scammers' time, and golden-hour recovery, all behind a guardian-approved policy gate.">
-  <meta name="theme-color" content="#0B0E0D">
+  <meta name="theme-color" content="#080B0A">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -13,7 +13,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
 </head>
 <body data-view="amma">
@@ -28,24 +28,56 @@
     <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
     <symbol id="i-hangup" viewBox="0 0 24 24"><path d="M3 14.5c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5c-2.3-.8-4.7-.8-7 0v2.5l-3 1.5L3 14.5Z" fill="currentColor"/></symbol>
     <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="14" width="17" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="7" r=".9" fill="currentColor"/><circle cx="7" cy="17" r=".9" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   </svg>
 
   <div class="app">
-    <!-- Navigation: left rail on desktop, bottom tab bar on phones -->
+    <!-- Left Rail (desktop) / Bottom Bar (mobile) -->
     <nav class="rail" aria-label="Sections">
-      <a class="mark" href="#" aria-label="KAVACH home"><svg><use href="#i-shield"/></svg></a>
-      <button class="nav-btn" data-nav="amma"><svg><use href="#i-phone"/></svg><span class="d-only">Live</span><span class="m-only">Amma</span></button>
-      <button class="nav-btn m-only-flex" data-nav="guardian"><svg><use href="#i-guard"/></svg><span>Rahul</span></button>
-      <button class="nav-btn" data-nav="recover"><svg><use href="#i-bolt"/></svg><span>Recover</span></button>
-      <button class="nav-btn" data-nav="strike"><svg><use href="#i-mask"/></svg><span>Strike</span></button>
-      <button class="nav-btn" data-nav="gate"><svg><use href="#i-gate"/></svg><span>Gate</span><b class="nav-count" id="pendingCount" hidden></b></button>
+      <a class="mark" href="#amma" aria-label="KAVACH home">
+        <img src="assets/shield-emblem.png" alt="KAVACH" class="emblem-img">
+      </a>
+      <button class="nav-btn" data-nav="amma" title="Live Phone & Guardian Console">
+        <svg><use href="#i-phone"/></svg>
+        <span class="d-only">Live</span><span class="m-only">Amma</span>
+      </button>
+      <button class="nav-btn m-only-flex" data-nav="guardian" title="Rahul's Guardian Console">
+        <svg><use href="#i-guard"/></svg>
+        <span>Rahul</span>
+      </button>
+      <button class="nav-btn" data-nav="recover" title="Golden Hour Recover Swarm">
+        <svg><use href="#i-bolt"/></svg>
+        <span>Recover</span>
+        <b class="nav-dot" id="recoverDot" hidden></b>
+      </button>
+      <button class="nav-btn" data-nav="strike" title="Strike Decoy & Fraud Graph">
+        <svg><use href="#i-mask"/></svg>
+        <span>Strike</span>
+        <b class="nav-count" id="strikeCount" hidden></b>
+      </button>
+      <button class="nav-btn" data-nav="gate" title="Policy Gate & Audit Trail">
+        <svg><use href="#i-gate"/></svg>
+        <span>Gate</span>
+        <b class="nav-count" id="pendingCount" hidden></b>
+      </button>
+      <button class="rail-mcp d-only-flex" id="btnMcpModal" title="Inspect 6 FastMCP Servers">
+        <svg><use href="#i-server"/></svg>
+        <span>6 MCP</span>
+      </button>
     </nav>
 
     <div class="main">
+      <!-- Top Bar -->
       <header class="topbar">
         <div class="title">
-          <h1>Kavach</h1>
+          <div class="title-stack">
+            <h1>Kavach</h1>
+            <span class="tagline d-only">No Amma left alone with a scammer</span>
+          </div>
           <span class="conn" id="conn" title="Checking for the KAVACH server…"><i></i><span>Connecting</span></span>
+          <button class="mcp-pill d-only-flex" id="btnMcpTop"><span class="pulse-mini"></span>6 MCP Servers</button>
         </div>
         <div class="steps" role="group" aria-label="Demo scenario">
           <button class="step" data-step="1"><b>1</b>Scam call</button>
@@ -62,12 +94,24 @@
           <!-- ============ AMMA'S PHONE ============ -->
           <section id="v-amma" class="view" aria-label="Amma's phone">
             <div class="device">
+              <div class="device-notch d-only-flex" aria-hidden="true">
+                <span class="notch-spk"></span>
+                <span class="notch-cam"></span>
+              </div>
               <div class="screen" id="screen">
                 <div class="statusbar d-only-flex"><span>11:42</span><span>Jio 5G · 98%</span></div>
 
                 <div class="a-home" id="aHome">
                   <div class="a-head">
-                    <div class="a-brand"><svg><use href="#i-shield"/></svg><div><strong>KAVACH</strong><span>You are protected</span></div></div>
+                    <div class="a-brand">
+                      <div class="avatar-ring">
+                        <img src="assets/avatar-amma.png" alt="Amma" class="avatar-img">
+                      </div>
+                      <div>
+                        <strong>Amma · Protected</strong>
+                        <span>KAVACH Shield On</span>
+                      </div>
+                    </div>
                     <div class="seg" role="radiogroup" aria-label="Warning language">
                       <button role="radio" data-lang="kn" lang="kn">ಕನ್ನಡ</button>
                       <button role="radio" data-lang="hi" lang="hi">हिंदी</button>
@@ -77,19 +121,45 @@
 
                   <div class="a-safe">
                     <span class="pulse-dot"></span>
-                    <div><strong>Calls are being screened</strong><span>Unknown numbers are checked before your phone rings.</span></div>
+                    <div>
+                      <strong>Calls &amp; SMS screened</strong>
+                      <span>Unknown callers are verified before ringing. 2 trusted contacts bypass checks.</span>
+                    </div>
                   </div>
 
-                  <article class="sms" aria-label="New message">
-                    <div class="sms-meta"><svg><use href="#i-msg"/></svg><strong>VK-DISCOM-ALERT</strong><span>11:38</span></div>
+                  <!-- Call Screening Quick Launcher -->
+                  <div class="a-sim">
+                    <div class="a-sim-head">
+                      <span>Call shield test</span>
+                      <span class="mono">kavach-telephony</span>
+                    </div>
+                    <div class="a-sim-btns">
+                      <button class="btn gold small" id="btnSimScam"><svg><use href="#i-phone"/></svg>Scam call</button>
+                      <button class="btn ghost small" id="btnSimTrusted">Trusted call (Rahul)</button>
+                    </div>
+                  </div>
+
+                  <!-- SMS Scanner Card -->
+                  <article class="sms" aria-label="Suspicious SMS scanner">
+                    <div class="sms-top">
+                      <div class="sms-meta"><svg><use href="#i-msg"/></svg><strong id="smsSender">VK-DISCOM-ALERT</strong><span>11:38</span></div>
+                      <div class="sms-presets" role="group" aria-label="Sample SMS messages">
+                        <button class="preset-pill active" data-sms="ebill">Electricity bill</button>
+                        <button class="preset-pill" data-sms="kyc">KYC expiry</button>
+                        <button class="preset-pill" data-sms="safe">Rahul lunch</button>
+                      </div>
+                    </div>
                     <p id="smsText">Dear consumer, your electricity power will be cut tonight at 9:30 PM because previous month bill was not updated. Immediately call 9876543210 or pay at bit.ly/eb-bill</p>
-                    <button class="btn gold block" id="btnCheckSms">Check with KAVACH</button>
+                    <button class="btn gold block" id="btnCheckSms">Check message with KAVACH</button>
                     <div class="sms-verdict" id="smsVerdict" hidden></div>
                   </article>
 
                   <button class="panic" id="btnPanic">
-                    <strong>I've been cheated</strong>
-                    <span>Starts golden-hour recovery and tells Rahul</span>
+                    <div class="panic-row">
+                      <strong>I've been cheated</strong>
+                      <span class="tag red">Golden Hour</span>
+                    </div>
+                    <span>Launches 4-agent bank lien &amp; 1930 swarm, alerts Rahul</span>
                   </button>
                 </div>
 
@@ -102,23 +172,44 @@
                     <div class="call-timer mono" id="callTimer">00:00</div>
                   </div>
 
+                  <!-- 3-way Conference Strip -->
+                  <div class="conf-strip" id="confStrip">
+                    <span class="conf-node on">Amma</span>
+                    <span class="conf-sep">·</span>
+                    <span class="conf-node on" id="confCaller">Caller</span>
+                    <span class="conf-sep">·</span>
+                    <span class="conf-node" id="confKavach">KAVACH Shield</span>
+                  </div>
+
+                  <!-- Live Audio Equalizer -->
+                  <canvas id="callWave" class="call-wave" width="320" height="36" aria-hidden="true"></canvas>
+
                   <blockquote class="transcript" id="transcript"></blockquote>
 
                   <div class="kv-wrap" id="kvWrap">
-                    <button class="kv-btn" id="btnKavach" aria-describedby="kvHint"><svg><use href="#i-shield"/></svg><span>KAVACH</span></button>
-                    <p id="kvHint">Tap if this call feels wrong</p>
+                    <button class="kv-btn" id="btnKavach" aria-describedby="kvHint">
+                      <img src="assets/shield-emblem.png" alt="" class="kv-shield-img">
+                      <span>KAVACH</span>
+                    </button>
+                    <p id="kvHint">Tap to join KAVACH Conference Protection</p>
                   </div>
 
                   <div class="hud" id="hud" hidden>
-                    <div class="hud-row"><span>Scam risk</span><strong class="mono" id="riskPct">0%</strong></div>
+                    <div class="hud-row"><span>Scam confidence</span><strong class="mono" id="riskPct">0%</strong></div>
                     <div class="meter"><i id="riskBar"></i></div>
                     <div class="verdict" id="verdict"></div>
+                    <div class="kw-row" id="kwRow" hidden></div>
                     <p class="warning" id="warningText"></p>
-                    <button class="btn ghost small" id="btnSpeak"><svg><use href="#i-speaker"/></svg>Play warning</button>
+                    <div class="hud-btns">
+                      <button class="btn ghost small" id="btnSpeak"><svg><use href="#i-speaker"/></svg>Play warning</button>
+                      <button class="btn gold small" id="btnToDecoy">Route to Ramesh Decoy →</button>
+                    </div>
                   </div>
 
                   <div class="call-actions">
+                    <button class="call-sub" id="btnMute" title="Mute microphone" aria-pressed="false">Mute</button>
                     <button class="hangup" id="btnHangup" aria-label="End call"><svg><use href="#i-hangup"/></svg></button>
+                    <button class="call-sub" id="btnSpeakerToggle" title="Speakerphone" aria-pressed="true">Speaker</button>
                   </div>
                 </div>
               </div>
@@ -128,30 +219,60 @@
           <!-- ============ RAHUL'S GUARDIAN CONSOLE ============ -->
           <section id="v-guardian" class="view" aria-label="Rahul's guardian console">
             <div class="g-head">
-              <h2 class="display">Rahul’s console</h2>
-              <p>Guardian for Amma · Bengaluru. KAVACH asks you before it files a report or freezes an account.</p>
+              <div class="g-identity">
+                <div class="avatar-ring lg">
+                  <img src="assets/avatar-rahul.png" alt="Rahul" class="avatar-img">
+                </div>
+                <div>
+                  <span class="eyebrow">Guardian Console · Telegram Bot Linked</span>
+                  <h2 class="display">Rahul’s console</h2>
+                  <p>Guardian for Amma · Bengaluru. KAVACH asks you before it files a report or freezes an account.</p>
+                </div>
+              </div>
             </div>
 
             <div class="golden" id="goldenCard" hidden>
-              <div>
-                <span class="eyebrow">Golden hour</span>
-                <div class="golden-time mono" id="goldenTime">60:00</div>
-                <span class="muted" id="goldenSub"></span>
+              <div class="golden-head">
+                <div>
+                  <span class="eyebrow">Golden hour active</span>
+                  <div class="golden-time mono" id="goldenTime">60:00</div>
+                  <span class="muted" id="goldenSub"></span>
+                </div>
+                <button class="btn gold small" data-nav="recover">Open Recover Swarm →</button>
               </div>
               <div class="golden-bar"><i id="goldenBar"></i></div>
             </div>
 
             <div class="stats">
               <div class="stat"><strong id="statCalls">0</strong><span>Scam calls stopped</span></div>
+              <div class="stat"><strong id="statWasted">0 min</strong><span>Scammer time wasted</span></div>
               <div class="stat"><strong id="statProtected">₹0</strong><span>Frozen in golden hour</span></div>
               <div class="stat"><strong id="statBlocked">0</strong><span>Blocked by policy</span></div>
             </div>
 
-            <h3 class="section-h">Needs your approval</h3>
-            <div id="approvalList" class="stack"></div>
+            <div class="g-split">
+              <div>
+                <div class="section-row">
+                  <h3 class="section-h">Needs your approval</h3>
+                  <span class="mono muted" id="apprSummary"></span>
+                </div>
+                <div id="approvalList" class="stack"></div>
 
-            <h3 class="section-h">Alerts</h3>
-            <div id="alertFeed" class="stack"></div>
+                <h3 class="section-h">Telegram Alert Stream</h3>
+                <div id="alertFeed" class="stack"></div>
+              </div>
+            </div>
+
+            <div class="whitelist-card card">
+              <div class="whitelist-head">
+                <div>
+                  <h3>Trusted Contacts Whitelist</h3>
+                  <span class="muted">Verified numbers ring Amma directly without call screening delay</span>
+                </div>
+                <span class="tag green">Auto-Bypass</span>
+              </div>
+              <div class="whitelist-chips" id="trustedList"></div>
+            </div>
           </section>
         </div>
 
@@ -159,9 +280,9 @@
         <section id="v-recover" class="view" aria-labelledby="recH">
           <div class="v-head">
             <div>
-              <span class="eyebrow">Recover swarm</span>
+              <span class="eyebrow">Recover swarm · 4 Parallel Agents</span>
               <h2 class="display" id="recH">Four agents, one golden hour</h2>
-              <p>When money leaves Amma’s account, four agents start at once. Anything that touches a bank or the police waits for Rahul.</p>
+              <p>When money leaves Amma’s account, four agents start concurrently inside the 60-minute window. Anything that touches a bank or police waits for Rahul.</p>
             </div>
           </div>
           <div id="recoverBody"></div>
@@ -171,26 +292,52 @@
         <section id="v-strike" class="view" aria-labelledby="strH">
           <div class="v-head">
             <div>
-              <span class="eyebrow">Strike decoy</span>
+              <span class="eyebrow">Strike decoy &amp; Shared Intelligence</span>
               <h2 class="display" id="strH">Ramesh keeps them talking</h2>
-              <p>Confirmed scam calls go to “Ramesh”, a slow, polite retired teacher. Every UPI ID and account they reveal goes into the shared fraud graph.</p>
+              <p>Confirmed scam callers go to “Ramesh Sharma”, a slow, polite retired teacher. Every UPI ID and mule account extracted feeds the shared NetworkX fraud graph.</p>
             </div>
           </div>
 
           <div class="strike">
             <aside class="persona card">
-              <div class="persona-top"><span class="avatar">RS</span><div><strong>Ramesh Sharma, 67</strong><span>Retired maths teacher · Jayanagar</span></div></div>
+              <div class="persona-top">
+                <div class="avatar-ring xl">
+                  <img src="assets/avatar-ramesh.png" alt="Ramesh Sharma" class="avatar-img">
+                </div>
+                <div>
+                  <strong>Ramesh Sharma</strong>
+                  <span class="persona-age mono">AGE 67 · RETIRED TEACHER</span>
+                  <span class="persona-loc">Jayanagar, Bengaluru</span>
+                </div>
+              </div>
               <ul class="ticks">
                 <li>Hard of hearing, asks them to repeat</li>
-                <li>Never shares real financial data</li>
-                <li>Never moves money</li>
+                <li>Never shares real PII or OTPs</li>
+                <li>Synthetic test accounts only</li>
               </ul>
-              <h4>Captured so far</h4>
-              <div id="entities" class="chips"></div>
-              <div class="wasted"><strong class="mono" id="wasted">0</strong><span>minutes of scammer time</span></div>
+
+              <div class="intel-split">
+                <div>
+                  <h4>Captured UPI IDs</h4>
+                  <div id="entitiesUpi" class="chips"></div>
+                </div>
+                <div>
+                  <h4>Mule Accounts</h4>
+                  <div id="entitiesMule" class="chips"></div>
+                </div>
+              </div>
+
+              <div class="wasted">
+                <strong class="mono" id="wasted">0</strong>
+                <span>minutes of scammer time wasted</span>
+              </div>
             </aside>
 
             <div class="chat card">
+              <div class="chat-head">
+                <span class="tag green">Decoy Engaged</span>
+                <span class="mono muted" id="decoyTurnCount">0 turns</span>
+              </div>
               <div class="chat-log" id="chatLog" aria-live="polite"></div>
               <div class="quick" id="quick">
                 <button class="chip-btn">Send ₹50,000 to refund.cbi@okaxis</button>
@@ -199,7 +346,7 @@
               </div>
               <form class="composer" id="composer">
                 <label class="sr" for="scamInput">Play the scammer</label>
-                <input id="scamInput" maxlength="1000" placeholder="Type what the scammer says…" autocomplete="off">
+                <input id="scamInput" maxlength="1000" placeholder="Type what the scammer says (try sharing a UPI ID or bank account)…" autocomplete="off">
                 <button class="btn gold">Send</button>
               </form>
             </div>
@@ -207,10 +354,36 @@
 
           <div class="card graph-card">
             <div class="graph-head">
-              <div><h3>Shared fraud graph</h3><span class="muted" id="graphStats"></span></div>
-              <div class="legend"><span class="lg red">Scam number / mule</span><span class="lg gold">UPI ID</span><span class="lg dk">Syndicate</span><span class="lg blue">Protected family</span></div>
+              <div>
+                <h3>Shared fraud intelligence graph</h3>
+                <span class="muted" id="graphStats"></span>
+              </div>
+              <div class="graph-controls">
+                <div class="graph-filters" role="group" aria-label="Filter graph node types">
+                  <button class="filter-pill active" data-gfilter="all">All</button>
+                  <button class="filter-pill" data-gfilter="syndicate">Syndicates</button>
+                  <button class="filter-pill" data-gfilter="phone">Phones</button>
+                  <button class="filter-pill" data-gfilter="upi">UPIs</button>
+                  <button class="filter-pill" data-gfilter="mule_account">Mules</button>
+                  <button class="filter-pill" data-gfilter="victim">Families</button>
+                </div>
+                <button class="btn ghost small" id="btnResetGraph">Re-center</button>
+              </div>
             </div>
-            <svg id="graph" role="img" aria-label="Fraud graph linking scam numbers, UPI IDs, mule accounts, syndicates and protected families"></svg>
+            <div class="graph-legend-bar">
+              <div class="legend">
+                <span class="lg red">Scam number / mule</span>
+                <span class="lg gold">UPI ID</span>
+                <span class="lg dk">Syndicate</span>
+                <span class="lg blue">Protected family</span>
+                <span class="lg green">Trusted contact</span>
+              </div>
+              <span class="muted d-only">Drag nodes to arrange · Click any node to inspect intelligence</span>
+            </div>
+            <div class="graph-stage">
+              <svg id="graph" role="img" aria-label="Fraud graph linking scam numbers, UPI IDs, mule accounts, syndicates and protected families"></svg>
+              <aside class="node-inspector" id="nodeInspector" hidden></aside>
+            </div>
           </div>
         </section>
 
@@ -218,31 +391,94 @@
         <section id="v-gate" class="view" aria-labelledby="gateH">
           <div class="v-head">
             <div>
-              <span class="eyebrow">Policy gate</span>
+              <span class="eyebrow">Policy gate &amp; MCP Governance</span>
               <h2 class="display" id="gateH">Every tool call, checked and written down</h2>
-              <p>Agents reach the world only through MCP tools, and every call passes this gate first.</p>
+              <p>Agents reach the outside world only through six FastMCP tool servers, and every call passes this 3-tier gate first.</p>
             </div>
-            <button class="btn red-ghost" id="btnViolation">Try a forbidden action</button>
+            <div class="violation-controls">
+              <select id="violationToolSelect" class="select-input" aria-label="Select prohibited action to test">
+                <option value="bank.move_money">bank.move_money (Transfer ₹50,000)</option>
+                <option value="auth.share_otp">auth.share_otp (Leak Victim OTP)</option>
+                <option value="device.read_banking_app">device.read_banking_app (Accessibility Scrape)</option>
+                <option value="telephony.impersonate_police">telephony.impersonate_police (Fake Officer)</option>
+              </select>
+              <button class="btn red-ghost" id="btnViolation">Try forbidden action</button>
+            </div>
           </div>
           <div class="banner" id="violationBanner" hidden role="alert"></div>
 
           <div class="tiers">
-            <div class="tier t-auto"><h4>Automatic</h4><p>Runs at once, logged.</p><ul><li>Number and link checks</li><li>Warnings to Amma</li><li>Alerts to Rahul</li><li>Ending a scam call</li></ul></div>
-            <div class="tier t-appr"><h4>Needs Rahul</h4><p>Waits for one tap of approval.</p><ul><li>Bank lien on a mule account</li><li>NCRP police complaint</li><li>Sanchar Saathi SIM report</li><li>Sharing call transcripts</li></ul></div>
-            <div class="tier t-never"><h4>Never allowed</h4><p>Blocked even if an agent asks.</p><ul><li>Moving money</li><li>Sharing OTP or PIN</li><li>Reading banking apps</li><li>Pretending to be police</li></ul></div>
+            <div class="tier t-auto">
+              <div class="tier-num mono">TIER 01</div>
+              <h4>Automatic</h4>
+              <p>Runs at once within safe boundaries, always logged.</p>
+              <ul><li>Number and phishing link checks</li><li>Spoken native warnings to Amma</li><li>Telegram alerts to Rahul</li><li>Defensive call termination</li></ul>
+            </div>
+            <div class="tier t-appr">
+              <div class="tier-num mono">TIER 02</div>
+              <h4>Needs Rahul</h4>
+              <p>Pauses execution until one tap of guardian approval.</p>
+              <ul><li>Bank lien hold on a mule account</li><li>NCRP cybercrime.gov.in complaint</li><li>DoT Sanchar Saathi SIM report</li><li>Sharing call transcripts with police</li></ul>
+            </div>
+            <div class="tier t-never">
+              <div class="tier-num mono">TIER 03</div>
+              <h4>Never allowed</h4>
+              <p>Hard-blocked at the gate even if an agent asks.</p>
+              <ul><li>Moving money or initiating UPI transfers</li><li>Sharing OTP, PIN, or real credentials</li><li>Reading banking apps via Accessibility</li><li>Impersonating police or officials</li></ul>
+            </div>
+          </div>
+
+          <div class="card mcp-section">
+            <div class="table-head">
+              <div>
+                <h3>6 FastMCP Tool Servers</h3>
+                <span class="muted">Streamable HTTP boundaries isolating every agent capability</span>
+              </div>
+              <span class="tag green">6 / 6 Active</span>
+            </div>
+            <div class="mcp-grid" id="mcpGrid"></div>
           </div>
 
           <div class="card">
-            <div class="table-head"><h3>Audit log</h3><span class="muted" id="logCount"></span></div>
+            <div class="audit-toolbar">
+              <div class="audit-title-group">
+                <h3>Immutable Audit Log</h3>
+                <span class="muted" id="logCount"></span>
+              </div>
+              <div class="audit-filters">
+                <div class="graph-filters" role="group" aria-label="Filter audit logs by tier">
+                  <button class="filter-pill active" data-tfilter="ALL">All</button>
+                  <button class="filter-pill" data-tfilter="AUTOMATIC">Automatic</button>
+                  <button class="filter-pill" data-tfilter="NEEDS_GUARDIAN_APPROVAL">Needs Rahul</button>
+                  <button class="filter-pill" data-tfilter="NEVER_ALLOWED">Never</button>
+                </div>
+                <input type="search" id="auditSearch" class="search-input" placeholder="Filter tool, agent, reason…" aria-label="Search audit log">
+              </div>
+            </div>
             <div class="table-wrap">
               <table class="audit">
-                <thead><tr><th>Time</th><th>Agent</th><th>Tool</th><th>Tier</th><th>Decision</th><th>Reason</th></tr></thead>
+                <thead><tr><th>Time</th><th>Agent</th><th>Tool</th><th>Tier</th><th>Decision</th><th>Reason &amp; Args</th></tr></thead>
                 <tbody id="auditBody"></tbody>
               </table>
             </div>
           </div>
         </section>
       </main>
+    </div>
+  </div>
+
+  <!-- MCP Architecture Modal -->
+  <div class="modal-backdrop" id="mcpModal" hidden>
+    <div class="modal card" role="dialog" aria-modal="true" aria-labelledby="mcpModalTitle">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">System Architecture · Track 1: Make MCP Matter</span>
+          <h2 class="display" id="mcpModalTitle">Six isolated MCP servers</h2>
+        </div>
+        <button class="btn ghost small" id="btnCloseMcpModal" aria-label="Close architecture panel"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <p class="muted" style="margin-bottom:16px;">Every agent in KAVACH reaches the outside world strictly through these six FastMCP servers, governed by the Policy Gate.</p>
+      <div class="mcp-grid" id="mcpModalGrid"></div>
     </div>
   </div>
 
