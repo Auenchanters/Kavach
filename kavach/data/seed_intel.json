@@ -1,0 +1,133 @@
+{
+  "numbers": {
+    "+91 98XXX XX210": {
+      "reported_count": 47,
+      "risk_score": 0.96,
+      "category": "Digital Arrest / CBI Impersonation",
+      "operator": "Airtel Kolkata Circle (SIM suspected cloned / mule)",
+      "syndicate_id": "SYN-MEWAT-04",
+      "first_seen": "2026-09-12",
+      "active": true
+    },
+    "+91 70XXX XX451": {
+      "reported_count": 19,
+      "risk_score": 0.91,
+      "category": "Mule Call Relay / Tech Support",
+      "operator": "Jio Jamtara Cluster",
+      "syndicate_id": "SYN-MEWAT-04",
+      "first_seen": "2026-10-04",
+      "active": true
+    },
+    "+91 91234 56789": {
+      "reported_count": 0,
+      "risk_score": 0.05,
+      "category": "Trusted Contact - Rahul (Son)",
+      "operator": "Jio Karnataka",
+      "syndicate_id": null,
+      "active": true
+    },
+    "+91 80234 99000": {
+      "reported_count": 0,
+      "risk_score": 0.08,
+      "category": "Trusted Contact - Manipal Hospital Bengaluru",
+      "operator": "BSNL Karnataka",
+      "syndicate_id": null,
+      "active": true
+    }
+  },
+  "upi_ids": {
+    "refund.cbi@okaxis": {
+      "holder_name": "Ramesh Mule Account #12",
+      "bank": "Axis Bank",
+      "syndicate_id": "SYN-MEWAT-04",
+      "risk_score": 0.98,
+      "freeze_status": "FLAGGED_PENDING_FREEZE"
+    },
+    "ebill.pay@icici": {
+      "holder_name": "Quick Utilities Fake",
+      "bank": "ICICI Bank",
+      "syndicate_id": "SYN-JAM-09",
+      "risk_score": 0.94,
+      "freeze_status": "FROZEN"
+    }
+  },
+  "mule_accounts": {
+    "HDFC ····4471": {
+      "bank": "HDFC Bank",
+      "branch": "Salt Lake Sector V, Kolkata",
+      "ifsc": "HDFC0001289",
+      "account_number": "50100492814471",
+      "syndicate_id": "SYN-MEWAT-04",
+      "total_volume_today": "₹14,80,000",
+      "status": "ACTIVE_MULE"
+    }
+  },
+  "syndicates": {
+    "SYN-MEWAT-04": {
+      "name": "Kolkata-Mewat 'Digital Arrest' Syndicate",
+      "hub_location": "Mewat / Salt Lake Cyber Hub",
+      "estimated_victims": 420,
+      "primary_modus": "Impersonates CBI / Mumbai Police / Courier Narcotics",
+      "total_laundered_cr": 4.8
+    },
+    "SYN-JAM-09": {
+      "name": "Jamtara Discom Bill Fraud Ring",
+      "hub_location": "Jamtara, Jharkhand",
+      "estimated_victims": 180,
+      "primary_modus": "Electricity cutoff SMS with malicious APK",
+      "total_laundered_cr": 1.2
+    }
+  },
+  "sample_scenarios": {
+    "shield_call": {
+      "caller_number": "+91 98XXX XX210",
+      "claimed_identity": "Inspector Alok Verma, CBI Cyber Crime HQ",
+      "allegation": "Aadhaar linked to ₹38 Crore money laundering via Canara Bank Mumbai. Non-bailable arrest warrant issued. Stay on video call.",
+      "transcript_lines": [
+        {"speaker": "Caller", "text": "Hello, this is Inspector Alok Verma calling from CBI Cyber Crime Cell, New Delhi."},
+        {"speaker": "Amma", "text": "Yes? Who is this? Why are you calling me?"},
+        {"speaker": "Caller", "text": "Madam, your Aadhaar number has been used in a ₹38 Crore money laundering case through Canara Bank Mumbai."},
+        {"speaker": "Amma", "text": "Aadhaar? No, I am a retired teacher in Bengaluru! I didn't do anything!"},
+        {"speaker": "Caller", "text": "A non-bailable digital arrest warrant is issued by Supreme Court. Do not disconnect! You must stay on video call or local police will reach your house in 10 minutes!"}
+      ]
+    },
+    "strike_decoy": {
+      "persona": {
+        "name": "Ramesh Sharma",
+        "age": 67,
+        "occupation": "Retired High School Mathematics Teacher",
+        "city": "Bengaluru",
+        "style": "Slow, courteous, slightly hard of hearing, asking repetitively how UPI works"
+      },
+      "dialogue": [
+        {"speaker": "Scammer", "text": "Sir, this is Reserve Bank Verification Officer. You must deposit 50,000 security money immediately to clear your name."},
+        {"speaker": "Decoy (KAVACH)", "text": "Haan beta... security deposit? But my pension comes in Canara Bank. Where should I send it? Let me find my reading glasses..."},
+        {"speaker": "Scammer", "text": "Listen carefully! Open Google Pay or PhonePe right now. Send it to refund.cbi@okaxis."},
+        {"speaker": "Decoy (KAVACH)", "text": "Re-fund dot see-bee-eye at ok axis... beta, can you repeat? My grandson set up this phone. What was the account number?"},
+        {"speaker": "Scammer", "text": "Account number is 50100492814471, HDFC Bank Salt Lake! Send ₹50,000 now!"},
+        {"speaker": "Decoy (KAVACH)", "text": "HDFC Bank 4471... wait beta, it is asking for a UPI PIN. Should I put my year of retirement 2018 or my birth year?"}
+      ],
+      "extracted_entities": {
+        "upi_id": "refund.cbi@okaxis",
+        "mule_account": "HDFC ····4471",
+        "scammer_phone": "+91 98XXX XX210",
+        "second_phone": "+91 70XXX XX451"
+      }
+    },
+    "recover_loss": {
+      "debit_sms": "₹48,000 debited from A/c ····4471 via UPI ref 619284019284. Not you? Call 1800 202 6161.",
+      "amount": 48000,
+      "source_account": "Canara Bank ····9102",
+      "destination_mule": "HDFC ····4471 (refund.cbi@okaxis)",
+      "transaction_id": "UPI-619284019284",
+      "alert_time": "11:42 AM"
+    },
+    "scam_sms": {
+      "sender": "VK-DISCOM-ALERT",
+      "sms_text": "Dear consumer, your electricity power will be cut tonight at 9:30 PM because previous month bill was not updated. Immediately call 9876543210 or pay at bit.ly/eb-bill",
+      "url": "http://bit.ly/eb-bill",
+      "risk_verdict": "HIGH RISK PHISHING",
+      "voice_note": "ಅಮ್ಮಾ, ಇದು ನಕಲಿ ವಿದ್ಯುತ್ ಬಿಲ್ ಸಂದೇಶ. ಯಾವುದೇ ಲಿಂಕ್ ಒತ್ತಬೇಡಿ."
+    }
+  }
+}

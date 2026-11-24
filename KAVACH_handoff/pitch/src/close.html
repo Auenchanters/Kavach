@@ -1,0 +1,32 @@
+<template>
+  <style>
+    {{CSS}}
+    #cl-tag { left: 0; width: 1920px; top: 470px; text-align: center; font-size: 84px; letter-spacing: -0.02em; }
+    #cl-shield { left: 710px; top: 20px; width: 500px; height: 500px; }
+    #cl-name { left: 0; width: 1920px; top: 520px; text-align: center; font-size: 150px; letter-spacing: -0.02em; line-height: 1; }
+    #cl-line { left: 0; width: 1920px; top: 720px; text-align: center; font-size: 52px; }
+    #cl-cred { left: 0; width: 1920px; top: 860px; text-align: center; font-size: 32px; }
+  </style>
+  <div id="root" data-composition-id="close" data-width="1920" data-height="1080">
+    <div id="cl-tag" class="abs">Less magic, <span class="indigo semi">more utility</span></div>
+    <img id="cl-shield" class="abs" src="assets/shield.png" alt="KAVACH shield: brushed steel and indigo enamel" />
+    <div id="cl-name" class="abs semi">KAVACH</div>
+    <div id="cl-line" class="abs t2">No Amma left alone with a scammer</div>
+    <div id="cl-cred" class="abs t3">wHACKiest 2026 · Track 1: Make MCP Matter</div>
+    <i data-sfx="minimize_004.ogg" data-at="{{s6b:Six}}" data-vol="0.3"></i>
+    <i data-sfx="confirmation_002.ogg" data-at="{{s6b:Six}}" data-vol="0.45"></i>
+    <i data-sfx="glass_004.ogg" data-at="{{s6b:Amma}}" data-vol="0.3"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    ["#cl-shield", "#cl-name", "#cl-line", "#cl-cred"].forEach((s) => gsap.set(s, { opacity: 0 }));
+    tl.fromTo("#cl-tag", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s6b:Less}} - 0.1);
+    tl.to("#cl-tag", { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, {{s6b:Six}} - 0.35);
+    // the lockup: the shield lands, then the name, then the promise (held to the end)
+    tl.fromTo("#cl-shield", { opacity: 0, y: -60, scale: 1.15 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, {{s6b:Six}} - 0.1);
+    tl.fromTo("#cl-name", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s6b:Six}} + 0.25);
+    tl.fromTo("#cl-line", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s6b:Amma}} - 0.4);
+    tl.fromTo("#cl-cred", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, {{s6b.end}} + 0.2);
+    window.__timelines["close"] = tl;
+  </script>
+</template>

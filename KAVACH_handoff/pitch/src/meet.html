@@ -1,0 +1,111 @@
+<template>
+  <style>
+    {{CSS}}
+    .mt-person { top: 420px; width: 480px; height: 220px; padding: 40px 44px; }
+    #mt-amma { left: 160px; } #mt-scam { left: 1280px; }
+    .mt-name { font-size: 48px; } .mt-sub { font-size: 34px; margin-top: 12px; }
+    #mt-gap { left: 640px; top: 528px; width: 640px; height: 4px; border-top: 4px dashed #A1A1A6; }
+    #mt-shield { left: 690px; top: 260px; width: 540px; height: 540px; }
+    #mt-title { left: 0; width: 1920px; top: 760px; text-align: center; }
+    #mt-name { font-size: 132px; letter-spacing: -0.02em; line-height: 1; }
+    #mt-sub { font-size: 40px; margin-top: 18px; }
+    #mt-cred { left: 0; width: 1920px; top: 960px; text-align: center; font-size: 30px; }
+    #mt-rahul { left: 1280px; top: 420px; width: 480px; height: 220px; padding: 40px 44px; }
+    #mt-link { left: 640px; top: 528px; width: 640px; height: 4px; background: #2A2FD0; transform-origin: left center; }
+    #mt-rings { left: 0; top: 0; width: 1920px; height: 1080px; transform: scale(0.88); transform-origin: 960px 540px; }
+    .mt-ring { fill: none; stroke: #171717; stroke-opacity: 0.18; stroke-width: 3; }
+    .mt-rl { font-size: 32px; fill: #525252; font-family: KSans, sans-serif; }
+    .mt-ch { font-size: 32px; fill: #171717; font-family: KSans, sans-serif; }
+    .mt-cl { stroke: #2A2FD0; stroke-width: 2.5; stroke-dasharray: 8 10; fill: none; }
+  </style>
+  <div id="root" data-composition-id="meet" data-width="1920" data-height="1080">
+    <svg id="mt-rings" class="abs" viewBox="0 0 1920 1080">
+      <circle id="mt-r1" class="mt-ring" cx="960" cy="540" r="190" />
+      <circle id="mt-r2" class="mt-ring" cx="960" cy="540" r="270" />
+      <circle id="mt-r3" class="mt-ring" cx="960" cy="540" r="350" />
+      <circle id="mt-r4" class="mt-ring" cx="960" cy="540" r="430" />
+      <text id="mt-l1" class="mt-rl" x="960" y="340" text-anchor="middle">Shield</text>
+      <text id="mt-l2" class="mt-rl" x="960" y="260" text-anchor="middle">Strike</text>
+      <text id="mt-l3" class="mt-rl" x="960" y="180" text-anchor="middle">Recover</text>
+      <text id="mt-l4" class="mt-rl" x="960" y="100" text-anchor="middle">Intelligence</text>
+      <g id="mt-chan">
+        <path class="mt-cl" d="M1390 540 L1560 540" /><text class="mt-ch" x="1580" y="551">Phone</text>
+        <path class="mt-cl" d="M1332 755 L1480 840" /><text class="mt-ch" x="1496" y="862">SMS</text>
+        <path class="mt-cl" d="M1180 910 L1250 1010" /><text class="mt-ch" x="1268" y="1036">WhatsApp</text>
+        <path class="mt-cl" d="M588 755 L440 840" /><text class="mt-ch" x="424" y="862" text-anchor="end">Bank alerts</text>
+        <path class="mt-cl" d="M530 540 L360 540" /><text class="mt-ch" x="340" y="551" text-anchor="end">1930 helpline</text>
+        <path class="mt-cl" d="M588 325 L440 240" /><text class="mt-ch" x="424" y="232" text-anchor="end">cybercrime.gov.in</text>
+        <path class="mt-cl" d="M1332 325 L1480 240" /><text class="mt-ch" x="1496" y="232">Sanchar Saathi</text>
+      </g>
+    </svg>
+    <div id="mt-gap" class="abs"></div>
+    <div id="mt-link" class="abs"></div>
+    <div id="mt-amma" class="abs card mt-person">
+      <div class="mt-name">Amma, 65</div>
+      <div id="mt-amma-sub" class="mt-sub c2">on a call, frightened</div>
+    </div>
+    <div id="mt-scam" class="abs card mt-person">
+      <div class="mt-name mono red" style="font-size:40px">+91 98XXX XX210</div>
+      <div class="mt-sub c2">"This is the CBI"</div>
+    </div>
+    <div id="mt-rahul" class="abs card">
+      <div class="mt-name">Rahul</div>
+      <div class="mt-sub c2">her son, the guardian</div>
+    </div>
+    <img id="mt-shield" class="abs" src="assets/shield.png" alt="KAVACH shield: brushed steel and indigo enamel" />
+    <div id="mt-title" class="abs">
+      <div id="mt-name" class="semi">KAVACH</div>
+    </div>
+    <div id="mt-what" class="abs" style="left:0; width:1920px; top:330px; text-align:center; font-size:44px"><span id="mt-w0">voice-first</span><span id="mt-w1" class="t3"> · </span><span id="mt-w2">multi-agent</span><span id="mt-w3" class="t3"> · </span><span id="mt-w4">for ordinary families</span></div>
+    <div id="mt-cred" class="abs t3">wHACKiest 2026 · Track 1: Make MCP Matter</div>
+    <i data-sfx="impactMetal_001.ogg" data-at="{{s2a:KAVACH}}" data-vol="0.45"></i>
+    <i data-sfx="confirmation_002.ogg" data-at="{{s2a:KAVACH}}" data-vol="0.4"></i>
+    <i data-sfx="pluck_002.ogg" data-at="{{s2b:Rahul}}" data-vol="0.35"></i>
+    <i data-sfx="tick_001.ogg" data-at="{{s2c:Shield}}" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="{{s2c:Strike}}" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="{{s2c:Recover}}" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="{{s2c:Intelligence}}" data-vol="0.3"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const IN = (s, t, d = 0.5) => tl.fromTo(s, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out" }, t);
+    const OUT = (s, t) => tl.to(s, { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, t);
+    ["#mt-shield", "#mt-title", "#mt-cred", "#mt-rahul", "#mt-link", "#mt-rings", "#mt-chan"].forEach((s) => gsap.set(s, { opacity: 0 }));
+    ["#mt-l1", "#mt-l2", "#mt-l3", "#mt-l4"].forEach((s) => gsap.set(s, { opacity: 0 }));
+
+    // the shield lands in the empty slot between Amma and the scammer
+    tl.fromTo("#mt-shield", { opacity: 0, y: -260, scale: 1.25 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, {{s2a:KAVACH}} - 0.35);
+    tl.to("#mt-gap", { opacity: 0, duration: 0.25 }, {{s2a:KAVACH}} + 0.1);
+    tl.to("#mt-scam", { opacity: 0.35, duration: 0.4, ease: "power2.inOut" }, {{s2a:KAVACH}} + 0.2);
+    IN("#mt-title", {{s2a:KAVACH}} + 0.15);
+    IN("#mt-cred", {{s2a:Track}} - 0.1);
+    OUT(["#mt-title", "#mt-cred"], {{s2b}} - 0.3);
+
+    // Amma and Rahul
+    tl.to("#mt-scam", { opacity: 0, x: 80, duration: 0.4, ease: "power3.in" }, {{s2b}} - 0.2);
+    tl.to("#mt-shield", { x: 0, y: -260, scale: 0.42, duration: 0.9, ease: "power2.inOut" }, {{s2b}});
+    gsap.set(["#mt-w0", "#mt-w1", "#mt-w2", "#mt-w3", "#mt-w4"], { opacity: 0 });
+    IN("#mt-w0", {{s2b:voice-first}} - 0.1, 0.4); IN(["#mt-w1", "#mt-w2"], {{s2b:multi-agent}} - 0.1, 0.4); IN(["#mt-w3", "#mt-w4"], {{s2b:families}} - 0.1, 0.4);
+    OUT("#mt-what", {{s2c}} - 0.4);
+    tl.set("#mt-amma-sub", { textContent: "Bengaluru · Kannada" }, {{s2b:Amma}} - 0.1);
+    tl.fromTo("#mt-amma-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, {{s2b:Amma}} - 0.1);
+    tl.fromTo("#mt-link", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, {{s2b:guardians}} - 0.5);
+    tl.fromTo("#mt-rahul", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, {{s2b:guardians}} - 0.1);
+
+    // four layers around the shield, then the channels it reaches through MCP
+    OUT(["#mt-amma", "#mt-rahul", "#mt-link"], {{s2c}} - 0.1);
+    tl.to("#mt-shield", { y: 0, scale: 0.55, duration: 0.8, ease: "power2.inOut" }, {{s2c}} - 0.2);
+    tl.set("#mt-rings", { opacity: 1 }, {{s2c}});
+    [1, 2, 3, 4].forEach((i, k) => {
+      const w = [{{s2c:Shield}}, {{s2c:Strike}}, {{s2c:Recover}}, {{s2c:Intelligence}}][k];
+      tl.fromTo("#mt-r" + i, { opacity: 0, scale: 0.92, transformOrigin: "960px 540px" }, { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }, w - 0.1);
+      tl.fromTo("#mt-r" + i, { stroke: "#171717", strokeOpacity: 0.18 }, { stroke: "#2A2FD0", strokeOpacity: 1, duration: 0.25 }, w - 0.1);
+      tl.to("#mt-r" + i, { stroke: "#171717", strokeOpacity: 0.25, duration: 0.4 }, w + 0.8);
+      IN("#mt-l" + i, w - 0.1, 0.4);
+    });
+    tl.set("#mt-chan", { opacity: 1 }, {{s2c:channels}} - 0.2);
+    tl.fromTo("#mt-chan > :nth-child(-n+8)", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out", stagger: 0.09 }, {{s2c:channels}} - 0.2);
+    tl.fromTo("#mt-chan > :nth-child(n+9)", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out", stagger: 0.09 }, {{s2c:official}} - 0.2);
+    window.__timelines["meet"] = tl;
+  </script>
+</template>

@@ -1,0 +1,93 @@
+<template>
+  <style>
+    {{CSS}}
+    #hk-sec { left: 220px; top: 380px; }
+    #hk-sec-n { font-size: 200px; line-height: 1; color: #171717; }
+    #hk-sec-l { font-size: 44px; margin-top: 24px; }
+    #hk-a, #hk-b { left: 220px; }
+    #hk-a { top: 230px; } #hk-b { top: 560px; }
+    .hk-n { font-size: 190px; line-height: 1; letter-spacing: -0.02em; }
+    .hk-l { font-size: 44px; margin-top: 18px; }
+    #hk-coins { left: 220px; top: 330px; display: flex; gap: 48px; }
+    .hk-coin { width: 220px; height: 220px; border-radius: 110px; background: #19191B; color: #EDEDED;
+               display: flex; align-items: center; justify-content: center; font-size: 110px;
+               box-shadow: 0 24px 48px rgba(0,0,0,0.14); }
+    #hk-coin-l { left: 220px; top: 640px; font-size: 52px; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="hk-sec" class="abs">
+      <div id="hk-sec-n" class="mono">00:00:00</div>
+      <div id="hk-sec-l" class="t2">one more victim, every second</div>
+    </div>
+    <div id="hk-a" class="abs">
+      <div id="hk-a-n" class="hk-n semi">0M</div>
+      <div id="hk-a-l" class="hk-l t2">calls to India's 1930 cyber-fraud helpline in 2025</div>
+    </div>
+    <div id="hk-b" class="abs">
+      <div id="hk-b-n" class="hk-n semi red">₹0 cr</div>
+      <div id="hk-b-l" class="hk-l t2">lost across 28 lakh reported cases</div>
+    </div>
+    <div id="hk-coins" class="abs">
+      <div class="hk-coin" id="hk-c0">₹</div><div class="hk-coin" id="hk-c1">₹</div>
+      <div class="hk-coin" id="hk-c2">₹</div><div class="hk-coin" id="hk-c3">₹</div>
+    </div>
+    <div id="hk-coin-l" class="abs"><span class="red semi">3 of 4</span> <span class="t2">never recovered</span></div>
+    <div id="hk-c" class="abs" style="left:220px; top:230px">
+      <div id="hk-c-n" class="hk-n semi">0</div>
+      <div class="hk-l t2">senior citizens filed fraud complaints in 2025</div>
+    </div>
+    <div id="hk-d" class="abs" style="left:220px; top:560px">
+      <div id="hk-d-n" class="hk-n semi red">₹0 cr</div>
+      <div id="hk-d-l" class="hk-l t2">mostly to "digital arrest" and investment scams</div>
+    </div>
+    <i data-sfx="pluck_002.ogg" data-at="{{s1b:32.4}}" data-vol="0.5"></i>
+    <i data-sfx="pluck_002.ogg" data-at="{{s1b:22,931}}" data-vol="0.5"></i>
+    <i data-sfx="drop_002.ogg" data-at="{{s1c:three}}" data-vol="0.4"></i>
+    <i data-sfx="pluck_002.ogg" data-at="{{s1d:lakh}}" data-vol="0.5"></i>
+    <i data-sfx="pluck_002.ogg" data-at="{{s1d:4,005}}" data-vol="0.5"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const IN = (s, t, d = 0.5) => tl.fromTo(s, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out" }, t);
+    const OUT = (s, t) => tl.to(s, { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, t);
+    const count = (id, to, t, fmt, d = 1.1) => {
+      const o = { v: 0 }, el = document.getElementById(id);
+      el.textContent = fmt(0);
+      tl.to(o, { v: to, duration: d, ease: "power2.out", onUpdate: () => { el.textContent = fmt(o.v); } }, t);
+    };
+    // Indian grouping: 1,03,488 and 22,931
+    const lakh = (v) => { const n = Math.round(v).toString(); return n.length <= 3 ? n : n.slice(0, -3).replace(/\B(?=(\d{2})+$)/g, ",") + "," + n.slice(-3); };
+    [".hk-coin", "#hk-coin-l", "#hk-a", "#hk-b", "#hk-c", "#hk-d"].forEach((s) => gsap.set(s, { opacity: 0 }));
+
+    // every second: a clock of victims
+    IN("#hk-sec", {{s1a}} - 0.2);
+    const sec = { v: 0 }, secEl = document.getElementById("hk-sec-n");
+    tl.to(sec, { v: {{s1b}} - {{s1a}}, duration: {{s1b}} - {{s1a}}, ease: "none",
+      onUpdate: () => { const s = Math.floor(sec.v); secEl.textContent = "00:00:0" + s; } }, {{s1a}});
+    OUT("#hk-sec", {{s1b}} - 0.3);
+
+    // 32.4 million calls, ₹22,931 crore
+    IN("#hk-a", {{s1b:1930}} - 0.1); gsap.set("#hk-a-n", { opacity: 0 });
+    tl.fromTo("#hk-a-n", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s1b:32.4}} - 0.1);
+    count("hk-a-n", 32.4, {{s1b:32.4}} - 0.1, (v) => v.toFixed(1) + "M");
+    IN("#hk-b", {{s1b:22,931}} - 0.1); gsap.set("#hk-b-l", { opacity: 0 });
+    tl.fromTo("#hk-b-l", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s1b:28}} - 0.1);
+    count("hk-b-n", 22931, {{s1b:22,931}} - 0.1, (v) => "₹" + lakh(v) + " cr");
+    OUT("#hk-a", {{s1c}} - 0.35); OUT("#hk-b", {{s1c}} - 0.3);
+
+    // three of four rupees never come back
+    tl.fromTo(".hk-coin", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.07 }, {{s1c}});
+    tl.to(["#hk-c0", "#hk-c1", "#hk-c2"], { backgroundColor: "#D4D4D8", color: "#A1A1A6", duration: 0.35, ease: "power2.inOut", stagger: 0.12 }, {{s1c:three}});
+    IN("#hk-coin-l", {{s1c:three}});
+    OUT(".hk-coin", {{s1d}} - 0.35); OUT("#hk-coin-l", {{s1d}} - 0.35);
+
+    // seniors
+    IN("#hk-c", {{s1d:one}} - 0.1);
+    count("hk-c-n", 103488, {{s1d:one}} - 0.1, lakh, 1.3);
+    IN("#hk-d", {{s1d:lost}} - 0.1); gsap.set("#hk-d-l", { opacity: 0 });
+    tl.fromTo("#hk-d-l", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, {{s1d:lost}});
+    count("hk-d-n", 4005, {{s1d:4,005}} - 0.1, (v) => "₹" + lakh(v) + " cr");
+    OUT("#hk-c", {{dur}} - 0.45); OUT("#hk-d", {{dur}} - 0.4);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

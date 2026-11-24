@@ -1,0 +1,152 @@
+[
+ {
+  "id": "s1a",
+  "scene": "hook",
+  "text": "Every second in India, someone falls victim to cyber fraud."
+ },
+ {
+  "id": "s1b",
+  "scene": "hook",
+  "text": "In 2025 alone, India's 1930 helpline received 32.4 million calls, with 22,931 crore rupees lost across 28 lakh reported cases."
+ },
+ {
+  "id": "s1c",
+  "scene": "hook",
+  "text": "And three out of four rupees were never recovered."
+ },
+ {
+  "id": "s1d",
+  "scene": "hook",
+  "text": "Over one lakh senior citizens lost 4,005 crore rupees."
+ },
+ {
+  "id": "s1e",
+  "scene": "fail",
+  "text": "Awareness campaigns fail when fear takes over. Caller ID apps can warn you, but they don't act for you once the money is gone."
+ },
+ {
+  "id": "s1f",
+  "scene": "fail",
+  "text": "And official helplines expect panicked victims to act within a single golden hour."
+ },
+ {
+  "id": "s1g",
+  "scene": "fail",
+  "text": "Nobody stands between your parents and the scammer during the call, or acts for them right after."
+ },
+ {
+  "id": "s2a",
+  "scene": "meet",
+  "text": "That is why we built KAVACH, for WHACKiest 2026, Track 1: Make MCP Matter."
+ },
+ {
+  "id": "s2b",
+  "scene": "meet",
+  "text": "KAVACH is a voice-first, multi-agent AI system for ordinary families: elderly parents like Amma, and guardians like her son Rahul."
+ },
+ {
+  "id": "s2c",
+  "scene": "meet",
+  "text": "Four layers of agents, Shield, Strike, Recover and Intelligence, connect through MCP to the channels families already use, and to India's official fraud systems."
+ },
+ {
+  "id": "s3a",
+  "scene": "shield",
+  "text": "First, Shield runs every day. Saved contacts ring normally, while risky unknown calls are screened first."
+ },
+ {
+  "id": "s3b",
+  "scene": "shield",
+  "text": "If Amma picks up a suspicious call, she taps one large KAVACH button. KAVACH joins as a three-way call, detects scam patterns live, and warns her calmly in Kannada, Hindi or English."
+ },
+ {
+  "id": "s3c",
+  "scene": "shield",
+  "text": "Rahul is alerted on Telegram. Suspicious SMS and WhatsApp links are checked too, with a voice note in reply."
+ },
+ {
+  "id": "s3d",
+  "scene": "strike",
+  "text": "Second, Strike fights back. Forwarded scam calls route to a decoy AI retiree using strictly fake details."
+ },
+ {
+  "id": "s3e",
+  "scene": "strike",
+  "text": "It keeps scammers talking, draws out UPI IDs and mule accounts, and drafts reports for Sanchar Saathi Chakshu and banks."
+ },
+ {
+  "id": "s3f",
+  "scene": "recover",
+  "text": "Third, Recover races the golden hour. Triggered by one tap or a debit SMS, four agents launch in parallel:"
+ },
+ {
+  "id": "s3g",
+  "scene": "recover",
+  "text": "a bank block request, a 1930 briefing, a pre-filled cybercrime complaint, and a time-stamped evidence pack, all waiting on Rahul's one-tap approval."
+ },
+ {
+  "id": "s3h",
+  "scene": "intel",
+  "text": "Fourth, Intelligence. Every confirmed scam number, URL and UPI ID becomes a node in a shared fraud graph, exposing whole scam rings, so one family's attack protects thousands."
+ },
+ {
+  "id": "s4a",
+  "scene": "arch",
+  "text": "Technically, KAVACH isn't a chatbot with bolted-on plugins. It's a modular, MCP-first agent system."
+ },
+ {
+  "id": "s4b",
+  "scene": "arch",
+  "text": "At the top, ElevenLabs Agents handle speech, turn-taking and multilingual voice, talking to our MCP layer over streamable HTTP."
+ },
+ {
+  "id": "s4c",
+  "scene": "arch",
+  "text": "Under it sits the KAVACH Orchestrator, in Python and FastAPI, with Gemini Flash scoring scams across our Shield, Strike, Recover and Guardian agents."
+ },
+ {
+  "id": "s4d",
+  "scene": "arch",
+  "text": "Agents never talk to outside systems directly. Every tool call passes through a Policy Gate, with an audit log and three action tiers."
+ },
+ {
+  "id": "s4e",
+  "scene": "arch",
+  "text": "Automatic, for screening and warnings. Guardian-approved, through Telegram, for reports or bank holds. And never allowed: sharing real data, moving money, or posing as officials."
+ },
+ {
+  "id": "s4f",
+  "scene": "arch",
+  "text": "Below the gate sit six FastMCP servers: telephony, intel, bank, report, family and knowledge, plus a live fraud graph and a guardian dashboard."
+ },
+ {
+  "id": "s4g",
+  "scene": "arch",
+  "text": "So future bank or telecom agents can plug into the same governance layer."
+ },
+ {
+  "id": "s5a",
+  "scene": "safety",
+  "text": "KAVACH never uses Android accessibility permissions and never reads your banking screens. That is exactly how malware steals OTPs."
+ },
+ {
+  "id": "s5b",
+  "scene": "safety",
+  "text": "It relies only on consent-based channels: announced conference calls, debit SMS, and RBI's Account Aggregator, aligned with India's DPDP Act."
+ },
+ {
+  "id": "s5c",
+  "scene": "scope",
+  "text": "In our build, voice agents, scam detection, all six MCP servers, SMS parsing, Telegram approvals and the fraud graph are real. Only bank actions and official portal filings are mocked."
+ },
+ {
+  "id": "s6a",
+  "scene": "roadmap",
+  "text": "Next: a 50-family Android pilot with Exotel, then bank and telecom partnerships that license our fraud graph, while KAVACH stays free for families."
+ },
+ {
+  "id": "s6b",
+  "scene": "close",
+  "text": "Less magic, more utility. Six MCP servers, one mission: no Amma left alone with a scammer."
+ }
+]

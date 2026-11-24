@@ -1,0 +1,2571 @@
+{
+ "take": "vo_take.wav",
+ "take_start": 4.0,
+ "segments": [
+  {
+   "id": "s1a",
+   "scene": "hook",
+   "start": 4.0,
+   "duration": 4.02,
+   "words": [
+    {
+     "word": "Every",
+     "at": 4.0
+    },
+    {
+     "word": "second",
+     "at": 4.4
+    },
+    {
+     "word": "in",
+     "at": 4.74
+    },
+    {
+     "word": "India,",
+     "at": 5.0
+    },
+    {
+     "word": "someone",
+     "at": 5.84
+    },
+    {
+     "word": "falls",
+     "at": 6.06
+    },
+    {
+     "word": "victim",
+     "at": 6.38
+    },
+    {
+     "word": "to",
+     "at": 6.78
+    },
+    {
+     "word": "cyber",
+     "at": 7.02
+    },
+    {
+     "word": "fraud.",
+     "at": 7.32
+    }
+   ]
+  },
+  {
+   "id": "s1b",
+   "scene": "hook",
+   "start": 8.12,
+   "duration": 13.08,
+   "words": [
+    {
+     "word": "In",
+     "at": 8.12
+    },
+    {
+     "word": "2025",
+     "at": 8.26
+    },
+    {
+     "word": "alone,",
+     "at": 8.96
+    },
+    {
+     "word": "India's",
+     "at": 9.92
+    },
+    {
+     "word": "1930",
+     "at": 10.18
+    },
+    {
+     "word": "helpline",
+     "at": 10.82
+    },
+    {
+     "word": "received",
+     "at": 11.42
+    },
+    {
+     "word": "32.4",
+     "at": 12.25
+    },
+    {
+     "word": "million",
+     "at": 13.08
+    },
+    {
+     "word": "calls,",
+     "at": 13.52
+    },
+    {
+     "word": "with",
+     "at": 14.24
+    },
+    {
+     "word": "22,931",
+     "at": 15.53
+    },
+    {
+     "word": "crore",
+     "at": 16.82
+    },
+    {
+     "word": "rupees",
+     "at": 17.18
+    },
+    {
+     "word": "lost",
+     "at": 17.62
+    },
+    {
+     "word": "across",
+     "at": 17.96
+    },
+    {
+     "word": "28",
+     "at": 18.5
+    },
+    {
+     "word": "lakh",
+     "at": 19.32
+    },
+    {
+     "word": "reported",
+     "at": 19.74
+    },
+    {
+     "word": "cases.",
+     "at": 20.22
+    }
+   ]
+  },
+  {
+   "id": "s1c",
+   "scene": "hook",
+   "start": 21.3,
+   "duration": 3.18,
+   "words": [
+    {
+     "word": "And",
+     "at": 21.3
+    },
+    {
+     "word": "three",
+     "at": 21.61
+    },
+    {
+     "word": "out",
+     "at": 21.92
+    },
+    {
+     "word": "of",
+     "at": 22.08
+    },
+    {
+     "word": "four",
+     "at": 22.3
+    },
+    {
+     "word": "rupees",
+     "at": 22.52
+    },
+    {
+     "word": "were",
+     "at": 22.94
+    },
+    {
+     "word": "never",
+     "at": 23.32
+    },
+    {
+     "word": "recovered.",
+     "at": 23.6
+    }
+   ]
+  },
+  {
+   "id": "s1d",
+   "scene": "hook",
+   "start": 24.58,
+   "duration": 5.0,
+   "words": [
+    {
+     "word": "Over",
+     "at": 24.58
+    },
+    {
+     "word": "one",
+     "at": 24.88
+    },
+    {
+     "word": "lakh",
+     "at": 25.18
+    },
+    {
+     "word": "senior",
+     "at": 25.5
+    },
+    {
+     "word": "citizens",
+     "at": 25.88
+    },
+    {
+     "word": "lost",
+     "at": 26.32
+    },
+    {
+     "word": "4,005",
+     "at": 27.11
+    },
+    {
+     "word": "crore",
+     "at": 27.9
+    },
+    {
+     "word": "rupees.",
+     "at": 28.3
+    }
+   ]
+  },
+  {
+   "id": "s1e",
+   "scene": "fail",
+   "start": 29.68,
+   "duration": 6.86,
+   "words": [
+    {
+     "word": "Awareness",
+     "at": 29.68
+    },
+    {
+     "word": "campaigns",
+     "at": 29.68
+    },
+    {
+     "word": "fail",
+     "at": 30.12
+    },
+    {
+     "word": "when",
+     "at": 30.62
+    },
+    {
+     "word": "fear",
+     "at": 31.06
+    },
+    {
+     "word": "takes",
+     "at": 31.42
+    },
+    {
+     "word": "over.",
+     "at": 31.66
+    },
+    {
+     "word": "Caller",
+     "at": 32.06
+    },
+    {
+     "word": "ID",
+     "at": 32.7
+    },
+    {
+     "word": "apps",
+     "at": 32.9
+    },
+    {
+     "word": "can",
+     "at": 33.18
+    },
+    {
+     "word": "warn",
+     "at": 33.38
+    },
+    {
+     "word": "you,",
+     "at": 33.64
+    },
+    {
+     "word": "but",
+     "at": 34.08
+    },
+    {
+     "word": "they",
+     "at": 34.22
+    },
+    {
+     "word": "don't",
+     "at": 34.34
+    },
+    {
+     "word": "act",
+     "at": 34.52
+    },
+    {
+     "word": "for",
+     "at": 34.84
+    },
+    {
+     "word": "you",
+     "at": 35.04
+    },
+    {
+     "word": "once",
+     "at": 35.2
+    },
+    {
+     "word": "the",
+     "at": 35.36
+    },
+    {
+     "word": "money",
+     "at": 35.54
+    },
+    {
+     "word": "is",
+     "at": 35.68
+    },
+    {
+     "word": "gone.",
+     "at": 35.88
+    }
+   ]
+  },
+  {
+   "id": "s1f",
+   "scene": "fail",
+   "start": 36.64,
+   "duration": 4.72,
+   "words": [
+    {
+     "word": "And",
+     "at": 36.64
+    },
+    {
+     "word": "official",
+     "at": 36.74
+    },
+    {
+     "word": "helplines",
+     "at": 37.06
+    },
+    {
+     "word": "expect",
+     "at": 37.58
+    },
+    {
+     "word": "panicked",
+     "at": 37.96
+    },
+    {
+     "word": "victims",
+     "at": 38.4
+    },
+    {
+     "word": "to",
+     "at": 38.78
+    },
+    {
+     "word": "act",
+     "at": 39.02
+    },
+    {
+     "word": "within",
+     "at": 39.22
+    },
+    {
+     "word": "a",
+     "at": 39.44
+    },
+    {
+     "word": "single",
+     "at": 39.66
+    },
+    {
+     "word": "golden",
+     "at": 40.04
+    },
+    {
+     "word": "hour.",
+     "at": 40.42
+    }
+   ]
+  },
+  {
+   "id": "s1g",
+   "scene": "fail",
+   "start": 41.46,
+   "duration": 4.86,
+   "words": [
+    {
+     "word": "Nobody",
+     "at": 41.46
+    },
+    {
+     "word": "stands",
+     "at": 41.74
+    },
+    {
+     "word": "between",
+     "at": 42.12
+    },
+    {
+     "word": "your",
+     "at": 42.46
+    },
+    {
+     "word": "parents",
+     "at": 42.7
+    },
+    {
+     "word": "and",
+     "at": 43.04
+    },
+    {
+     "word": "the",
+     "at": 43.26
+    },
+    {
+     "word": "scammer",
+     "at": 43.38
+    },
+    {
+     "word": "during",
+     "at": 43.8
+    },
+    {
+     "word": "the",
+     "at": 44.02
+    },
+    {
+     "word": "call,",
+     "at": 44.2
+    },
+    {
+     "word": "or",
+     "at": 44.64
+    },
+    {
+     "word": "acts",
+     "at": 44.9
+    },
+    {
+     "word": "for",
+     "at": 45.1
+    },
+    {
+     "word": "them",
+     "at": 45.26
+    },
+    {
+     "word": "right",
+     "at": 45.42
+    },
+    {
+     "word": "after.",
+     "at": 45.6
+    }
+   ]
+  },
+  {
+   "id": "s2a",
+   "scene": "meet",
+   "start": 46.42,
+   "duration": 6.88,
+   "words": [
+    {
+     "word": "That",
+     "at": 46.42
+    },
+    {
+     "word": "is",
+     "at": 46.7
+    },
+    {
+     "word": "why",
+     "at": 46.88
+    },
+    {
+     "word": "we",
+     "at": 47.12
+    },
+    {
+     "word": "built",
+     "at": 47.42
+    },
+    {
+     "word": "KAVACH,",
+     "at": 47.74
+    },
+    {
+     "word": "for",
+     "at": 48.52
+    },
+    {
+     "word": "WHACKiest",
+     "at": 48.84
+    },
+    {
+     "word": "2026,",
+     "at": 49.16
+    },
+    {
+     "word": "Track",
+     "at": 50.4
+    },
+    {
+     "word": "1:",
+     "at": 50.58
+    },
+    {
+     "word": "Make",
+     "at": 51.38
+    },
+    {
+     "word": "MCP",
+     "at": 51.54
+    },
+    {
+     "word": "Matter.",
+     "at": 52.2
+    }
+   ]
+  },
+  {
+   "id": "s2b",
+   "scene": "meet",
+   "start": 53.4,
+   "duration": 7.4,
+   "words": [
+    {
+     "word": "KAVACH",
+     "at": 53.4
+    },
+    {
+     "word": "is",
+     "at": 53.58
+    },
+    {
+     "word": "a",
+     "at": 53.82
+    },
+    {
+     "word": "voice-first,",
+     "at": 54.02
+    },
+    {
+     "word": "multi-agent",
+     "at": 54.68
+    },
+    {
+     "word": "AI",
+     "at": 55.44
+    },
+    {
+     "word": "system",
+     "at": 55.74
+    },
+    {
+     "word": "for",
+     "at": 56.16
+    },
+    {
+     "word": "ordinary",
+     "at": 56.46
+    },
+    {
+     "word": "families:",
+     "at": 56.84
+    },
+    {
+     "word": "elderly",
+     "at": 57.98
+    },
+    {
+     "word": "parents",
+     "at": 58.2
+    },
+    {
+     "word": "like",
+     "at": 58.48
+    },
+    {
+     "word": "Amma,",
+     "at": 58.74
+    },
+    {
+     "word": "and",
+     "at": 59.12
+    },
+    {
+     "word": "guardians",
+     "at": 59.56
+    },
+    {
+     "word": "like",
+     "at": 59.92
+    },
+    {
+     "word": "her",
+     "at": 60.22
+    },
+    {
+     "word": "son",
+     "at": 60.4
+    },
+    {
+     "word": "Rahul.",
+     "at": 60.6
+    }
+   ]
+  },
+  {
+   "id": "s2c",
+   "scene": "meet",
+   "start": 60.9,
+   "duration": 10.92,
+   "words": [
+    {
+     "word": "Four",
+     "at": 60.9
+    },
+    {
+     "word": "layers",
+     "at": 61.74
+    },
+    {
+     "word": "of",
+     "at": 62.06
+    },
+    {
+     "word": "agents,",
+     "at": 62.22
+    },
+    {
+     "word": "Shield,",
+     "at": 63.4
+    },
+    {
+     "word": "Strike,",
+     "at": 63.84
+    },
+    {
+     "word": "Recover",
+     "at": 64.48
+    },
+    {
+     "word": "and",
+     "at": 64.78
+    },
+    {
+     "word": "Intelligence,",
+     "at": 65.08
+    },
+    {
+     "word": "connect",
+     "at": 66.02
+    },
+    {
+     "word": "through",
+     "at": 66.22
+    },
+    {
+     "word": "MCP",
+     "at": 66.46
+    },
+    {
+     "word": "to",
+     "at": 66.88
+    },
+    {
+     "word": "the",
+     "at": 67.16
+    },
+    {
+     "word": "channels",
+     "at": 67.32
+    },
+    {
+     "word": "families",
+     "at": 67.56
+    },
+    {
+     "word": "already",
+     "at": 68.0
+    },
+    {
+     "word": "use,",
+     "at": 68.6
+    },
+    {
+     "word": "and",
+     "at": 69.28
+    },
+    {
+     "word": "to",
+     "at": 69.52
+    },
+    {
+     "word": "India's",
+     "at": 69.66
+    },
+    {
+     "word": "official",
+     "at": 70.1
+    },
+    {
+     "word": "fraud",
+     "at": 70.42
+    },
+    {
+     "word": "systems.",
+     "at": 70.7
+    }
+   ]
+  },
+  {
+   "id": "s3a",
+   "scene": "shield",
+   "start": 71.92,
+   "duration": 6.76,
+   "words": [
+    {
+     "word": "First,",
+     "at": 71.92
+    },
+    {
+     "word": "Shield",
+     "at": 72.74
+    },
+    {
+     "word": "runs",
+     "at": 72.88
+    },
+    {
+     "word": "every",
+     "at": 73.22
+    },
+    {
+     "word": "day.",
+     "at": 73.66
+    },
+    {
+     "word": "Saved",
+     "at": 74.4
+    },
+    {
+     "word": "contacts",
+     "at": 74.62
+    },
+    {
+     "word": "ring",
+     "at": 75.0
+    },
+    {
+     "word": "normally,",
+     "at": 75.26
+    },
+    {
+     "word": "while",
+     "at": 76.02
+    },
+    {
+     "word": "risky",
+     "at": 76.18
+    },
+    {
+     "word": "unknown",
+     "at": 76.58
+    },
+    {
+     "word": "calls",
+     "at": 77.04
+    },
+    {
+     "word": "are",
+     "at": 77.42
+    },
+    {
+     "word": "screened",
+     "at": 77.6
+    },
+    {
+     "word": "first.",
+     "at": 77.88
+    }
+   ]
+  },
+  {
+   "id": "s3b",
+   "scene": "shield",
+   "start": 78.78,
+   "duration": 10.9,
+   "words": [
+    {
+     "word": "If",
+     "at": 78.78
+    },
+    {
+     "word": "Amma",
+     "at": 78.92
+    },
+    {
+     "word": "picks",
+     "at": 79.18
+    },
+    {
+     "word": "up",
+     "at": 79.38
+    },
+    {
+     "word": "a",
+     "at": 79.54
+    },
+    {
+     "word": "suspicious",
+     "at": 79.68
+    },
+    {
+     "word": "call,",
+     "at": 80.02
+    },
+    {
+     "word": "she",
+     "at": 80.78
+    },
+    {
+     "word": "taps",
+     "at": 80.88
+    },
+    {
+     "word": "one",
+     "at": 81.12
+    },
+    {
+     "word": "large",
+     "at": 81.5
+    },
+    {
+     "word": "KAVACH",
+     "at": 82.02
+    },
+    {
+     "word": "button.",
+     "at": 82.32
+    },
+    {
+     "word": "KAVACH",
+     "at": 83.22
+    },
+    {
+     "word": "joins",
+     "at": 83.4
+    },
+    {
+     "word": "as",
+     "at": 83.7
+    },
+    {
+     "word": "a",
+     "at": 83.92
+    },
+    {
+     "word": "three-way",
+     "at": 84.08
+    },
+    {
+     "word": "call,",
+     "at": 84.4
+    },
+    {
+     "word": "detects",
+     "at": 85.08
+    },
+    {
+     "word": "scam",
+     "at": 85.28
+    },
+    {
+     "word": "patterns",
+     "at": 85.64
+    },
+    {
+     "word": "live,",
+     "at": 86.04
+    },
+    {
+     "word": "and",
+     "at": 86.82
+    },
+    {
+     "word": "warns",
+     "at": 86.9
+    },
+    {
+     "word": "her",
+     "at": 87.16
+    },
+    {
+     "word": "calmly",
+     "at": 87.38
+    },
+    {
+     "word": "in",
+     "at": 87.8
+    },
+    {
+     "word": "Kannada,",
+     "at": 88.2
+    },
+    {
+     "word": "Hindi",
+     "at": 88.92
+    },
+    {
+     "word": "or",
+     "at": 89.1
+    },
+    {
+     "word": "English.",
+     "at": 89.46
+    }
+   ]
+  },
+  {
+   "id": "s3c",
+   "scene": "shield",
+   "start": 89.78,
+   "duration": 7.2,
+   "words": [
+    {
+     "word": "Rahul",
+     "at": 89.78
+    },
+    {
+     "word": "is",
+     "at": 90.58
+    },
+    {
+     "word": "alerted",
+     "at": 90.88
+    },
+    {
+     "word": "on",
+     "at": 91.18
+    },
+    {
+     "word": "Telegram.",
+     "at": 91.4
+    },
+    {
+     "word": "Suspicious",
+     "at": 92.3
+    },
+    {
+     "word": "SMS",
+     "at": 92.74
+    },
+    {
+     "word": "and",
+     "at": 93.2
+    },
+    {
+     "word": "WhatsApp",
+     "at": 93.5
+    },
+    {
+     "word": "links",
+     "at": 93.86
+    },
+    {
+     "word": "are",
+     "at": 94.18
+    },
+    {
+     "word": "checked",
+     "at": 94.34
+    },
+    {
+     "word": "too,",
+     "at": 94.54
+    },
+    {
+     "word": "with",
+     "at": 95.12
+    },
+    {
+     "word": "a",
+     "at": 95.2
+    },
+    {
+     "word": "voice",
+     "at": 95.34
+    },
+    {
+     "word": "note",
+     "at": 95.56
+    },
+    {
+     "word": "in",
+     "at": 95.78
+    },
+    {
+     "word": "reply.",
+     "at": 95.94
+    }
+   ]
+  },
+  {
+   "id": "s3d",
+   "scene": "strike",
+   "start": 97.08,
+   "duration": 7.44,
+   "words": [
+    {
+     "word": "Second,",
+     "at": 97.08
+    },
+    {
+     "word": "Strike",
+     "at": 98.1
+    },
+    {
+     "word": "fights",
+     "at": 98.1
+    },
+    {
+     "word": "back.",
+     "at": 98.56
+    },
+    {
+     "word": "Forwarded",
+     "at": 99.62
+    },
+    {
+     "word": "scam",
+     "at": 99.82
+    },
+    {
+     "word": "calls",
+     "at": 100.04
+    },
+    {
+     "word": "route",
+     "at": 100.42
+    },
+    {
+     "word": "to",
+     "at": 100.66
+    },
+    {
+     "word": "a",
+     "at": 100.9
+    },
+    {
+     "word": "decoy",
+     "at": 101.02
+    },
+    {
+     "word": "AI",
+     "at": 101.46
+    },
+    {
+     "word": "retiree",
+     "at": 101.78
+    },
+    {
+     "word": "using",
+     "at": 102.48
+    },
+    {
+     "word": "strictly",
+     "at": 102.78
+    },
+    {
+     "word": "fake",
+     "at": 103.22
+    },
+    {
+     "word": "details.",
+     "at": 103.72
+    }
+   ]
+  },
+  {
+   "id": "s3e",
+   "scene": "strike",
+   "start": 104.62,
+   "duration": 7.76,
+   "words": [
+    {
+     "word": "It",
+     "at": 104.62
+    },
+    {
+     "word": "keeps",
+     "at": 104.74
+    },
+    {
+     "word": "scammers",
+     "at": 104.98
+    },
+    {
+     "word": "talking,",
+     "at": 105.32
+    },
+    {
+     "word": "draws",
+     "at": 106.08
+    },
+    {
+     "word": "out",
+     "at": 106.36
+    },
+    {
+     "word": "UPI",
+     "at": 106.58
+    },
+    {
+     "word": "IDs",
+     "at": 107.02
+    },
+    {
+     "word": "and",
+     "at": 107.273
+    },
+    {
+     "word": "mule",
+     "at": 107.527
+    },
+    {
+     "word": "accounts,",
+     "at": 107.78
+    },
+    {
+     "word": "and",
+     "at": 108.54
+    },
+    {
+     "word": "drafts",
+     "at": 108.68
+    },
+    {
+     "word": "reports",
+     "at": 108.94
+    },
+    {
+     "word": "for",
+     "at": 109.32
+    },
+    {
+     "word": "Sanchar",
+     "at": 109.76
+    },
+    {
+     "word": "Saathi",
+     "at": 110.2
+    },
+    {
+     "word": "Chakshu",
+     "at": 110.64
+    },
+    {
+     "word": "and",
+     "at": 111.08
+    },
+    {
+     "word": "banks.",
+     "at": 111.38
+    }
+   ]
+  },
+  {
+   "id": "s3f",
+   "scene": "recover",
+   "start": 112.48,
+   "duration": 6.48,
+   "words": [
+    {
+     "word": "Third,",
+     "at": 112.48
+    },
+    {
+     "word": "Recover",
+     "at": 113.58
+    },
+    {
+     "word": "races",
+     "at": 113.58
+    },
+    {
+     "word": "the",
+     "at": 114.08
+    },
+    {
+     "word": "golden",
+     "at": 114.28
+    },
+    {
+     "word": "hour.",
+     "at": 114.54
+    },
+    {
+     "word": "Triggered",
+     "at": 115.32
+    },
+    {
+     "word": "by",
+     "at": 115.56
+    },
+    {
+     "word": "one",
+     "at": 115.7
+    },
+    {
+     "word": "tap",
+     "at": 115.98
+    },
+    {
+     "word": "or",
+     "at": 116.28
+    },
+    {
+     "word": "a",
+     "at": 116.46
+    },
+    {
+     "word": "debit",
+     "at": 116.62
+    },
+    {
+     "word": "SMS,",
+     "at": 116.78
+    },
+    {
+     "word": "four",
+     "at": 117.78
+    },
+    {
+     "word": "agents",
+     "at": 117.88
+    },
+    {
+     "word": "launch",
+     "at": 118.2
+    },
+    {
+     "word": "in",
+     "at": 118.5
+    },
+    {
+     "word": "parallel:",
+     "at": 118.78
+    }
+   ]
+  },
+  {
+   "id": "s3g",
+   "scene": "recover",
+   "start": 119.06,
+   "duration": 10.26,
+   "words": [
+    {
+     "word": "a",
+     "at": 119.06
+    },
+    {
+     "word": "bank",
+     "at": 119.66
+    },
+    {
+     "word": "block",
+     "at": 119.9
+    },
+    {
+     "word": "request,",
+     "at": 120.14
+    },
+    {
+     "word": "a",
+     "at": 120.96
+    },
+    {
+     "word": "1930",
+     "at": 121.02
+    },
+    {
+     "word": "briefing,",
+     "at": 121.52
+    },
+    {
+     "word": "a",
+     "at": 122.54
+    },
+    {
+     "word": "pre-filled",
+     "at": 122.56
+    },
+    {
+     "word": "cybercrime",
+     "at": 123.02
+    },
+    {
+     "word": "complaint,",
+     "at": 123.56
+    },
+    {
+     "word": "and",
+     "at": 124.4
+    },
+    {
+     "word": "a",
+     "at": 124.48
+    },
+    {
+     "word": "time-stamped",
+     "at": 124.62
+    },
+    {
+     "word": "evidence",
+     "at": 125.28
+    },
+    {
+     "word": "pack,",
+     "at": 125.7
+    },
+    {
+     "word": "all",
+     "at": 126.36
+    },
+    {
+     "word": "waiting",
+     "at": 126.56
+    },
+    {
+     "word": "on",
+     "at": 126.92
+    },
+    {
+     "word": "Rahul's",
+     "at": 127.18
+    },
+    {
+     "word": "one-tap",
+     "at": 127.64
+    },
+    {
+     "word": "approval.",
+     "at": 128.08
+    }
+   ]
+  },
+  {
+   "id": "s3h",
+   "scene": "intel",
+   "start": 129.42,
+   "duration": 12.34,
+   "words": [
+    {
+     "word": "Fourth,",
+     "at": 129.42
+    },
+    {
+     "word": "Intelligence.",
+     "at": 130.4
+    },
+    {
+     "word": "Every",
+     "at": 131.12
+    },
+    {
+     "word": "confirmed",
+     "at": 131.38
+    },
+    {
+     "word": "scam",
+     "at": 131.86
+    },
+    {
+     "word": "number,",
+     "at": 132.2
+    },
+    {
+     "word": "URL",
+     "at": 132.94
+    },
+    {
+     "word": "and",
+     "at": 133.2
+    },
+    {
+     "word": "UPI",
+     "at": 133.58
+    },
+    {
+     "word": "ID",
+     "at": 134.0
+    },
+    {
+     "word": "becomes",
+     "at": 134.34
+    },
+    {
+     "word": "a",
+     "at": 134.84
+    },
+    {
+     "word": "node",
+     "at": 135.1
+    },
+    {
+     "word": "in",
+     "at": 135.34
+    },
+    {
+     "word": "a",
+     "at": 135.52
+    },
+    {
+     "word": "shared",
+     "at": 135.72
+    },
+    {
+     "word": "fraud",
+     "at": 135.96
+    },
+    {
+     "word": "graph,",
+     "at": 136.32
+    },
+    {
+     "word": "exposing",
+     "at": 136.96
+    },
+    {
+     "word": "whole",
+     "at": 137.42
+    },
+    {
+     "word": "scam",
+     "at": 137.86
+    },
+    {
+     "word": "rings,",
+     "at": 138.2
+    },
+    {
+     "word": "so",
+     "at": 138.74
+    },
+    {
+     "word": "one",
+     "at": 138.96
+    },
+    {
+     "word": "family's",
+     "at": 139.26
+    },
+    {
+     "word": "attack",
+     "at": 139.72
+    },
+    {
+     "word": "protects",
+     "at": 140.0
+    },
+    {
+     "word": "thousands.",
+     "at": 140.52
+    }
+   ]
+  },
+  {
+   "id": "s4a",
+   "scene": "arch",
+   "start": 141.86,
+   "duration": 6.22,
+   "words": [
+    {
+     "word": "Technically,",
+     "at": 141.86
+    },
+    {
+     "word": "KAVACH",
+     "at": 142.7
+    },
+    {
+     "word": "isn't",
+     "at": 142.86
+    },
+    {
+     "word": "a",
+     "at": 143.24
+    },
+    {
+     "word": "chatbot",
+     "at": 143.36
+    },
+    {
+     "word": "with",
+     "at": 143.8
+    },
+    {
+     "word": "bolted-on",
+     "at": 144.06
+    },
+    {
+     "word": "plugins.",
+     "at": 144.6
+    },
+    {
+     "word": "It's",
+     "at": 145.3
+    },
+    {
+     "word": "a",
+     "at": 145.56
+    },
+    {
+     "word": "modular,",
+     "at": 145.74
+    },
+    {
+     "word": "MCP-first",
+     "at": 146.48
+    },
+    {
+     "word": "agent",
+     "at": 147.36
+    },
+    {
+     "word": "system.",
+     "at": 147.72
+    }
+   ]
+  },
+  {
+   "id": "s4b",
+   "scene": "arch",
+   "start": 148.18,
+   "duration": 8.64,
+   "words": [
+    {
+     "word": "At",
+     "at": 148.18
+    },
+    {
+     "word": "the",
+     "at": 148.72
+    },
+    {
+     "word": "top,",
+     "at": 148.86
+    },
+    {
+     "word": "ElevenLabs",
+     "at": 149.4
+    },
+    {
+     "word": "Agents",
+     "at": 149.94
+    },
+    {
+     "word": "handle",
+     "at": 150.3
+    },
+    {
+     "word": "speech,",
+     "at": 150.7
+    },
+    {
+     "word": "turn-taking",
+     "at": 151.52
+    },
+    {
+     "word": "and",
+     "at": 152.26
+    },
+    {
+     "word": "multilingual",
+     "at": 152.32
+    },
+    {
+     "word": "voice,",
+     "at": 152.86
+    },
+    {
+     "word": "talking",
+     "at": 153.68
+    },
+    {
+     "word": "to",
+     "at": 153.84
+    },
+    {
+     "word": "our",
+     "at": 154.08
+    },
+    {
+     "word": "MCP",
+     "at": 154.2
+    },
+    {
+     "word": "layer",
+     "at": 154.6
+    },
+    {
+     "word": "over",
+     "at": 154.92
+    },
+    {
+     "word": "streamable",
+     "at": 155.28
+    },
+    {
+     "word": "HTTP.",
+     "at": 155.84
+    }
+   ]
+  },
+  {
+   "id": "s4c",
+   "scene": "arch",
+   "start": 156.92,
+   "duration": 10.44,
+   "words": [
+    {
+     "word": "Under",
+     "at": 156.92
+    },
+    {
+     "word": "it",
+     "at": 157.18
+    },
+    {
+     "word": "sits",
+     "at": 157.44
+    },
+    {
+     "word": "the",
+     "at": 157.78
+    },
+    {
+     "word": "KAVACH",
+     "at": 158.02
+    },
+    {
+     "word": "Orchestrator,",
+     "at": 158.34
+    },
+    {
+     "word": "in",
+     "at": 159.44
+    },
+    {
+     "word": "Python",
+     "at": 159.56
+    },
+    {
+     "word": "and",
+     "at": 159.88
+    },
+    {
+     "word": "FastAPI,",
+     "at": 160.24
+    },
+    {
+     "word": "with",
+     "at": 161.36
+    },
+    {
+     "word": "Gemini",
+     "at": 161.58
+    },
+    {
+     "word": "Flash",
+     "at": 161.92
+    },
+    {
+     "word": "scoring",
+     "at": 162.26
+    },
+    {
+     "word": "scams",
+     "at": 162.76
+    },
+    {
+     "word": "across",
+     "at": 163.22
+    },
+    {
+     "word": "our",
+     "at": 163.62
+    },
+    {
+     "word": "Shield,",
+     "at": 163.92
+    },
+    {
+     "word": "Strike,",
+     "at": 164.92
+    },
+    {
+     "word": "Recover",
+     "at": 165.18
+    },
+    {
+     "word": "and",
+     "at": 165.92
+    },
+    {
+     "word": "Guardian",
+     "at": 166.04
+    },
+    {
+     "word": "agents.",
+     "at": 166.38
+    }
+   ]
+  },
+  {
+   "id": "s4d",
+   "scene": "arch",
+   "start": 167.46,
+   "duration": 7.5,
+   "words": [
+    {
+     "word": "Agents",
+     "at": 167.46
+    },
+    {
+     "word": "never",
+     "at": 167.72
+    },
+    {
+     "word": "talk",
+     "at": 168.18
+    },
+    {
+     "word": "to",
+     "at": 168.48
+    },
+    {
+     "word": "outside",
+     "at": 168.66
+    },
+    {
+     "word": "systems",
+     "at": 168.98
+    },
+    {
+     "word": "directly.",
+     "at": 169.4
+    },
+    {
+     "word": "Every",
+     "at": 170.46
+    },
+    {
+     "word": "tool",
+     "at": 170.78
+    },
+    {
+     "word": "call",
+     "at": 171.0
+    },
+    {
+     "word": "passes",
+     "at": 171.26
+    },
+    {
+     "word": "through",
+     "at": 171.64
+    },
+    {
+     "word": "a",
+     "at": 171.9
+    },
+    {
+     "word": "Policy",
+     "at": 172.1
+    },
+    {
+     "word": "Gate,",
+     "at": 172.32
+    },
+    {
+     "word": "with",
+     "at": 172.96
+    },
+    {
+     "word": "an",
+     "at": 173.16
+    },
+    {
+     "word": "audit",
+     "at": 173.32
+    },
+    {
+     "word": "log",
+     "at": 173.54
+    },
+    {
+     "word": "and",
+     "at": 173.8
+    },
+    {
+     "word": "three",
+     "at": 174.12
+    },
+    {
+     "word": "action",
+     "at": 174.42
+    },
+    {
+     "word": "tiers.",
+     "at": 174.78
+    }
+   ]
+  },
+  {
+   "id": "s4e",
+   "scene": "arch",
+   "start": 175.06,
+   "duration": 12.14,
+   "words": [
+    {
+     "word": "Automatic,",
+     "at": 175.06
+    },
+    {
+     "word": "for",
+     "at": 176.0
+    },
+    {
+     "word": "screening",
+     "at": 176.62
+    },
+    {
+     "word": "and",
+     "at": 176.98
+    },
+    {
+     "word": "warnings.",
+     "at": 177.28
+    },
+    {
+     "word": "Guardian-approved,",
+     "at": 178.54
+    },
+    {
+     "word": "through",
+     "at": 179.0
+    },
+    {
+     "word": "Telegram,",
+     "at": 179.52
+    },
+    {
+     "word": "for",
+     "at": 179.9
+    },
+    {
+     "word": "reports",
+     "at": 180.32
+    },
+    {
+     "word": "or",
+     "at": 180.68
+    },
+    {
+     "word": "bank",
+     "at": 180.96
+    },
+    {
+     "word": "holds.",
+     "at": 181.16
+    },
+    {
+     "word": "And",
+     "at": 182.02
+    },
+    {
+     "word": "never",
+     "at": 182.2
+    },
+    {
+     "word": "allowed:",
+     "at": 182.52
+    },
+    {
+     "word": "sharing",
+     "at": 183.36
+    },
+    {
+     "word": "real",
+     "at": 183.68
+    },
+    {
+     "word": "data,",
+     "at": 184.0
+    },
+    {
+     "word": "moving",
+     "at": 184.7
+    },
+    {
+     "word": "money,",
+     "at": 184.98
+    },
+    {
+     "word": "or",
+     "at": 185.58
+    },
+    {
+     "word": "posing",
+     "at": 185.7
+    },
+    {
+     "word": "as",
+     "at": 186.02
+    },
+    {
+     "word": "officials.",
+     "at": 186.26
+    }
+   ]
+  },
+  {
+   "id": "s4f",
+   "scene": "arch",
+   "start": 187.3,
+   "duration": 10.6,
+   "words": [
+    {
+     "word": "Below",
+     "at": 187.3
+    },
+    {
+     "word": "the",
+     "at": 187.6
+    },
+    {
+     "word": "gate",
+     "at": 187.76
+    },
+    {
+     "word": "sit",
+     "at": 188.02
+    },
+    {
+     "word": "six",
+     "at": 188.28
+    },
+    {
+     "word": "FastMCP",
+     "at": 188.94
+    },
+    {
+     "word": "servers:",
+     "at": 189.6
+    },
+    {
+     "word": "telephony,",
+     "at": 190.74
+    },
+    {
+     "word": "intel,",
+     "at": 191.48
+    },
+    {
+     "word": "bank,",
+     "at": 192.14
+    },
+    {
+     "word": "report,",
+     "at": 192.86
+    },
+    {
+     "word": "family",
+     "at": 193.5
+    },
+    {
+     "word": "and",
+     "at": 194.12
+    },
+    {
+     "word": "knowledge,",
+     "at": 194.18
+    },
+    {
+     "word": "plus",
+     "at": 194.88
+    },
+    {
+     "word": "a",
+     "at": 195.16
+    },
+    {
+     "word": "live",
+     "at": 195.44
+    },
+    {
+     "word": "fraud",
+     "at": 195.68
+    },
+    {
+     "word": "graph",
+     "at": 195.96
+    },
+    {
+     "word": "and",
+     "at": 196.28
+    },
+    {
+     "word": "a",
+     "at": 196.7
+    },
+    {
+     "word": "guardian",
+     "at": 196.84
+    },
+    {
+     "word": "dashboard.",
+     "at": 197.14
+    }
+   ]
+  },
+  {
+   "id": "s4g",
+   "scene": "arch",
+   "start": 198.0,
+   "duration": 3.68,
+   "words": [
+    {
+     "word": "So",
+     "at": 198.0
+    },
+    {
+     "word": "future",
+     "at": 198.28
+    },
+    {
+     "word": "bank",
+     "at": 198.64
+    },
+    {
+     "word": "or",
+     "at": 198.94
+    },
+    {
+     "word": "telecom",
+     "at": 199.1
+    },
+    {
+     "word": "agents",
+     "at": 199.42
+    },
+    {
+     "word": "can",
+     "at": 199.84
+    },
+    {
+     "word": "plug",
+     "at": 200.08
+    },
+    {
+     "word": "into",
+     "at": 200.3
+    },
+    {
+     "word": "the",
+     "at": 200.5
+    },
+    {
+     "word": "same",
+     "at": 200.66
+    },
+    {
+     "word": "governance",
+     "at": 201.0
+    },
+    {
+     "word": "layer.",
+     "at": 201.38
+    }
+   ]
+  },
+  {
+   "id": "s5a",
+   "scene": "safety",
+   "start": 201.78,
+   "duration": 8.42,
+   "words": [
+    {
+     "word": "KAVACH",
+     "at": 201.78
+    },
+    {
+     "word": "never",
+     "at": 202.56
+    },
+    {
+     "word": "uses",
+     "at": 203.02
+    },
+    {
+     "word": "Android",
+     "at": 203.42
+    },
+    {
+     "word": "accessibility",
+     "at": 203.78
+    },
+    {
+     "word": "permissions",
+     "at": 204.34
+    },
+    {
+     "word": "and",
+     "at": 205.34
+    },
+    {
+     "word": "never",
+     "at": 205.46
+    },
+    {
+     "word": "reads",
+     "at": 205.8
+    },
+    {
+     "word": "your",
+     "at": 206.1
+    },
+    {
+     "word": "banking",
+     "at": 206.26
+    },
+    {
+     "word": "screens.",
+     "at": 206.48
+    },
+    {
+     "word": "That",
+     "at": 207.44
+    },
+    {
+     "word": "is",
+     "at": 207.64
+    },
+    {
+     "word": "exactly",
+     "at": 207.76
+    },
+    {
+     "word": "how",
+     "at": 208.2
+    },
+    {
+     "word": "malware",
+     "at": 208.62
+    },
+    {
+     "word": "steals",
+     "at": 208.86
+    },
+    {
+     "word": "OTPs.",
+     "at": 209.26
+    }
+   ]
+  },
+  {
+   "id": "s5b",
+   "scene": "safety",
+   "start": 210.3,
+   "duration": 9.48,
+   "words": [
+    {
+     "word": "It",
+     "at": 210.3
+    },
+    {
+     "word": "relies",
+     "at": 210.5
+    },
+    {
+     "word": "only",
+     "at": 210.78
+    },
+    {
+     "word": "on",
+     "at": 211.16
+    },
+    {
+     "word": "consent-based",
+     "at": 211.52
+    },
+    {
+     "word": "channels:",
+     "at": 212.22
+    },
+    {
+     "word": "announced",
+     "at": 213.26
+    },
+    {
+     "word": "conference",
+     "at": 213.5
+    },
+    {
+     "word": "calls,",
+     "at": 213.92
+    },
+    {
+     "word": "debit",
+     "at": 214.74
+    },
+    {
+     "word": "SMS,",
+     "at": 214.84
+    },
+    {
+     "word": "and",
+     "at": 215.64
+    },
+    {
+     "word": "RBI's",
+     "at": 215.86
+    },
+    {
+     "word": "Account",
+     "at": 216.4
+    },
+    {
+     "word": "Aggregator,",
+     "at": 216.68
+    },
+    {
+     "word": "aligned",
+     "at": 217.52
+    },
+    {
+     "word": "with",
+     "at": 217.86
+    },
+    {
+     "word": "India's",
+     "at": 218.12
+    },
+    {
+     "word": "DPDP",
+     "at": 218.56
+    },
+    {
+     "word": "Act.",
+     "at": 219.14
+    }
+   ]
+  },
+  {
+   "id": "s5c",
+   "scene": "scope",
+   "start": 219.88,
+   "duration": 12.7,
+   "words": [
+    {
+     "word": "In",
+     "at": 219.88
+    },
+    {
+     "word": "our",
+     "at": 220.1
+    },
+    {
+     "word": "build,",
+     "at": 220.26
+    },
+    {
+     "word": "voice",
+     "at": 221.0
+    },
+    {
+     "word": "agents,",
+     "at": 221.2
+    },
+    {
+     "word": "scam",
+     "at": 222.12
+    },
+    {
+     "word": "detection,",
+     "at": 222.14
+    },
+    {
+     "word": "all",
+     "at": 223.0
+    },
+    {
+     "word": "six",
+     "at": 223.18
+    },
+    {
+     "word": "MCP",
+     "at": 223.4
+    },
+    {
+     "word": "servers,",
+     "at": 223.8
+    },
+    {
+     "word": "SMS",
+     "at": 224.7
+    },
+    {
+     "word": "parsing,",
+     "at": 225.41
+    },
+    {
+     "word": "Telegram",
+     "at": 226.12
+    },
+    {
+     "word": "approvals",
+     "at": 226.12
+    },
+    {
+     "word": "and",
+     "at": 226.88
+    },
+    {
+     "word": "the",
+     "at": 227.08
+    },
+    {
+     "word": "fraud",
+     "at": 227.24
+    },
+    {
+     "word": "graph",
+     "at": 227.46
+    },
+    {
+     "word": "are",
+     "at": 227.78
+    },
+    {
+     "word": "real.",
+     "at": 228.08
+    },
+    {
+     "word": "Only",
+     "at": 228.36
+    },
+    {
+     "word": "bank",
+     "at": 229.16
+    },
+    {
+     "word": "actions",
+     "at": 229.48
+    },
+    {
+     "word": "and",
+     "at": 229.9
+    },
+    {
+     "word": "official",
+     "at": 230.18
+    },
+    {
+     "word": "portal",
+     "at": 230.5
+    },
+    {
+     "word": "filings",
+     "at": 230.9
+    },
+    {
+     "word": "are",
+     "at": 231.3
+    },
+    {
+     "word": "mocked.",
+     "at": 231.5
+    }
+   ]
+  },
+  {
+   "id": "s6a",
+   "scene": "roadmap",
+   "start": 232.68,
+   "duration": 9.56,
+   "words": [
+    {
+     "word": "Next:",
+     "at": 232.68
+    },
+    {
+     "word": "a",
+     "at": 233.18
+    },
+    {
+     "word": "50-family",
+     "at": 233.3
+    },
+    {
+     "word": "Android",
+     "at": 233.98
+    },
+    {
+     "word": "pilot",
+     "at": 234.44
+    },
+    {
+     "word": "with",
+     "at": 234.76
+    },
+    {
+     "word": "Exotel,",
+     "at": 235.43
+    },
+    {
+     "word": "then",
+     "at": 236.1
+    },
+    {
+     "word": "bank",
+     "at": 236.46
+    },
+    {
+     "word": "and",
+     "at": 236.6
+    },
+    {
+     "word": "telecom",
+     "at": 236.78
+    },
+    {
+     "word": "partnerships",
+     "at": 237.12
+    },
+    {
+     "word": "that",
+     "at": 237.72
+    },
+    {
+     "word": "license",
+     "at": 238.02
+    },
+    {
+     "word": "our",
+     "at": 238.4
+    },
+    {
+     "word": "fraud",
+     "at": 238.64
+    },
+    {
+     "word": "graph,",
+     "at": 238.9
+    },
+    {
+     "word": "while",
+     "at": 239.52
+    },
+    {
+     "word": "KAVACH",
+     "at": 239.8
+    },
+    {
+     "word": "stays",
+     "at": 240.18
+    },
+    {
+     "word": "free",
+     "at": 240.56
+    },
+    {
+     "word": "for",
+     "at": 240.92
+    },
+    {
+     "word": "families.",
+     "at": 241.18
+    }
+   ]
+  },
+  {
+   "id": "s6b",
+   "scene": "close",
+   "start": 242.34,
+   "duration": 7.069,
+   "words": [
+    {
+     "word": "Less",
+     "at": 242.34
+    },
+    {
+     "word": "magic,",
+     "at": 242.44
+    },
+    {
+     "word": "more",
+     "at": 243.28
+    },
+    {
+     "word": "utility.",
+     "at": 243.44
+    },
+    {
+     "word": "Six",
+     "at": 244.62
+    },
+    {
+     "word": "MCP",
+     "at": 244.78
+    },
+    {
+     "word": "servers,",
+     "at": 245.2
+    },
+    {
+     "word": "one",
+     "at": 246.34
+    },
+    {
+     "word": "mission:",
+     "at": 246.48
+    },
+    {
+     "word": "no",
+     "at": 247.46
+    },
+    {
+     "word": "Amma",
+     "at": 247.72
+    },
+    {
+     "word": "left",
+     "at": 248.1
+    },
+    {
+     "word": "alone",
+     "at": 248.34
+    },
+    {
+     "word": "with",
+     "at": 248.62
+    },
+    {
+     "word": "a",
+     "at": 248.84
+    },
+    {
+     "word": "scammer.",
+     "at": 248.98
+    }
+   ]
+  }
+ ],
+ "total": 252.409
+}

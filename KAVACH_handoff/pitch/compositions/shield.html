@@ -1,0 +1,112 @@
+<template>
+  <style>
+    
+@font-face { font-family: KSans; src: local('Segoe UI'); font-weight: 400; }
+@font-face { font-family: KSans; src: local('Segoe UI Semibold'); font-weight: 600; }
+@font-face { font-family: KMono; src: local('Consolas'); font-weight: 400; }
+#root { position: absolute; inset: 0; overflow: hidden; font-family: KSans, sans-serif; color: #171717;
+        background: radial-gradient(ellipse 70% 75% at 50% 45%, #F4F4F5 0%, #E4E4E6 60%, #C9C9CC 100%); }
+#root * { box-sizing: border-box; }
+#root .abs { position: absolute; }
+#root .card { background: #19191B; border: 1px solid #2C2C2F; border-radius: 24px; color: #EDEDED;
+              box-shadow: 0 24px 48px rgba(0,0,0,0.14); }
+#root .row { background: #232325; border-radius: 14px; color: #EDEDED; }
+#root .mono { font-family: KMono, monospace; font-variant-numeric: tabular-nums; }
+#root .semi { font-weight: 600; }
+#root .t2 { color: #525252; } #root .t3 { color: #737373; }
+#root .c2 { color: #A1A1A6; } #root .c3 { color: #85858B; }
+#root .red { color: #E5484D; } #root .green { color: #4CC38A; } #root .amber { color: #F5A524; }
+#root .indigo { color: #2A2FD0; } #root .indigo-d { color: #6C70F0; }
+#root .dot { display: inline-block; width: 16px; height: 16px; border-radius: 8px; flex: none; }
+#root .head { left: 120px; top: 84px; font-size: 40px; }
+#root i[data-sfx] { display: none; }
+
+    .sh-call { left: 220px; width: 560px; height: 150px; padding: 0 40px; display: flex; flex-direction: column; justify-content: center; }
+    #sh-c0 { top: 330px; } #sh-c1 { top: 600px; }
+    .sh-cn { font-size: 44px; } .sh-cs { font-size: 32px; margin-top: 6px; }
+    .sh-line { left: 800px; height: 4px; width: 420px; transform-origin: left center; }
+    #sh-l0 { top: 403px; background: #4CC38A; } #sh-l1 { top: 673px; background: #2A2FD0; }
+    .sh-out { left: 1250px; font-size: 44px; display: flex; align-items: center; gap: 24px; }
+    #sh-o0 { top: 375px; } #sh-o1 { top: 630px; }
+    #sh-o1 img { width: 96px; height: 96px; }
+    #sh-film { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; }
+    #sh-alert { left: 220px; top: 220px; width: 900px; padding: 44px 48px; }
+    #sh-alert-h { display: flex; align-items: center; gap: 16px; font-size: 32px; }
+    #sh-alert-h img { width: 48px; height: 48px; }
+    #sh-alert-b { font-size: 36px; line-height: 1.45; margin-top: 26px; }
+    #sh-alert-a { display: flex; gap: 20px; margin-top: 34px; }
+    .sh-btn { font-size: 32px; padding: 18px 30px; border-radius: 12px; }
+    #sh-approve { background: #EDEDED; color: #171717; } #sh-callamma { background: #232325; color: #EDEDED; }
+    #sh-right { left: 1152px; top: 220px; width: 548px; display: flex; flex-direction: column; gap: 32px; }
+    #sh-sms { padding: 36px 44px; }
+    .sh-sms-t { font-size: 32px; line-height: 1.4; }
+    #sh-vn { padding: 36px 44px; }
+    #sh-vn-w { display: flex; align-items: center; gap: 6px; height: 56px; margin: 16px 0; }
+    .sh-vb { width: 8px; border-radius: 4px; background: #6C70F0; }
+  </style>
+  <div id="root" data-composition-id="shield" data-width="1920" data-height="1080">
+    <div class="abs head"><span class="indigo semi">Shield</span> <span class="t2">· every day</span></div>
+    <div id="sh-c0" class="abs card sh-call"><div class="sh-cn">Mom</div><div class="sh-cs c2">saved contact</div></div>
+    <div id="sh-c1" class="abs card sh-call"><div class="sh-cn mono">+91 98XXX XX210</div><div class="sh-cs c2">unknown number</div></div>
+    <div id="sh-l0" class="abs sh-line"></div><div id="sh-l1" class="abs sh-line"></div>
+    <div id="sh-o0" class="abs sh-out"><span class="dot" style="background:#4CC38A"></span>rings normally</div>
+    <div id="sh-o1" class="abs sh-out"><img src="assets/shield.png" alt="" />KAVACH screens it first</div>
+    <!-- the phone film (Blender frames 36-290, no caption): tap -> listening -> verdict -> call ended, fitted to the narration -->
+    <video id="sh-film" class="clip" src="assets/video/phone_film_nocap.mp4" muted playsinline
+           data-start="7.010" data-duration="11.500" data-media-start="0.2"
+           data-playback-rate="0.887"></video>
+    <div id="sh-alert" class="abs card">
+      <div id="sh-alert-h"><img src="assets/shield.png" alt="" /><span class="semi">KAVACH alert</span><span class="c3 mono">· 11:42</span></div>
+      <div id="sh-alert-b">Amma received a <span class="red">"digital arrest"</span> scam call from <span class="mono">+91 98XXX XX210</span>.
+        KAVACH joined, warned her, and the caller hung up. No money moved.</div>
+      <div id="sh-alert-a"><div id="sh-approve" class="sh-btn semi">Approve report</div><div id="sh-callamma" class="sh-btn">Call Amma</div></div>
+    </div>
+    <div id="sh-right" class="abs">
+    <div id="sh-sms" class="card">
+      <div class="sh-sms-t c2">SMS · electricity board</div>
+      <div class="sh-sms-t" style="margin-top:12px">Power will be cut tonight. Pay now at <span class="red">bit.ly/eb-bill</span></div>
+    </div>
+    <div id="sh-vn" class="card">
+      <div class="sh-sms-t c2">KAVACH · voice note, 0:06</div>
+      <div id="sh-vn-w"></div>
+      <div class="sh-sms-t">"Don't click this link. It's fake."</div>
+    </div>
+    </div>
+    <i data-sfx="minimize_002.ogg" data-at="2.93" data-vol="0.25"></i>
+    <i data-sfx="select_003.ogg" data-at="4.71" data-vol="0.35"></i>
+    <!-- film time T plays at S(s3b) - 0.3 + (T - 1.7) / rate -->
+    <i data-sfx="minimize_007.ogg" data-at="7.010" data-vol="0.3"></i>
+    <i data-sfx="select_001.ogg" data-at="7.348" data-vol="0.45"></i>
+    <i data-sfx="error_005.ogg" data-at="11.012" data-vol="0.4"></i>
+    <i data-sfx="impactMetal_001.ogg" data-at="12.422" data-vol="0.35"></i>
+    <i data-sfx="confirmation_004.ogg" data-at="18.31" data-vol="0.45"></i>
+    <i data-sfx="select_001.ogg" data-at="23.87" data-vol="0.35"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const IN = (s, t, d = 0.55) => tl.fromTo(s, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out" }, t);
+    const OUT = (s, t) => tl.to(s, { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, t);
+    ["#sh-c0", "#sh-c1", "#sh-o0", "#sh-o1", "#sh-alert", "#sh-sms", "#sh-vn"].forEach((s) => gsap.set(s, { opacity: 0 }));
+    ["#sh-l0", "#sh-l1"].forEach((s) => gsap.set(s, { scaleX: 0 }));
+    const vw = document.getElementById("sh-vn-w");
+    for (let i = 0; i < 40; i++) { const b = document.createElement("div"); b.className = "sh-vb"; b.style.height = (14 + 40 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6))) + "px"; vw.appendChild(b); }
+
+    // routing: saved contacts ring, unknown numbers are screened
+    IN("#sh-c0", 2.93 - 0.1);
+    tl.to("#sh-l0", { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 2.93 + 0.3);
+    IN("#sh-o0", 2.93 + 0.7);
+    IN("#sh-c1", 4.71 - 0.1);
+    tl.to("#sh-l1", { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 4.71 + 0.3);
+    IN("#sh-o1", 4.71 - 0.1);
+    OUT(["#sh-c0", "#sh-c1", "#sh-l0", "#sh-l1", "#sh-o0", "#sh-o1"], 7.31 - 0.25);
+
+    // after the phone film: the verdict becomes Rahul's alert
+    tl.fromTo("#sh-alert", { opacity: 0, x: 380, y: 120, scale: 0.7 }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, 18.31 - 0.2);
+    tl.fromTo("#sh-approve", { scale: 1 }, { scale: 0.96, duration: 0.08, yoyo: true, repeat: 1 }, 19.93 + 0.2);
+    IN("#sh-sms", 21.27 - 0.1);
+    tl.fromTo("#sh-vn", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 22.87 - 0.15);
+    tl.fromTo(".sh-vb", { scaleY: 0.2 }, { scaleY: 1, duration: 0.35, ease: "expo.out", stagger: 0.015 }, 23.87 - 0.1);
+    OUT(["#sh-alert", "#sh-sms", "#sh-vn"], 25.16 - 0.4);
+    window.__timelines["shield"] = tl;
+  </script>
+</template>

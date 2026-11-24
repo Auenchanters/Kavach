@@ -1,0 +1,83 @@
+<template>
+  <style>
+    
+@font-face { font-family: KSans; src: local('Segoe UI'); font-weight: 400; }
+@font-face { font-family: KSans; src: local('Segoe UI Semibold'); font-weight: 600; }
+@font-face { font-family: KMono; src: local('Consolas'); font-weight: 400; }
+#root { position: absolute; inset: 0; overflow: hidden; font-family: KSans, sans-serif; color: #171717;
+        background: radial-gradient(ellipse 70% 75% at 50% 45%, #F4F4F5 0%, #E4E4E6 60%, #C9C9CC 100%); }
+#root * { box-sizing: border-box; }
+#root .abs { position: absolute; }
+#root .card { background: #19191B; border: 1px solid #2C2C2F; border-radius: 24px; color: #EDEDED;
+              box-shadow: 0 24px 48px rgba(0,0,0,0.14); }
+#root .row { background: #232325; border-radius: 14px; color: #EDEDED; }
+#root .mono { font-family: KMono, monospace; font-variant-numeric: tabular-nums; }
+#root .semi { font-weight: 600; }
+#root .t2 { color: #525252; } #root .t3 { color: #737373; }
+#root .c2 { color: #A1A1A6; } #root .c3 { color: #85858B; }
+#root .red { color: #E5484D; } #root .green { color: #4CC38A; } #root .amber { color: #F5A524; }
+#root .indigo { color: #2A2FD0; } #root .indigo-d { color: #6C70F0; }
+#root .dot { display: inline-block; width: 16px; height: 16px; border-radius: 8px; flex: none; }
+#root .head { left: 120px; top: 84px; font-size: 40px; }
+#root i[data-sfx] { display: none; }
+
+    #sf-phone { left: 300px; top: 170px; width: 440px; height: 840px; border-radius: 64px; border: 12px solid #2B2B2E; background: #121214; }
+    #sf-vault { left: 352px; top: 380px; width: 336px; height: 340px; border-radius: 24px; background: #232325; color: #EDEDED;
+                display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; font-size: 32px; text-align: center; }
+    #sf-fence { left: 330px; top: 358px; width: 380px; height: 384px; border-radius: 32px; border: 4px dashed #E5484D; }
+    #sf-no { left: 820px; top: 250px; font-size: 44px; }
+    #sf-mal { left: 820px; top: 320px; font-size: 34px; }
+    .sf-pipe { left: 740px; height: 6px; background: #4CC38A; transform-origin: right center; }
+    #sf-p0 { top: 560px; width: 380px; } #sf-p1 { top: 690px; width: 380px; } #sf-p2 { top: 820px; width: 380px; }
+    .sf-pl { left: 1150px; font-size: 38px; display: flex; align-items: center; gap: 16px; }
+    #sf-l0 { top: 535px; } #sf-l1 { top: 665px; } #sf-l2 { top: 795px; }
+    #sf-dpdp { left: 1150px; top: 930px; font-size: 32px; }
+  </style>
+  <div id="root" data-composition-id="safety" data-width="1920" data-height="1080">
+    <div class="abs head"><span class="indigo semi">Safe by design</span></div>
+    <div id="sf-phone" class="abs"></div>
+    <div id="sf-vault" class="abs">
+      <svg width="72" height="84" viewBox="0 0 72 84"><rect x="6" y="36" width="60" height="44" rx="10" fill="#EDEDED"/><path d="M18 36 V24 a18 18 0 0 1 36 0 V36" stroke="#EDEDED" stroke-width="8" fill="none"/></svg>
+      <div>Banking and<br/>UPI apps</div>
+      <div id="sf-otp" class="mono" style="font-size:28px; background:#2C2C2F; color:#EDEDED; border-radius:10px; padding:8px 14px">OTP 482 913</div>
+    </div>
+    <div id="sf-fence" class="abs"></div>
+    <div id="sf-no" class="abs red semi">No accessibility access. No screen reading.</div>
+    <div id="sf-mal" class="abs t2">That is exactly how malware steals OTPs</div>
+    <div id="sf-only" class="abs green semi" style="left:1150px; top:450px; font-size:36px">consent-based channels only</div>
+    <div id="sf-p0" class="abs sf-pipe"></div><div id="sf-p1" class="abs sf-pipe"></div><div id="sf-p2" class="abs sf-pipe"></div>
+    <div id="sf-l0" class="abs sf-pl"><span class="dot" style="background:#4CC38A"></span>Conference call, announced</div>
+    <div id="sf-l1" class="abs sf-pl"><span class="dot" style="background:#4CC38A"></span>Bank debit SMS</div>
+    <div id="sf-l2" class="abs sf-pl"><span class="dot" style="background:#4CC38A"></span>RBI Account Aggregator</div>
+    <div id="sf-dpdp" class="abs t2">aligned with India's DPDP Act</div>
+    <i data-sfx="impactMetal_001.ogg" data-at="1.23" data-vol="0.35"></i>
+    <i data-sfx="question_003.ogg" data-at="7.29" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="12.17" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="13.41" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="15.07" data-vol="0.3"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const IN = (s, t, d = 0.55) => tl.fromTo(s, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out" }, t);
+    const OUT = (s, t) => tl.to(s, { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, t);
+    ["#sf-vault", "#sf-fence", "#sf-no", "#sf-mal", "#sf-l0", "#sf-l1", "#sf-l2", "#sf-dpdp"].forEach((s) => gsap.set(s, { opacity: 0 }));
+    [".sf-pipe"].forEach((s) => gsap.set(s, { scaleX: 0 }));
+    tl.fromTo("#sf-phone", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" }, 0.1);
+    IN("#sf-vault", 2.45 - 0.6);
+    tl.fromTo("#sf-fence", { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, 4.47);
+    gsap.set("#sf-otp", { opacity: 0 });
+    tl.fromTo("#sf-otp", { opacity: 0, x: 0 }, { opacity: 1, x: 0, duration: 0.3 }, 7.29 - 0.2);
+    tl.to("#sf-otp", { x: 70, duration: 0.45, ease: "power2.in" }, 7.53 - 0.1);
+    tl.to("#sf-otp", { x: 0, backgroundColor: "#E5484D", duration: 0.35, ease: "power2.out" }, 7.53 + 0.35);  // stopped at the fence, pushed back
+    IN("#sf-no", 2.45);
+    IN("#sf-mal", 7.29 - 0.1);
+    [["#sf-p0", "#sf-l0", 12.17], ["#sf-p1", "#sf-l1", 13.41], ["#sf-p2", "#sf-l2", 15.07]].forEach(([p, l, t]) => {
+      tl.to(p, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, t - 0.2);
+      IN(l, t);
+    });
+    IN("#sf-dpdp", 16.19 - 0.1);
+    gsap.set("#sf-only", { opacity: 0 }); IN("#sf-only", 10.19 - 0.1);
+    OUT(["#sf-phone", "#sf-vault", "#sf-fence", "#sf-otp", "#sf-only", "#sf-no", "#sf-mal", ".sf-pipe", ".sf-pl", "#sf-dpdp"], 18.10 - 0.4);
+    window.__timelines["safety"] = tl;
+  </script>
+</template>

@@ -1,0 +1,153 @@
+<template>
+  <style>
+    
+@font-face { font-family: KSans; src: local('Segoe UI'); font-weight: 400; }
+@font-face { font-family: KSans; src: local('Segoe UI Semibold'); font-weight: 600; }
+@font-face { font-family: KMono; src: local('Consolas'); font-weight: 400; }
+#root { position: absolute; inset: 0; overflow: hidden; font-family: KSans, sans-serif; color: #171717;
+        background: radial-gradient(ellipse 70% 75% at 50% 45%, #F4F4F5 0%, #E4E4E6 60%, #C9C9CC 100%); }
+#root * { box-sizing: border-box; }
+#root .abs { position: absolute; }
+#root .card { background: #19191B; border: 1px solid #2C2C2F; border-radius: 24px; color: #EDEDED;
+              box-shadow: 0 24px 48px rgba(0,0,0,0.14); }
+#root .row { background: #232325; border-radius: 14px; color: #EDEDED; }
+#root .mono { font-family: KMono, monospace; font-variant-numeric: tabular-nums; }
+#root .semi { font-weight: 600; }
+#root .t2 { color: #525252; } #root .t3 { color: #737373; }
+#root .c2 { color: #A1A1A6; } #root .c3 { color: #85858B; }
+#root .red { color: #E5484D; } #root .green { color: #4CC38A; } #root .amber { color: #F5A524; }
+#root .indigo { color: #2A2FD0; } #root .indigo-d { color: #6C70F0; }
+#root .dot { display: inline-block; width: 16px; height: 16px; border-radius: 8px; flex: none; }
+#root .head { left: 120px; top: 84px; font-size: 40px; }
+#root i[data-sfx] { display: none; }
+
+    #ar-flood { left: 0; top: 0; width: 1920px; height: 1080px; background: #121214; }
+    #ar-head { left: 120px; top: 84px; font-size: 40px; color: #EDEDED; }
+    #ar-not { left: 120px; top: 300px; font-size: 64px; color: #85858B; position: absolute; }
+    #ar-not-k { position: absolute; left: -8px; right: -8px; top: 52%; height: 5px; background: #E5484D; transform-origin: left center; }
+    #ar-yes { left: 120px; top: 420px; font-size: 88px; color: #EDEDED; letter-spacing: -0.02em; }
+    #ar-cam { left: 0; top: 0; width: 1920px; height: 3000px; }
+    /* the stack: one column, one 96px gap (room for the packets to travel the pipe between layers) */
+    #ar-stack { left: 140px; top: 160px; width: 1240px; display: flex; flex-direction: column; gap: 96px; }
+    .ar-slab { position: relative; padding: 36px 44px; background: #19191B; border: 1px solid #2C2C2F; border-radius: 24px; color: #EDEDED; }
+    .ar-t { font-size: 44px; } .ar-s { font-size: 32px; color: #A1A1A6; margin-top: 6px; }
+    .ar-chips { display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+    .ar-chip { background: #232325; border-radius: 12px; padding: 14px 22px; font-size: 30px; }
+    .ar-lane { display: flex; align-items: center; gap: 18px; background: #232325; border-radius: 14px; padding: 18px 24px; margin-top: 16px; font-size: 30px; white-space: nowrap; }
+    .ar-lane b { font-weight: 600; min-width: 300px; }
+    .ar-pipe { left: 758px; width: 4px; background: #2C2C2F; }
+    .ar-pkt { left: 752px; width: 16px; height: 16px; border-radius: 8px; background: #6C70F0; }
+    .ar-plug { left: 1460px; width: 340px; padding: 24px 32px; border: 3px dashed #6C70F0; border-radius: 20px; color: #EDEDED; font-size: 32px; background: #121214; }
+  </style>
+  <div id="root" data-composition-id="arch" data-width="1920" data-height="1080">
+    <div id="ar-flood" class="abs"></div>
+    <div id="ar-head" class="abs"><span class="indigo-d semi">How it's built</span> <span class="c2">· MCP-first</span></div>
+    <div id="ar-not" class="abs">a chatbot with bolted-on plugins<div id="ar-not-k"></div></div>
+    <div id="ar-yes" class="abs semi">a modular, <span class="indigo-d">MCP-first</span> agent system</div>
+    <div id="ar-cam" class="abs">
+      <div class="abs ar-pipe" style="top:330px;height:2000px"></div>
+      <div id="ar-pk1" class="abs ar-pkt"></div>
+      <div id="ar-pk2" class="abs ar-pkt"></div>
+      <div id="ar-pk3" class="abs ar-pkt"></div>
+      <div id="ar-stack" class="abs">
+      <div id="ar-s1" class="ar-slab">
+        <div class="ar-t">Voice layer · <span class="semi">ElevenLabs Agents</span></div>
+        <div class="ar-chips"><div class="ar-chip" id="ar-c0">speech-to-text</div><div class="ar-chip" id="ar-c1">natural turn-taking</div>
+          <div class="ar-chip" id="ar-c2">Kannada · Hindi · English</div><div class="ar-chip mono" id="ar-c3">MCP over streamable HTTP</div></div>
+      </div>
+      <div id="ar-s2" class="ar-slab">
+        <div class="ar-t" style="white-space:nowrap">KAVACH Orchestrator · <span class="mono c2" style="font-size:28px">Python · FastAPI · Gemini Flash</span></div>
+        <div class="ar-chips"><div class="ar-chip" id="ar-m0">Shield agents</div><div class="ar-chip" id="ar-m1">Strike agents</div>
+          <div class="ar-chip" id="ar-m2">Recover swarm</div><div class="ar-chip" id="ar-m3">Guardian agent</div></div>
+      </div>
+      <div id="ar-s3" class="ar-slab">
+        <div class="ar-t">Policy gate <span class="c2">→ audit log</span></div>
+        <div id="ar-g0" class="ar-lane"><span class="dot" style="background:#4CC38A"></span><b class="green">Automatic</b><span class="c2">check a number, warn Amma, alert Rahul</span></div>
+        <div id="ar-g1" class="ar-lane"><span class="dot" style="background:#F5A524"></span><b class="amber">Guardian-approved</b><span class="c2">a report, a bank hold</span><span id="ar-tg" class="ar-chip" style="margin-left:auto; font-size:28px">Telegram: Approve / Reject</span></div>
+        <div id="ar-g2" class="ar-lane"><span class="dot" style="background:#E5484D"></span><b class="red">Never allowed</b><span class="c2">share real data, move money, pose as police</span></div>
+        <div id="ar-audit" class="ar-s mono" style="margin-top:18px">audit log · 12:04:41 · move_money → <span class="red">blocked</span></div>
+      </div>
+      <div id="ar-s4" class="ar-slab">
+        <div class="ar-t">Six FastMCP servers</div>
+        <div class="ar-chips mono"><div class="ar-chip ar-srv" id="ar-v0">kavach-telephony</div><div class="ar-chip ar-srv" id="ar-v1">kavach-intel</div>
+          <div class="ar-chip ar-srv" id="ar-v2">kavach-bank</div><div class="ar-chip ar-srv" id="ar-v3">kavach-report</div>
+          <div class="ar-chip ar-srv" id="ar-v4">kavach-family</div><div class="ar-chip ar-srv" id="ar-v5">kavach-knowledge</div></div>
+        <div class="ar-s">+ live fraud graph · guardian dashboard (Next.js)</div>
+      </div>
+      <div id="ar-s5" class="ar-slab">
+        <div class="ar-t">Outside world</div>
+        <div class="ar-s">phone network · bank alerts · 1930 · cybercrime.gov.in · Sanchar Saathi · Telegram</div>
+      </div>
+      </div>
+      <div id="ar-direct" class="abs red" style="left:800px; font-size:32px">no direct calls to the outside world</div>
+      <div id="ar-plug0" class="abs ar-plug">Bank's agent</div>
+      <div id="ar-plug1" class="abs ar-plug">Telecom's agent</div>
+    </div>
+    <i data-sfx="minimize_004.ogg" data-at="4.33" data-vol="0.3"></i>
+    <i data-sfx="minimize_002.ogg" data-at="7.99" data-vol="0.3"></i>
+    <i data-sfx="minimize_007.ogg" data-at="16.93" data-vol="0.3"></i>
+    <i data-sfx="impactMetal_001.ogg" data-at="30.69" data-vol="0.35"></i>
+    <i data-sfx="tick_001.ogg" data-at="33.65" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="37.13" data-vol="0.3"></i>
+    <i data-sfx="tick_001.ogg" data-at="40.79" data-vol="0.3"></i>
+    <i data-sfx="minimize_002.ogg" data-at="46.87" data-vol="0.3"></i>
+    <i data-sfx="select_003.ogg" data-at="58.67" data-vol="0.4"></i>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const IN = (s, t, d = 0.55) => tl.fromTo(s, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out" }, t);
+    const OUT = (s, t) => tl.to(s, { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power3.in" }, t);
+    ["#ar-not", "#ar-yes", "#ar-s1", "#ar-s2", "#ar-s3", "#ar-s4", "#ar-s5", "#ar-plug0", "#ar-plug1", ".ar-pipe", ".ar-pkt"].forEach((s) => gsap.set(s, { opacity: 0 }));
+    // colour flood: the studio goes dark for the engine room
+    tl.fromTo("#ar-flood", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.inOut" }, 0);
+    IN("#ar-not", 1.95 - 0.2);
+    tl.fromTo("#ar-not-k", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.inOut" }, 3.19);
+    IN("#ar-yes", 4.33 - 0.1);
+    OUT(["#ar-not", "#ar-yes"], 6.77 - 0.35);
+    // the stack is built top-down as each layer is named; the camera descends one layer per beat
+    const cam = (y, t) => tl.to("#ar-cam", { y: -y, duration: 1.0, ease: "power2.inOut" }, t);
+    const box = (id) => { const e = document.getElementById(id); return { top: 160 + e.offsetTop, bot: 160 + e.offsetTop + e.offsetHeight }; };
+    const S1 = box("ar-s1"), S2 = box("ar-s2"), S3 = box("ar-s3"), S4 = box("ar-s4");
+    // packets leave the bottom of one layer and arrive at the top of the next; visible only while they travel
+    const pkt = (id, a, b, t) => { gsap.set(id, { top: a.bot - 8 });
+      tl.set(id, { opacity: 1 }, t);
+      tl.fromTo(id, { y: 0 }, { y: b.top - a.bot, duration: 1.2, ease: "power2.inOut", immediateRender: false }, t);
+      tl.set(id, { opacity: 0 }, t + 1.2); };
+    gsap.set("#ar-direct", { top: (S2.bot + S3.top) / 2 - 22 });
+    gsap.set("#ar-plug0", { top: S3.top + 40 }); gsap.set("#ar-plug1", { top: S3.top + 40 + 140 });
+    gsap.set("#ar-cam", { y: 120 });
+    tl.to(".ar-pipe", { opacity: 1, duration: 0.4 }, 6.77);
+    OUT("#ar-head", 15.51 - 0.6);  // the stack takes the top of the frame
+    IN("#ar-s1", 7.99 - 0.2, 0.7);
+    gsap.set(["#ar-c0", "#ar-c1", "#ar-c2", "#ar-c3"], { opacity: 0.15 });
+    [9.29, 10.11, 10.91, 12.79].forEach((t, i) => tl.to("#ar-c" + i, { opacity: 1, duration: 0.3 }, t - 0.1));
+    tl.to(".ar-pipe", { backgroundColor: "#6C70F0", duration: 0.3 }, 14.43 - 0.1);  // the MCP line goes live
+    tl.to(".ar-pipe", { backgroundColor: "#2C2C2F", duration: 0.5 }, 15.51);
+    cam(S2.top - 420, 15.51 - 0.5);
+    IN("#ar-s2", 16.93 - 0.2, 0.7);
+    tl.fromTo(["#ar-m0", "#ar-m1", "#ar-m2", "#ar-m3"], { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.25 }, 22.51 - 0.1);
+    pkt("#ar-pk1", S1, S2, 20.17);
+    cam(S3.top - 400, 26.05 - 0.4);
+    gsap.set("#ar-direct", { opacity: 0 }); IN("#ar-direct", 27.99 - 0.1, 0.4); OUT("#ar-direct", 30.69 - 0.2);
+    IN("#ar-s3", 30.69 - 0.2, 0.7);
+    pkt("#ar-pk2", S2, S3, 29.85);
+    gsap.set(["#ar-tg", "#ar-audit"], { opacity: 0 });
+    tl.fromTo("#ar-tg", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 38.11 - 0.1);
+    tl.fromTo("#ar-audit", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 43.57 - 0.1);
+    [["#ar-g0", 33.65], ["#ar-g1", 37.13], ["#ar-g2", 40.79]].forEach(([s, t]) =>
+      tl.fromTo(s, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, t - 0.1));
+    cam(S4.top - 400, 45.89 - 0.4);
+    IN("#ar-s4", 46.87 - 0.3, 0.7);
+    [49.33, 50.07, 50.73, 51.45, 52.09, 52.77].forEach((t, i) =>
+      tl.fromTo("#ar-v" + i, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, t - 0.1));
+    pkt("#ar-pk3", S3, S4, 55.73);
+    // any future agent plugs into the same governance layer
+    cam(S3.top - 300, 56.59 - 0.3);
+    tl.to("#ar-s5", { opacity: 1, duration: 0.4 }, 46.87);
+    tl.fromTo("#ar-plug0", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 57.23 - 0.2);
+    tl.fromTo("#ar-plug1", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 57.69 - 0.2);
+    tl.to("#ar-cam, #ar-head", { opacity: 0, duration: 0.35, ease: "power3.in" }, 59.92 - 0.45);
+    tl.to("#ar-flood", { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 59.92 - 0.45);
+    window.__timelines["arch"] = tl;
+  </script>
+</template>

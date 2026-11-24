@@ -1,0 +1,78 @@
+{
+  "digital_arrest": {
+    "name": "Digital Arrest / CBI Impersonation",
+    "advisory_source": "I4C / Ministry of Home Affairs Advisory Nov 2024",
+    "keywords": [
+      "digital arrest", "cbi", "crime branch", "money laundering", "supreme court",
+      "warrant", "aadhaar", "canara bank", "narcotics", "skype call", "stay on video",
+      "security deposit", "rbi verification account"
+    ],
+    "risk_weight": 0.95,
+    "safe_advice": {
+      "kn": "ಅಮ್ಮಾ, ಇದು ಸುಳ್ಳು ಕರೆ! ಭಾರತದ ಯಾವುದೇ ಪೊಲೀಸ್ ಅಥವಾ ಸಿಬಿಐ ವಿಡಿಯೋ ಕಾಲಿನಲ್ಲಿ ಯಾರನ್ನೂ ಬಂಧಿಸುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೂಡಲೇ ಕರೆ ಕಟ್ ಮಾಡಿ.",
+      "hi": "अम्मा, यह एक फर्जी कॉल है! भारत में कोई भी पुलिस या सीबीआई अधिकारी वीडियो कॉल पर गिरफ़्तारी नहीं करता। कृपया तुरंत फोन काटें।",
+      "en": "Amma, this is a scam! Real police or CBI officers never arrest anyone over video call or ask for money verification. Please hang up immediately."
+    },
+    "action_script": "Announce call is monitored by KAVACH, alert guardian Rahul, and prepare Sanchar Saathi report."
+  },
+  "kyc_expiry": {
+    "name": "Bank / SIM KYC Expiration Scam",
+    "advisory_source": "RBI / DoT Public Fraud Advisory 2024",
+    "keywords": [
+      "kyc expire", "sim block", "account suspend", "pan card update", "click link",
+      "download quicksupport", "anydesk", "24 hours", "otp"
+    ],
+    "risk_weight": 0.88,
+    "safe_advice": {
+      "kn": "ಎಚ್ಚರಿಕೆ! ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಅಥವಾ ಸಿಮ್ ಎಂದಿಗೂ ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಲು ಅಥವಾ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಕೇಳುವುದಿಲ್ಲ.",
+      "hi": "सावधान! बैंक या टेलीकॉम कंपनी कभी भी फोन पर KYC के लिए ऐप डाउनलोड करने को नहीं कहती।",
+      "en": "Warning! Banks and telecom providers never ask you to install remote apps or click links for KYC."
+    },
+    "action_script": "Block incoming number, draft DoT Chakshu SIM block request."
+  },
+  "parcel_drugs": {
+    "name": "Customs / International Parcel Scam",
+    "advisory_source": "Customs Department / Narcotics Control Bureau Advisory",
+    "keywords": [
+      "fedex", "dhl", "customs mumbai", "parcel seized", "mdma", "taiwan passport",
+      "customs penalty", "transfer clearance"
+    ],
+    "risk_weight": 0.92,
+    "safe_advice": {
+      "kn": "ಇದು ಪಾರ್ಸೆಲ್ ವಂಚನೆ. ಕಸ್ಟಮ್ಸ್ ಇಲಾಖೆ ಆನ್‌ಲೈನ್ ದಂಡ ಕೇಳುವುದಿಲ್ಲ.",
+      "hi": "यह पार्सल फ्रॉड है। कस्टम्स विभाग कभी फोन पर सीधे पैसे नहीं मांगता।",
+      "en": "This is a parcel fraud. Customs officers do not demand online transfers over the phone."
+    },
+    "action_script": "Alert guardian, flag courier impersonation to intel server."
+  },
+  "electricity_cutoff": {
+    "name": "Urgent Electricity Bill Disconnection",
+    "advisory_source": "State DISCOM Fraud Warning 2025",
+    "keywords": [
+      "power cut", "electricity bill", "tonight 9:30", "discom", "unpaid bill",
+      "pay immediately", "call electricity officer"
+    ],
+    "risk_weight": 0.85,
+    "safe_advice": {
+      "kn": "ವಿದ್ಯುತ್ ಕಡಿತದ ನಕಲಿ ಸಂದೇಶ! ಬಿಲ್‌ಗಳನ್ನು ಕೇವಲ ಅಧಿಕೃತ ಬೆಸ್ಕಾಂ ವೆಬ್‌ಸೈಟ್ ಅಥವಾ ಆ್ಯಪ್ ಮೂಲಕವೇ ಪಾವತಿಸಿ.",
+      "hi": "बिजली कटौती का फर्जी संदेश! बिजली विभाग कभी व्यक्तिगत नंबरों से ऐसे मैसेज नहीं भेजता।",
+      "en": "Fake electricity disconnection alert! Never pay through personal links or phone numbers."
+    },
+    "action_script": "Scan link, verify against DISCOM white-list, issue voice note verdict."
+  },
+  "investment_fraud": {
+    "name": "High-Yield VIP Stock/Crypto Syndicate",
+    "advisory_source": "SEBI Investor Warning Circular",
+    "keywords": [
+      "vip group", "guaranteed returns", "institutional allotment", "pre-ipo",
+      "forex", "trading app", "transfer to trading account"
+    ],
+    "risk_weight": 0.90,
+    "safe_advice": {
+      "kn": "ಖಚಿತ ಲಾಭದ ಆಮಿಷ ಒಡ್ಡುವ ಹೂಡಿಕೆ ವಂಚನೆ! ಅಪರಿಚಿತ ಬ್ಯಾಂಕ್ ಖಾತೆಗಳಿಗೆ ಹಣ ವರ್ಗಾಯಿಸಬೇಡಿ.",
+      "hi": "यह फर्जी निवेश योजना है। सेबी किसी भी निजी ग्रुप ट्रेडिंग की गारंटी नहीं देता।",
+      "en": "Investment scam! Never transfer money to unverified personal or business mule accounts."
+    },
+    "action_script": "Flag beneficiary UPI IDs and accounts to bank server."
+  }
+}
