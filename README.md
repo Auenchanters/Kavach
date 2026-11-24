@@ -2,7 +2,7 @@
 > **"No Amma left alone with a scammer."**  
 > Built for **wHACKiest 2026** (Ramaiah Institute of Technology) · **Track 1: Make MCP Matter** ("Less magic, more utility.")
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-6366f1?style=for-the-badge&logo=github)](https://pratun.github.io/kavach/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-E8B04A?style=for-the-badge&logo=github)](https://auenchanters.github.io/Kavach/)
 [![License: CC0](https://img.shields.io/badge/License-CC0-10b981?style=for-the-badge)](./LICENSE)
 [![Track 1](https://img.shields.io/badge/Track-Make_MCP_Matter-4f46e5?style=for-the-badge)](#)
 
@@ -10,7 +10,7 @@
 
 ## 🌐 Live Interactive Demo
 Try the standalone prototype directly in your browser with zero setup:
-👉 **[Launch KAVACH Live Prototype](https://pratun.github.io/kavach/)**
+👉 **[Launch KAVACH Live Prototype](https://auenchanters.github.io/Kavach/)**
 
 ---
 
