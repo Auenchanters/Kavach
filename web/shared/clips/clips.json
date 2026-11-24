@@ -1,0 +1,114 @@
+[
+ {
+  "id": "warn_kn",
+  "lang": "kn",
+  "speaker": "kavach",
+  "text": "ಅಮ್ಮಾ, ಇದು ಸುಳ್ಳು ಕರೆ! ಭಾರತದ ಯಾವುದೇ ಪೊಲೀಸ್ ಅಥವಾ ಸಿಬಿಐ ವಿಡಿಯೋ ಕಾಲಿನಲ್ಲಿ ಯಾರನ್ನೂ ಬಂಧಿಸುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೂಡಲೇ ಕರೆ ಕಟ್ ಮಾಡಿ.",
+  "src": "warn_kn.mp3"
+ },
+ {
+  "id": "warn_hi",
+  "lang": "hi",
+  "speaker": "kavach",
+  "text": "अम्मा, यह एक फर्जी कॉल है! भारत में कोई भी पुलिस या सीबीआई अधिकारी वीडियो कॉल पर गिरफ़्तारी नहीं करता। कृपया तुरंत फोन काटें।",
+  "src": "warn_hi.mp3"
+ },
+ {
+  "id": "warn_en",
+  "lang": "en",
+  "speaker": "kavach",
+  "text": "Amma, this is a scam. Real police or CBI officers never arrest anyone over a video call. Please hang up now.",
+  "src": "warn_en.mp3"
+ },
+ {
+  "id": "sms_kn",
+  "lang": "kn",
+  "speaker": "kavach",
+  "text": "ಅಮ್ಮಾ, ಇದು ನಕಲಿ ಸಂದೇಶ. ಆ ಲಿಂಕ್ ಮೇಲೆ ಒತ್ತಬೇಡಿ, ಯಾರಿಗೂ ಹಣ ಕಳುಹಿಸಬೇಡಿ.",
+  "src": "sms_kn.mp3"
+ },
+ {
+  "id": "sms_hi",
+  "lang": "hi",
+  "speaker": "kavach",
+  "text": "अम्मा, यह एक फर्जी मैसेज है। किसी भी लिंक पर क्लिक न करें, किसी को पैसे न भेजें।",
+  "src": "sms_hi.mp3"
+ },
+ {
+  "id": "sms_en",
+  "lang": "en",
+  "speaker": "kavach",
+  "text": "Amma, this message is a scam. Do not tap the link, and do not send anyone money.",
+  "src": "sms_en.mp3"
+ },
+ {
+  "id": "recover_kn",
+  "lang": "kn",
+  "speaker": "kavach",
+  "text": "ಅಮ್ಮಾ, ಭಯಪಡಬೇಡಿ. ರಾಹುಲ್‌ಗೆ ತಿಳಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಹಣವನ್ನು ಮರಳಿ ಪಡೆಯಲು ಕವಚ ಕೆಲಸ ಶುರು ಮಾಡಿದೆ.",
+  "src": "recover_kn.mp3"
+ },
+ {
+  "id": "recover_hi",
+  "lang": "hi",
+  "speaker": "kavach",
+  "text": "अम्मा, घबराइए मत। राहुल को बता दिया गया है। आपका पैसा वापस लाने का काम कवच ने शुरू कर दिया है।",
+  "src": "recover_hi.mp3"
+ },
+ {
+  "id": "recover_en",
+  "lang": "en",
+  "speaker": "kavach",
+  "text": "Amma, don't worry. Rahul knows, and KAVACH has started getting your money back.",
+  "src": "recover_en.mp3"
+ },
+ {
+  "id": "announce_en",
+  "lang": "en",
+  "speaker": "kavach",
+  "text": "This is KAVACH. This call is now monitored for fraud and is being recorded.",
+  "src": "announce_en.mp3"
+ },
+ {
+  "id": "scam_1",
+  "lang": "en",
+  "speaker": "scammer",
+  "text": "This is Inspector Alok Verma, CBI Cyber Crime, New Delhi. A non-bailable digital arrest warrant has been issued against your Aadhaar.",
+  "src": "scam_1.mp3"
+ },
+ {
+  "id": "scam_2",
+  "lang": "hi",
+  "speaker": "scammer",
+  "text": "वीडियो कॉल पर बने रहिए। किसी को कुछ मत बताइए, वरना अभी गिरफ़्तारी होगी।",
+  "src": "scam_2.mp3"
+ },
+ {
+  "id": "scam_3",
+  "lang": "en",
+  "speaker": "scammer",
+  "text": "Open Google Pay and send fifty thousand rupees security deposit to refund dot C B I at ok axis. Do it now!",
+  "src": "scam_3.mp3"
+ },
+ {
+  "id": "ramesh_1",
+  "lang": "en",
+  "speaker": "ramesh",
+  "text": "Haan beta... security deposit? But my pension comes in Canara Bank. Where should I send it? Let me find my reading glasses.",
+  "src": "ramesh_1.mp3"
+ },
+ {
+  "id": "ramesh_2",
+  "lang": "en",
+  "speaker": "ramesh",
+  "text": "Refund dot C B I at ok axis... beta, can you spell it slowly? My grandson set up this phone. What was the account number?",
+  "src": "ramesh_2.mp3"
+ },
+ {
+  "id": "ramesh_3",
+  "lang": "en",
+  "speaker": "ramesh",
+  "text": "H D F C, Salt Lake... wait beta, the screen went black! Now it is asking for a six digit PIN. Should I put my birth year?",
+  "src": "ramesh_3.mp3"
+ }
+]
