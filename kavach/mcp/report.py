@@ -1,28 +1,30 @@
 """
-MCP Server: kavach-report
+Tool server kavach-report: in-process stand-in for the MCP server built at the hackathon.
 Prepares official legal submissions for Indian cybercrime authorities:
   - 1930 Cybercrime Helpline Verbal Briefing (Golden Hour phone brief)
   - NCRP (National Cyber Crime Reporting Portal - cybercrime.gov.in) Complaint Draft
   - DoT Sanchar Saathi Chakshu portal SIM disconnection filing
 """
 
-from typing import Dict, Any, Optional
-from datetime import datetime
 import uuid
+from typing import Any
+
 
 class ReportServer:
     def __init__(self, policy_gate):
         self.policy_gate = policy_gate
-        self.filed_reports: Dict[str, Dict[str, Any]] = {}
+        self.filed_reports: dict[str, dict[str, Any]] = {}
 
-    def prepare_1930_brief(self, incident_details: Dict[str, Any], approval_token: Optional[str] = None) -> Dict[str, Any]:
+    def prepare_1930_brief(self, incident_details: dict[str, Any], approval_token: str | None = None) -> dict[str, Any]:
         """
         Generates a word-for-word victim briefing script for Amma/Rahul when calling 1930.
         Eliminates panic and ensures every crucial detail is provided inside the Golden Hour.
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"incident_id": incident_details.get("incident_id", "INC-001")}
-        eval_res = self.policy_gate.evaluate("RecoverSwarm-1930Agent", "report.prepare_1930_brief", args, approval_token)
+        eval_res = self.policy_gate.evaluate(
+            "RecoverSwarm-1930Agent", "report.prepare_1930_brief", args, approval_token
+        )
         if not eval_res["allowed"]:
             return eval_res
 
@@ -43,7 +45,7 @@ class ReportServer:
 5. Suspect Destination UPI: refund.cbi@okaxis.
 6. Destination Mule Account: {mule_acc}.
 7. Caller Phone Number: {caller}.
-8. Requested Action: Immediate inter-bank freeze request via Indian Cybercrime Coordination Centre (I4C) API to HDFC Bank nodal officer.
+8. Requested Action: Immediate inter-bank freeze request via I4C to the receiving bank's nodal officer.
         """.strip()
 
         return {
@@ -54,19 +56,25 @@ class ReportServer:
             "checklist": [
                 "Keep Bank Statement SMS ready",
                 "Mention Transaction RRN explicitly",
-                "Request immediate Lien on recipient account"
-            ]
+                "Request immediate Lien on recipient account",
+            ],
         }
 
-    def draft_ncrp_complaint(self, incident_details: Dict[str, Any], approval_token: Optional[str] = None) -> Dict[str, Any]:
+    def draft_ncrp_complaint(
+        self, incident_details: dict[str, Any], approval_token: str | None = None
+    ) -> dict[str, Any]:
         """
         Pre-fills formal complaint for cybercrime.gov.in.
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"incident_id": incident_details.get("incident_id", "INC-001")}
         eval_res = self.policy_gate.evaluate(
-            "RecoverSwarm-NCRPAgent", "report.draft_ncrp_complaint", args, approval_token,
-            on_approve=lambda tok: self.draft_ncrp_complaint(incident_details, approval_token=tok))
+            "RecoverSwarm-NCRPAgent",
+            "report.draft_ncrp_complaint",
+            args,
+            approval_token,
+            on_approve=lambda tok: self.draft_ncrp_complaint(incident_details, approval_token=tok),
+        )
         if not eval_res["allowed"]:
             return eval_res
 
@@ -82,31 +90,34 @@ class ReportServer:
                 "alias": "Fake CBI Inspector Alok Verma",
                 "upi_id": "refund.cbi@okaxis",
                 "mule_account": incident_details.get("destination_mule", "HDFC ····4471"),
-                "transaction_id": incident_details.get("transaction_id")
+                "transaction_id": incident_details.get("transaction_id"),
             },
             "loss_amount": incident_details.get("amount", 48000),
             "evidence_attached": [
                 "call_transcript_hash_sha256.txt",
                 "debit_sms_timestamped.png",
-                "strike_decoy_extracted_upi.json"
+                "strike_decoy_extracted_upi.json",
             ],
-            "status": "DRAFT_READY_FOR_SUBMISSION"
+            "status": "DRAFT_READY_FOR_SUBMISSION",
         }
         self.filed_reports[complaint_id] = draft
-        return {
-            "status": "SUCCESS",
-            "complaint": draft
-        }
+        return {"status": "SUCCESS", "complaint": draft}
 
-    def file_chakshu(self, phone_number: str, category: str, evidence: str, approval_token: Optional[str] = None) -> Dict[str, Any]:
+    def file_chakshu(
+        self, phone_number: str, category: str, evidence: str, approval_token: str | None = None
+    ) -> dict[str, Any]:
         """
         Drafts and files suspicious telecom report with DoT Sanchar Saathi Chakshu portal.
         TIER: NEEDS_GUARDIAN_APPROVAL
         """
         args = {"phone_number": phone_number, "category": category}
         eval_res = self.policy_gate.evaluate(
-            "ReporterAgent", "report.file_chakshu", args, approval_token,
-            on_approve=lambda tok: self.file_chakshu(phone_number, category, evidence, approval_token=tok))
+            "ReporterAgent",
+            "report.file_chakshu",
+            args,
+            approval_token,
+            on_approve=lambda tok: self.file_chakshu(phone_number, category, evidence, approval_token=tok),
+        )
         if not eval_res["allowed"]:
             return eval_res
 
@@ -118,10 +129,7 @@ class ReportServer:
             "evidence_summary": evidence,
             "status": "QUEUED_FOR_CARRIER_DISCONNECTION",
             "dot_portal": "sancharsaathi.gov.in/sfc",
-            "carrier_sla": "SIM disconnection & IMEI blocking within 2 hours"
+            "carrier_sla": "SIM disconnection & IMEI blocking within 2 hours",
         }
         self.filed_reports[chakshu_id] = submission
-        return {
-            "status": "SUCCESS",
-            "chakshu_report": submission
-        }
+        return {"status": "SUCCESS", "chakshu_report": submission}

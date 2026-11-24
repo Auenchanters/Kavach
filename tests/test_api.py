@@ -51,6 +51,7 @@ def test_approval_executes_the_gated_action_once(client):
 
 def test_token_only_works_for_its_own_tool():
     from kavach.orchestrator.policy_gate import PolicyGate
+
     gate = PolicyGate()
     res = gate.evaluate("a", "bank.request_hold", {})
     gate.pending_approvals[res["approval_id"]]["status"] = "APPROVED"
@@ -71,7 +72,9 @@ def test_unknown_approval_and_bad_action(client):
 
 
 def test_1930_brief_uses_incident_data(client):
-    r = client.post("/api/recover/trigger", json={"amount": 7000, "transaction_id": "UPI-1", "destination_mule": "AXIS ····1"}).json()
+    r = client.post(
+        "/api/recover/trigger", json={"amount": 7000, "transaction_id": "UPI-1", "destination_mule": "AXIS ····1"}
+    ).json()
     brief = r["agents"]["helpline_1930_agent"]
     assert brief["status"] == "EXECUTED"
     script = brief["result"]["verbal_script"]

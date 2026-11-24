@@ -5,7 +5,7 @@ detects scam playbooks, speaks calm native warnings, and alerts Rahul.
 """
 
 import re
-from typing import Dict, Any, List
+from typing import Any
 
 LANGUAGE_NAMES = {"kn": "Kannada", "hi": "Hindi", "en": "English"}
 
@@ -15,6 +15,7 @@ SMS_WARNINGS = {
     "en": "Amma, this message is a scam. Do not tap the link and do not send anyone money.",
 }
 
+
 class ShieldAgent:
     def __init__(self, telephony_srv, intel_srv, knowledge_srv, family_srv, report_srv):
         self.telephony = telephony_srv
@@ -23,7 +24,7 @@ class ShieldAgent:
         self.knowledge = knowledge_srv
         self.family = family_srv
 
-    def screen_incoming_call(self, caller_number: str) -> Dict[str, Any]:
+    def screen_incoming_call(self, caller_number: str) -> dict[str, Any]:
         """
         Step 1: Check incoming number against Intel MCP.
         If high risk, answers on behalf of Amma; if known contact, lets ring.
@@ -32,7 +33,7 @@ class ShieldAgent:
         call_id = f"CALL-{caller_number[-4:]}"
 
         if reputation.get("is_scam") or reputation.get("risk_score", 0) > 0.7:
-            ans_res = self.telephony.answer_call(call_id, caller_number)
+            self.telephony.answer_call(call_id, caller_number)
             return {
                 "action": "KAVACH_SCREENING",
                 "caller_number": caller_number,
@@ -42,7 +43,7 @@ class ShieldAgent:
                 "syndicate_id": reputation.get("syndicate_id"),
                 "verdict": "HIGH_RISK_SCAM_CALLER",
                 "screening_status": "INTERCEPTED_BEFORE_RINGING",
-                "message": "Call intercepted by KAVACH. Amma's phone is protected from ringing."
+                "message": "Call intercepted by KAVACH. Amma's phone is protected from ringing.",
             }
         else:
             return {
@@ -52,10 +53,10 @@ class ShieldAgent:
                 "category": reputation.get("category", "Normal"),
                 "verdict": "BENIGN_OR_TRUSTED",
                 "screening_status": "PUT_THROUGH_WITH_SUMMARY",
-                "message": "Known or benign caller. Phone rings normally."
+                "message": "Known or benign caller. Phone rings normally.",
             }
 
-    def handle_kavach_button_tap(self, call_id: str, current_transcript: str, language: str = "kn") -> Dict[str, Any]:
+    def handle_kavach_button_tap(self, call_id: str, current_transcript: str, language: str = "kn") -> dict[str, Any]:
         """
         Step 2: Amma has already picked up an unknown call and feels suspicious.
         She taps the prominent KAVACH button.
@@ -74,7 +75,7 @@ class ShieldAgent:
         warning_text = advice_res.get("advice")
 
         # 4. Speak warning into conference call
-        speak_res = self.telephony.speak_warning(call_id, warning_text, language)
+        self.telephony.speak_warning(call_id, warning_text, language)
 
         # 5. Queue a Sanchar Saathi (Chakshu) report; it waits for Rahul's approval
         chakshu = self.report.file_chakshu(
@@ -92,12 +93,17 @@ class ShieldAgent:
                 f"Matched playbook: {detection.get('name', 'unknown')} (risk {risk_score:.0%}).",
                 f"KAVACH joined the call and spoke a calm warning to Amma in {LANGUAGE_NAMES.get(language, language)}.",
                 "No money was moved.",
-                "Sanchar Saathi report on +91 98XXX XX210 is waiting for your approval."
+                "Sanchar Saathi report on +91 98XXX XX210 is waiting for your approval.",
             ],
-            actions=[a for a in [
-                {"id": chakshu.get("approval_id"), "label": "Approve report", "type": "primary"},
-            ] if a["id"]] + [{"id": "call_amma", "label": "Call Amma", "type": "link"}],
-            incident_id=call_id
+            actions=[
+                a
+                for a in [
+                    {"id": chakshu.get("approval_id"), "label": "Approve report", "type": "primary"},
+                ]
+                if a["id"]
+            ]
+            + [{"id": "call_amma", "label": "Call Amma", "type": "link"}],
+            incident_id=call_id,
         )
 
         return {
@@ -108,16 +114,16 @@ class ShieldAgent:
             "language": language,
             "risk_score": risk_score,
             "guardian_alert": family_res,
-            "suggested_action": "HANG_UP"
+            "suggested_action": "HANG_UP",
         }
 
-    def check_sms(self, sms_text: str, sender: str = "VK-DISCOM-ALERT", language: str = "kn") -> Dict[str, Any]:
+    def check_sms(self, sms_text: str, sender: str = "VK-DISCOM-ALERT", language: str = "kn") -> dict[str, Any]:
         """
         Step 3: Analyze incoming SMS or forwarded WhatsApp message.
         Checks for malicious URLs and scam patterns, then generates a voice note verdict for Amma.
         """
         # Look for URLs
-        url_match = re.search(r'(https?://[^\s]+|bit\.ly/[^\s]+|tinyurl\.com/[^\s]+)', sms_text)
+        url_match = re.search(r"(https?://[^\s]+|bit\.ly/[^\s]+|tinyurl\.com/[^\s]+)", sms_text)
         url_analysis = None
         if url_match:
             url_analysis = self.intel.check_url(url_match.group(1))
@@ -134,7 +140,7 @@ class ShieldAgent:
                 recipient="Amma",
                 transcript=SMS_WARNINGS.get(language, SMS_WARNINGS["en"]),
                 audio_file="voice_note_warning.ogg",
-                language=language
+                language=language,
             )
 
         return {
@@ -143,5 +149,5 @@ class ShieldAgent:
             "url_analysis": url_analysis,
             "pattern_analysis": pattern,
             "voice_note": vn_res,
-            "verdict": "PHISHING_MALICIOUS" if is_scam else "SAFE"
+            "verdict": "PHISHING_MALICIOUS" if is_scam else "SAFE",
         }

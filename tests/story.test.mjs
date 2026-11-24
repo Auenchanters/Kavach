@@ -1,7 +1,7 @@
-// node --test tests/
+// Story engine tests. Run: npm test  (node --test tests/*.test.mjs)
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { apply, freshState, sceneState, createStory, pending, SCENES } from "../docs/shared/story.js";
+import { apply, freshState, sceneState, createStory, pending, SCENES } from "../web/shared/story.js";
 
 test("approving runs the gated action once", () => {
   let s = sceneState("recover");

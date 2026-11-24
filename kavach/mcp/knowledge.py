@@ -1,20 +1,21 @@
 """
-MCP Server: kavach-knowledge
+Tool server kavach-knowledge: in-process stand-in for the MCP server built at the hackathon.
 Matches spoken conversation or SMS against official RBI, DoT, and I4C scam playbooks.
 Delivers verified safe advice in Kannada, Hindi, and English.
 """
 
 import json
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 
 class KnowledgeServer:
     def __init__(self, policy_gate, playbooks_path: str):
         self.policy_gate = policy_gate
-        self.playbooks: Dict[str, Any] = {}
-        with open(playbooks_path, "r", encoding="utf-8") as f:
+        self.playbooks: dict[str, Any] = {}
+        with open(playbooks_path, encoding="utf-8") as f:
             self.playbooks = json.load(f)
 
-    def match_scam_pattern(self, text: str) -> Dict[str, Any]:
+    def match_scam_pattern(self, text: str) -> dict[str, Any]:
         """
         Analyzes transcript text against known modus operandi.
         Returns match score (0.0 to 1.0), identified playbook, matched keywords, and recommended action.
@@ -52,7 +53,7 @@ class KnowledgeServer:
                 "matched_keywords": matched_kw_list,
                 "advisory_source": pb_data.get("advisory_source"),
                 "safe_advice": pb_data.get("safe_advice", {}),
-                "action_script": pb_data.get("action_script")
+                "action_script": pb_data.get("action_script"),
             }
         else:
             return {
@@ -62,10 +63,10 @@ class KnowledgeServer:
                 "matched_keywords": [],
                 "advisory_source": None,
                 "safe_advice": {},
-                "action_script": "Continue normal screening."
+                "action_script": "Continue normal screening.",
             }
 
-    def get_safe_advice(self, category: str, language: str = "kn") -> Dict[str, Any]:
+    def get_safe_advice(self, category: str, language: str = "kn") -> dict[str, Any]:
         """
         Fetches approved guidance line for the given category in user's language.
         TIER: AUTOMATIC
@@ -79,8 +80,4 @@ class KnowledgeServer:
         advice_dict = pb.get("safe_advice", {})
         advice = advice_dict.get(language, advice_dict.get("en", "Be cautious with unknown callers."))
 
-        return {
-            "category": category,
-            "language": language,
-            "advice": advice
-        }
+        return {"category": category, "language": language, "advice": advice}

@@ -1,1 +1,0 @@
-web: uvicorn kavach.orchestrator.server:app --host 0.0.0.0 --port $PORT

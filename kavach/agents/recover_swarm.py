@@ -9,10 +9,11 @@ four specialized agents activate concurrently inside the critical 60-minute gold
 All formal submissions pass through the Policy Gate and await Guardian approval.
 """
 
-from typing import Dict, Any, List
-from datetime import datetime
 import hashlib
 import json
+from datetime import datetime
+from typing import Any
+
 
 class RecoverSwarm:
     def __init__(self, bank_srv, report_srv, family_srv, intel_srv, policy_gate):
@@ -24,7 +25,7 @@ class RecoverSwarm:
         self.active_incident = None
         self.last_run = None
 
-    def trigger_recovery(self, incident_data: Dict[str, Any]) -> Dict[str, Any]:
+    def trigger_recovery(self, incident_data: dict[str, Any]) -> dict[str, Any]:
         """
         Launches the 4 agents concurrently.
         """
@@ -47,11 +48,7 @@ class RecoverSwarm:
 
         # Agent 1: Bank Hold Request
         # Note: request_hold triggers PolicyGate approval requirement
-        bank_res = self.bank.request_hold(
-            account_id=destination_mule,
-            transaction_id=transaction_id,
-            amount=amount
-        )
+        bank_res = self.bank.request_hold(account_id=destination_mule, transaction_id=transaction_id, amount=amount)
 
         # Agent 2: 1930 Verbal Briefing Agent
         brief_1930_res = self.report.prepare_1930_brief(self.active_incident)
@@ -72,13 +69,18 @@ class RecoverSwarm:
                 "Recover Swarm deployed 4 agents in parallel.",
                 f"Bank lien hold drafted for mule account {destination_mule}.",
                 "1930 Helpline verbal briefing ready for one-tap calling.",
-                "Formal NCRP complaint drafted with cryptographic evidence dossier."
+                "Formal NCRP complaint drafted with cryptographic evidence dossier.",
             ],
-            actions=[a for a in [
-                {"id": bank_res.get("approval_id"), "label": "Approve bank lien", "type": "primary"},
-                {"id": ncrp_res.get("approval_id"), "label": "Approve NCRP filing", "type": "primary"},
-            ] if a["id"]] + [{"id": "call_1930", "label": "Dial 1930", "type": "link"}],
-            incident_id=self.active_incident["incident_id"]
+            actions=[
+                a
+                for a in [
+                    {"id": bank_res.get("approval_id"), "label": "Approve bank lien", "type": "primary"},
+                    {"id": ncrp_res.get("approval_id"), "label": "Approve NCRP filing", "type": "primary"},
+                ]
+                if a["id"]
+            ]
+            + [{"id": "call_1930", "label": "Dial 1930", "type": "link"}],
+            incident_id=self.active_incident["incident_id"],
         )
 
         self.last_run = {
@@ -88,28 +90,30 @@ class RecoverSwarm:
                 "bank_agent": {
                     "role": "Emergency Mule Account Lien Request",
                     "status": "APPROVAL_PENDING" if bank_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
-                    "result": bank_res
+                    "result": bank_res,
                 },
                 "helpline_1930_agent": {
                     "role": "Verbal 1930 Briefing Generator",
-                    "status": "APPROVAL_PENDING" if brief_1930_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
-                    "result": brief_1930_res
+                    "status": "APPROVAL_PENDING"
+                    if brief_1930_res.get("decision") == "APPROVAL_PENDING"
+                    else "EXECUTED",
+                    "result": brief_1930_res,
                 },
                 "ncrp_complaint_agent": {
                     "role": "cybercrime.gov.in Formal Drafter",
                     "status": "APPROVAL_PENDING" if ncrp_res.get("decision") == "APPROVAL_PENDING" else "EXECUTED",
-                    "result": ncrp_res
+                    "result": ncrp_res,
                 },
                 "evidence_agent": {
                     "role": "Cryptographic Time-stamped Dossier Packager",
                     "status": "COMPLETED",
-                    "result": evidence_pack
-                }
-            }
+                    "result": evidence_pack,
+                },
+            },
         }
         return self.last_run
 
-    def _build_evidence_pack(self, incident: Dict[str, Any]) -> Dict[str, Any]:
+    def _build_evidence_pack(self, incident: dict[str, Any]) -> dict[str, Any]:
         """Generates tamper-evident hash dossier"""
         raw_evidence = json.dumps(incident, sort_keys=True)
         sha = hashlib.sha256(raw_evidence.encode("utf-8")).hexdigest()
@@ -121,8 +125,8 @@ class RecoverSwarm:
                 "telephony_call_recording_metadata.json",
                 "strike_decoy_extracted_upi.json",
                 "bank_sms_debit_notification.txt",
-                "caller_reputation_audit_trail.json"
+                "caller_reputation_audit_trail.json",
             ],
-            "legal_admissibility": "Indian Evidence Act Section 65B Compliant",
-            "status": "SEALED"
+            "legal_note": "Section 65B certificate drafted; needs a human signature",
+            "status": "SEALED",
         }

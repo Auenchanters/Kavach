@@ -5,8 +5,9 @@ Steers the scammer into revealing UPI IDs, mule bank accounts, and telephone nod
 Automatically extracts structured intelligence, updates the fraud graph, and drafts reports.
 """
 
-from typing import Dict, Any, List
 import re
+from typing import Any
+
 
 class StrikeAgent:
     def __init__(self, telephony_srv, intel_srv, report_srv, family_srv):
@@ -17,13 +18,9 @@ class StrikeAgent:
         self.conversation_step = 0
         self.minutes_wasted = 26
         self.chakshu_requested = False
-        self.extracted_entities = {
-            "upi_ids": [],
-            "mule_accounts": [],
-            "phone_numbers": []
-        }
+        self.extracted_entities = {"upi_ids": [], "mule_accounts": [], "phone_numbers": []}
 
-    def get_persona_profile(self) -> Dict[str, Any]:
+    def get_persona_profile(self) -> dict[str, Any]:
         return {
             "name": "Ramesh Sharma",
             "age": 67,
@@ -33,17 +30,17 @@ class StrikeAgent:
                 "Slightly hard of hearing",
                 "Asks scammer to repeat slowly",
                 "Constantly looking for reading glasses",
-                "Mentions his pension account and grandson"
+                "Mentions his pension account and grandson",
             ],
             "guardrails": [
                 "NEVER shares real financial data",
                 "NEVER executes actual transfers",
                 "NEVER impersonates government officials",
-                "Provides only synthetic test accounts"
-            ]
+                "Provides only synthetic test accounts",
+            ],
         }
 
-    def process_decoy_turn(self, scammer_message: str) -> Dict[str, Any]:
+    def process_decoy_turn(self, scammer_message: str) -> dict[str, Any]:
         """
         Processes a turn of the decoy conversation.
         Extracts entities from the scammer's speech, formulates the decoy reply,
@@ -54,32 +51,45 @@ class StrikeAgent:
             self.telephony.transfer_to_decoy("CALL-X210")
 
         # Extract UPI ID (e.g., refund.cbi@okaxis); the lookahead skips email domains like x@gmail.com
-        upi_match = re.search(r'([a-zA-Z0-9_\-\.]+@[a-zA-Z]+)(?![a-zA-Z]|\.\w)', scammer_message)
+        upi_match = re.search(r"([a-zA-Z0-9_\-\.]+@[a-zA-Z]+)(?![a-zA-Z]|\.\w)", scammer_message)
         captured_upi = upi_match.group(1) if upi_match else None
 
         # Extract Bank Account
-        acc_match = re.search(r'(?:account\s*(?:number)?|a/c)[\s:]*([0-9]{9,16})', scammer_message, re.IGNORECASE)
+        acc_match = re.search(r"(?:account\s*(?:number)?|a/c)[\s:]*([0-9]{9,16})", scammer_message, re.IGNORECASE)
         captured_acc = acc_match.group(1) if acc_match else None
 
         # If detected, register into intel
         if captured_upi and captured_upi not in self.extracted_entities["upi_ids"]:
             self.extracted_entities["upi_ids"].append(captured_upi)
-            self.intel.add_entity(captured_upi, captured_upi, "upi", {"captured_by": "StrikeDecoy", "scam_type": "Digital Arrest"})
+            self.intel.add_entity(
+                captured_upi, captured_upi, "upi", {"captured_by": "StrikeDecoy", "scam_type": "Digital Arrest"}
+            )
             self.intel.link_entities("+91 98XXX XX210", captured_upi, "REVEALED_UPI")
 
         if captured_acc and captured_acc not in self.extracted_entities["mule_accounts"]:
             masked_acc = f"HDFC ····{captured_acc[-4:]}"
             self.extracted_entities["mule_accounts"].append(masked_acc)
-            self.intel.add_entity(masked_acc, masked_acc, "mule_account", {"account_number": captured_acc, "bank": "HDFC Bank"})
+            self.intel.add_entity(
+                masked_acc, masked_acc, "mule_account", {"account_number": captured_acc, "bank": "HDFC Bank"}
+            )
             if captured_upi:
                 self.intel.link_entities(captured_upi, masked_acc, "SETTLES_INTO")
 
         # Decoy responses depending on context
-        decoy_reply = "Haan beta... security deposit? But my pension comes in Canara Bank. Where should I send it? Let me find my reading glasses..."
+        decoy_reply = (
+            "Haan beta... security deposit? But my pension comes in Canara Bank. Where should "
+            "I send it? Let me find my reading glasses..."
+        )
         if "google pay" in scammer_message.lower() or "upi" in scammer_message.lower():
-            decoy_reply = "Re-fund dot see-bee-eye at ok axis... beta, can you spell it slowly? My grandson set up this phone. What was the bank account number?"
+            decoy_reply = (
+                "Re-fund dot see-bee-eye at ok axis... beta, can you spell it slowly? My grandson set "
+                "up this phone. What was the bank account number?"
+            )
         elif captured_acc or "hdfc" in scammer_message.lower():
-            decoy_reply = "HDFC Bank Salt Lake... wait beta, my phone screen went black! Ah, it is asking for a 6-digit UPI PIN. Should I put my birth year or retirement year 2018?"
+            decoy_reply = (
+                "HDFC Bank Salt Lake... wait beta, my phone screen went black! Ah, it is asking for a 6-digit "
+                "UPI PIN. Should I put my birth year or retirement year 2018?"
+            )
 
         # Draft one Chakshu report per engagement, once there is evidence (not one per turn).
         chakshu_draft = None
@@ -88,7 +98,10 @@ class StrikeAgent:
             chakshu_draft = self.report.file_chakshu(
                 phone_number="+91 98XXX XX210",
                 category="Digital Arrest Impersonation",
-                evidence=f"Strike Decoy extracted UPI ID '{captured_upi or 'n/a'}' and mule account '{captured_acc or 'n/a'}'."
+                evidence=(
+                    f"Strike Decoy extracted UPI ID '{captured_upi or 'n/a'}' and mule "
+                    f"account '{captured_acc or 'n/a'}'."
+                ),
             )
 
         return {
@@ -100,5 +113,5 @@ class StrikeAgent:
             "total_minutes_wasted": self.minutes_wasted,
             "all_extracted_entities": self.extracted_entities,
             "chakshu_draft": chakshu_draft,
-            "status": "ENGAGING_SCAMMER"
+            "status": "ENGAGING_SCAMMER",
         }

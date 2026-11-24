@@ -1,0 +1,28 @@
+[project]
+name = "kavach"
+version = "0.2.0"
+description = "Multi-agent scam defence for families: policy-gated agents over six MCP tool servers (hackathon prototype)."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn>=0.28",
+  "networkx>=3.2",
+  "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["tools/voices"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -7,10 +7,11 @@ Enforces the 3 security tiers:
 Every invocation is recorded in an immutable audit trail.
 """
 
-from datetime import datetime
-import json
 import uuid
-from typing import Dict, Any, List, Optional, Callable
+from collections.abc import Callable
+from datetime import datetime
+from typing import Any
+
 
 class PolicyGate:
     TIER_AUTOMATIC = "AUTOMATIC"
@@ -25,49 +26,43 @@ class PolicyGate:
         "telephony.speak_warning": TIER_AUTOMATIC,
         "telephony.transfer_to_decoy": TIER_AUTOMATIC,
         "telephony.end_call": TIER_AUTOMATIC,
-
         # Intel
         "intel.check_number": TIER_AUTOMATIC,
         "intel.check_url": TIER_AUTOMATIC,
         "intel.add_entity": TIER_AUTOMATIC,
         "intel.link_entities": TIER_AUTOMATIC,
         "intel.get_fraud_graph": TIER_AUTOMATIC,
-
         # Knowledge
         "knowledge.match_scam_pattern": TIER_AUTOMATIC,
         "knowledge.get_safe_advice": TIER_AUTOMATIC,
-
         # Family / Guardian
         "family.notify_guardian": TIER_AUTOMATIC,
         "family.send_voice_note": TIER_AUTOMATIC,
         "family.request_approval": TIER_AUTOMATIC,
-
         # Bank actions
         "bank.parse_debit_sms": TIER_AUTOMATIC,
         "bank.list_transactions": TIER_AUTOMATIC,
         "bank.request_hold": TIER_APPROVAL_REQUIRED,
         "bank.request_block": TIER_APPROVAL_REQUIRED,
-
         # Report actions
         # A script for the victim to read aloud: no outside effect, so no approval wait in the golden hour.
         "report.prepare_1930_brief": TIER_AUTOMATIC,
         "report.draft_ncrp_complaint": TIER_APPROVAL_REQUIRED,
         "report.file_chakshu": TIER_APPROVAL_REQUIRED,
         "report.share_transcript": TIER_APPROVAL_REQUIRED,
-
         # Prohibited actions (Simulated or intercepted)
         "bank.move_money": TIER_NEVER_ALLOWED,
         "bank.transfer_funds": TIER_NEVER_ALLOWED,
         "auth.share_otp": TIER_NEVER_ALLOWED,
         "device.read_banking_app": TIER_NEVER_ALLOWED,
-        "telephony.impersonate_police": TIER_NEVER_ALLOWED
+        "telephony.impersonate_police": TIER_NEVER_ALLOWED,
     }
 
     def __init__(self):
-        self.audit_log: List[Dict[str, Any]] = []
-        self.pending_approvals: Dict[str, Dict[str, Any]] = {}
+        self.audit_log: list[dict[str, Any]] = []
+        self.pending_approvals: dict[str, dict[str, Any]] = {}
         # approval_id -> callable that re-runs the gated tool with the approval token
-        self._executors: Dict[str, Callable[[str], Dict[str, Any]]] = {}
+        self._executors: dict[str, Callable[[str], dict[str, Any]]] = {}
         # Seed initial system startup audit log entry
         self._record_log(
             agent="SYSTEM",
@@ -75,11 +70,17 @@ class PolicyGate:
             tier=self.TIER_AUTOMATIC,
             args={"version": "1.0-hackathon", "action_tiers_enforced": 3},
             decision="ALLOWED",
-            reason="Policy gate initialized successfully with strict tier enforcement"
+            reason="Policy gate initialized successfully with strict tier enforcement",
         )
 
-    def evaluate(self, agent_name: str, tool_name: str, args: Dict[str, Any], approval_token: Optional[str] = None,
-                 on_approve: Optional[Callable[[str], Dict[str, Any]]] = None) -> Dict[str, Any]:
+    def evaluate(
+        self,
+        agent_name: str,
+        tool_name: str,
+        args: dict[str, Any],
+        approval_token: str | None = None,
+        on_approve: Callable[[str], dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
         """
         Evaluate tool invocation against policy gate.
         Returns:
@@ -94,14 +95,12 @@ class PolicyGate:
         tier = self.TOOL_TIERS.get(tool_name, self.TIER_NEVER_ALLOWED)
 
         if tier == self.TIER_NEVER_ALLOWED:
-            reason = f"Security Policy Violation: '{tool_name}' belongs to NEVER_ALLOWED tier. KAVACH never executes fund transfers, credentials sharing, or banking app inspection."
+            reason = (
+                f"Security Policy Violation: '{tool_name}' belongs to NEVER_ALLOWED tier. KAVACH never executes "
+                f"fund transfers, credentials sharing, or banking app inspection."
+            )
             self._record_log(agent_name, tool_name, tier, args, "BLOCKED", reason)
-            return {
-                "allowed": False,
-                "tier": tier,
-                "decision": "BLOCKED",
-                "reason": reason
-            }
+            return {"allowed": False, "tier": tier, "decision": "BLOCKED", "reason": reason}
 
         if tier == self.TIER_APPROVAL_REQUIRED:
             pending = self.pending_approvals.get(approval_token) if approval_token else None
@@ -110,12 +109,7 @@ class PolicyGate:
                 pending["status"] = "EXECUTED"
                 reason = f"Guardian approved action with token {approval_token}."
                 self._record_log(agent_name, tool_name, tier, args, "ALLOWED", reason)
-                return {
-                    "allowed": True,
-                    "tier": tier,
-                    "decision": "ALLOWED",
-                    "reason": reason
-                }
+                return {"allowed": True, "tier": tier, "decision": "ALLOWED", "reason": reason}
             else:
                 # Create pending approval request
                 approval_id = f"APPR-{uuid.uuid4().hex[:6].upper()}"
@@ -125,7 +119,7 @@ class PolicyGate:
                     "tool": tool_name,
                     "args": args,
                     "status": "PENDING",
-                    "created_at": datetime.now().strftime("%H:%M:%S")
+                    "created_at": datetime.now().strftime("%H:%M:%S"),
                 }
                 if on_approve:
                     self._executors[approval_id] = on_approve
@@ -136,20 +130,15 @@ class PolicyGate:
                     "tier": tier,
                     "decision": "APPROVAL_PENDING",
                     "approval_id": approval_id,
-                    "reason": reason
+                    "reason": reason,
                 }
 
         # Automatic tier
         reason = f"Action '{tool_name}' executed automatically within safe boundaries."
         self._record_log(agent_name, tool_name, tier, args, "ALLOWED", reason)
-        return {
-            "allowed": True,
-            "tier": tier,
-            "decision": "ALLOWED",
-            "reason": reason
-        }
+        return {"allowed": True, "tier": tier, "decision": "ALLOWED", "reason": reason}
 
-    def approve_action(self, approval_id: str, guardian_id: str = "Rahul") -> Optional[Dict[str, Any]]:
+    def approve_action(self, approval_id: str, guardian_id: str = "Rahul") -> dict[str, Any] | None:
         """Guardian approves a PENDING action; the gated tool then runs once. Returns the approval record, or None."""
         pending = self.pending_approvals.get(approval_id)
         if not pending or pending["status"] != "PENDING":
@@ -163,14 +152,14 @@ class PolicyGate:
             tier=self.TIER_APPROVAL_REQUIRED,
             args={"approval_id": approval_id, "guardian": guardian_id},
             decision="APPROVED",
-            reason=f"Guardian {guardian_id} confirmed execution of {pending['tool']}"
+            reason=f"Guardian {guardian_id} confirmed execution of {pending['tool']}",
         )
         executor = self._executors.pop(approval_id, None)
         if executor:
             pending["result"] = executor(approval_id)
         return pending
 
-    def reject_action(self, approval_id: str, guardian_id: str = "Rahul") -> Optional[Dict[str, Any]]:
+    def reject_action(self, approval_id: str, guardian_id: str = "Rahul") -> dict[str, Any] | None:
         """Guardian rejects a PENDING action. Returns the approval record, or None."""
         pending = self.pending_approvals.get(approval_id)
         if not pending or pending["status"] != "PENDING":
@@ -184,25 +173,25 @@ class PolicyGate:
             tier=self.TIER_APPROVAL_REQUIRED,
             args={"approval_id": approval_id, "guardian": guardian_id},
             decision="REJECTED",
-            reason=f"Guardian {guardian_id} rejected execution of {pending['tool']}"
+            reason=f"Guardian {guardian_id} rejected execution of {pending['tool']}",
         )
         return pending
 
-    def _record_log(self, agent: str, tool: str, tier: str, args: Dict[str, Any], decision: str, reason: str):
+    def _record_log(self, agent: str, tool: str, tier: str, args: dict[str, Any], decision: str, reason: str):
         entry = {
-            "id": f"LOG-{len(self.audit_log)+1:04d}",
+            "id": f"LOG-{len(self.audit_log) + 1:04d}",
             "time": datetime.now().strftime("%H:%M:%S"),
             "agent": agent,
             "tool": tool,
             "tier": tier,
             "args": args,
             "decision": decision,
-            "reason": reason
+            "reason": reason,
         }
         self.audit_log.insert(0, entry)  # Newest first
 
-    def get_logs(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def get_logs(self, limit: int = 50) -> list[dict[str, Any]]:
         return self.audit_log[:limit]
 
-    def get_pending_approvals(self) -> List[Dict[str, Any]]:
+    def get_pending_approvals(self) -> list[dict[str, Any]]:
         return [v for v in self.pending_approvals.values() if v.get("status") == "PENDING"]

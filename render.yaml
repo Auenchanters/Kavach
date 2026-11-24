@@ -3,7 +3,7 @@ services:
     name: kavach-scam-defense
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python3 run_kavach.py
+    startCommand: python -m kavach.run
     plan: free
     envVars:
       - key: PORT
