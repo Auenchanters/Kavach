@@ -53,7 +53,7 @@
   <div class="wrap">
     <header class="nav">
       <span class="mark"><svg class="i"><use href="#i-shield"/></svg>KAVACH</span>
-      <nav aria-label="Links"><a href="phone/">Amma’s phone</a><a href="admin/">Rahul’s panel</a><a href="https://github.com/Auenchanters/Kavach">GitHub</a><button class="theme-btn" data-theme-toggle type="button"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button></nav>
+      <nav aria-label="Links"><a href="phone/index.html">Amma’s phone</a><a href="admin/index.html">Rahul’s panel</a><a href="https://github.com/Auenchanters/Kavach">GitHub</a><button class="theme-btn" data-theme-toggle type="button"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button></nav>
     </header>
 
     <main>
@@ -62,8 +62,8 @@
           <h1>No Amma left alone with a <em>scammer</em>.</h1>
           <p class="sub">KAVACH puts a team of AI agents between your parents and the scammer. It warns them during the call in their own language, keeps scammers talking to a decoy, and races the golden hour to get stolen money back.</p>
           <div class="ctas">
-            <a class="btn btn-kavach" href="phone/">Open Amma’s phone</a>
-            <a class="btn btn-line" href="admin/">Open Rahul’s panel</a>
+            <a class="btn btn-kavach" href="phone/index.html">Open Amma’s phone</a>
+            <a class="btn btn-line" href="admin/index.html">Open Rahul’s panel</a>
             <button class="btn btn-line" id="both">Open both, side by side</button>
           </div>
         </div>
@@ -86,12 +86,17 @@
 
   <script type="module">
     import "./shared/theme.js";
-    import { tryMountShield } from "./shared/three/shield.js";
+    import { tryMountShield } from "./shared/three/lazy.js";
     tryMountShield(document.getElementById("hero3d")).then((s) => s.setState("joined"));
+    // On the Hugging Face Space page the app sits in a sandboxed third-party frame: sites like GitHub refuse to load
+    // inside it, and its storage is cut off from other tabs, so the phone and panel could not sync. Open real tabs instead.
+    const framed = self !== top;
+    if (framed) document.querySelectorAll("a[href]").forEach((a) => (a.target ||= "_blank"));
     document.getElementById("both").onclick = () => {
+      if (framed) return window.open(location.href, "_blank");
       const w = Math.floor(screen.availWidth / 2), h = screen.availHeight;
-      window.open("admin/", "kavach-admin", `popup,left=${w},top=0,width=${w},height=${h}`);
-      location.href = "phone/";
+      window.open("admin/index.html", "kavach-admin", `popup,left=${w},top=0,width=${w},height=${h}`);
+      location.href = "phone/index.html";
     };
   </script>
 </body>

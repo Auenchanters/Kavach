@@ -1,8 +1,8 @@
 // Network first, cache as fallback, so the app opens offline but never serves a stale build online.
 // API calls are never cached.
-const CACHE = "kavach-v3";
-const SHELL = ["./", "index.html", "phone/", "phone/phone.css", "phone/phone.js", "admin/", "admin/admin.css", "admin/admin.js",
-  "shared/tokens.css", "shared/story.js", "shared/voice.js", "shared/theme.js", "shared/three/shield.js", "shared/three/graph.js", "shared/models/shield.glb",
+const CACHE = "kavach-v4";
+const SHELL = ["./", "index.html", "phone/index.html", "phone/phone.css", "phone/phone.js", "admin/index.html", "admin/admin.css", "admin/admin.js",
+  "shared/tokens.css", "shared/story.js", "shared/voice.js", "shared/theme.js", "shared/three/lazy.js", "shared/three/shield.js", "shared/three/graph.js", "shared/models/shield.glb",
   "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png"];
 
 self.addEventListener("install", (e) => {

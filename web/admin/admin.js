@@ -1,7 +1,7 @@
 import { createStory, pending, SCENES, DECOY_SCRIPT, RAMESH, LANGS, AUTO, APPR } from "../shared/story.js";
 import "../shared/theme.js";
 import * as voice from "../shared/voice.js";
-import { tryMountGraph } from "../shared/three/graph.js";
+import { tryMountGraph } from "../shared/three/lazy.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));

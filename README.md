@@ -13,7 +13,7 @@
 
 KAVACH warns an elderly parent **during** a scam call in Kannada, Hindi or English, keeps the scammer busy with a **decoy** that draws out their UPI IDs and mule accounts, and — if money is lost anyway — starts **four recovery agents at once** inside the golden hour. Every action goes through a **policy gate**: some run automatically, some wait for the family's one-tap approval, and some (moving money, sharing an OTP, reading banking apps) are never allowed.
 
-**[Open the live prototype](https://auenchanters.github.io/Kavach/)** · [Amma's phone](https://auenchanters.github.io/Kavach/phone/) · [Rahul's panel](https://auenchanters.github.io/Kavach/admin/) · [Hugging Face Space](https://huggingface.co/spaces/Auenchanters/Kavach)
+**[Open the live prototype](https://auenchanters.github.io/Kavach/)** · [Amma's phone](https://auenchanters.github.io/Kavach/phone/) · [Rahul's panel](https://auenchanters.github.io/Kavach/admin/) · [Hugging Face Space](https://huggingface.co/spaces/Auenchanters/Kavach) ([full-screen](https://auenchanters-kavach.static.hf.space/index.html))
 
 ![The KAVACH story: a scam call, KAVACH joins, Rahul is alerted, money is lost, four agents recover it](docs/img/story.gif)
 

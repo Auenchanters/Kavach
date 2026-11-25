@@ -2,7 +2,7 @@
   "name": "KAVACH · Scam defense for families",
   "short_name": "KAVACH",
   "description": "Call screening, a scam decoy and golden-hour recovery, behind a guardian-approved policy gate.",
-  "start_url": "./phone/",
+  "start_url": "./phone/index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#19191B",
@@ -28,11 +28,11 @@
   "shortcuts": [
     {
       "name": "Amma's phone",
-      "url": "./phone/"
+      "url": "./phone/index.html"
     },
     {
       "name": "Rahul's panel",
-      "url": "./admin/"
+      "url": "./admin/index.html"
     },
     {
       "name": "About KAVACH",
