@@ -32,7 +32,9 @@ export function stop() {
 export function play(id) {
   if (muted || !ensure()) return Promise.resolve(false);
   stop();
-  const a = new Audio(new URL(`./clips/${id}.mp3`, import.meta.url));
+  const a = new Audio();
+  a.crossOrigin = "anonymous"; // hosts like Hugging Face redirect clips to a CDN; without CORS the analyser would mute them
+  a.src = new URL(`./clips/${id}.mp3`, import.meta.url);
   current = a;
   try { ctx.createMediaElementSource(a).connect(analyser); } catch { /* still plays, just no pulse */ }
   return new Promise((resolve) => {
